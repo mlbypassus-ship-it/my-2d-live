@@ -2,7 +2,7 @@
 <html lang="my">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>2D LIVE</title>
 
 <style>
@@ -79,7 +79,9 @@ header{
   margin-bottom:5px;
 }
 
-.market-box b{font-size:16px}
+.market-box b{
+  font-size:16px;
+}
 
 .results{
   margin:16px;
@@ -101,9 +103,13 @@ header{
   border-bottom:1px solid #292936;
 }
 
-.result-row:last-child{border-bottom:none}
+.result-row:last-child{
+  border-bottom:none;
+}
 
-.result-time{color:#aaa}
+.result-time{
+  color:#aaa;
+}
 
 .result-name{
   font-size:14px;
@@ -114,6 +120,45 @@ header{
   color:#ffc400;
   font-size:30px;
   font-weight:bold;
+}
+
+.admin-result{
+  border:1px solid #ffc400;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:12px;
+}
+
+.admin-result-title{
+  color:#ffc400;
+  font-weight:bold;
+}
+
+.admin-result-number{
+  font-size:45px;
+  font-weight:bold;
+  text-align:center;
+  margin:5px 0;
+}
+
+.notice{
+  margin:16px;
+  padding:18px;
+  border-radius:20px;
+  background:#15151f;
+  border-left:4px solid #ffc400;
+}
+
+.notice-title{
+  color:#ffc400;
+  font-weight:bold;
+  font-size:18px;
+}
+
+.notice-text{
+  margin-top:8px;
+  line-height:1.6;
+  color:#ddd;
 }
 
 .calendar-card{
@@ -139,7 +184,8 @@ input[type="date"]{
   color:#aaa;
 }
 
-.gift-card,.info-card{
+.gift-card,
+.info-card{
   margin:16px;
   padding:30px 20px;
   border-radius:22px;
@@ -151,7 +197,8 @@ input[type="date"]{
   font-size:60px;
 }
 
-.gift-card p,.info-card p{
+.gift-card p,
+.info-card p{
   color:#999;
   line-height:1.7;
 }
@@ -185,7 +232,9 @@ input[type="date"]{
   margin-bottom:4px;
 }
 
-.nav-btn.active{color:#ffc400}
+.nav-btn.active{
+  color:#ffc400;
+}
 
 .loading{
   color:#777;
@@ -205,16 +254,24 @@ input[type="date"]{
 
 <div class="app">
 
-<header>2D / 3D LIVE</header>
+<header>
+  2D / 3D LIVE
+</header>
+
 
 <!-- HOME -->
+
 <section id="home" class="page active">
 
   <div class="live-card">
 
-    <div class="live-label">🔴 LIVE 2D</div>
+    <div class="live-label">
+      🔴 LIVE 2D
+    </div>
 
-    <div id="liveNumber" class="live-number">--</div>
+    <div id="liveNumber" class="live-number">
+      --
+    </div>
 
     <div id="liveStatus" class="live-status">
       Connecting...
@@ -236,12 +293,41 @@ input[type="date"]{
 
   </div>
 
+
+  <!-- ADMIN 3D -->
+
   <div class="results">
 
-    <h2>📊 Today's Results</h2>
+    <h2>
+      🔢 Admin 3D Result
+    </h2>
+
+    <div id="admin3D">
+      <div class="loading">
+        Loading...
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- NOTIFICATION -->
+
+  <div id="notificationBox"></div>
+
+
+  <!-- TODAY -->
+
+  <div class="results">
+
+    <h2>
+      📊 Today's Results
+    </h2>
 
     <div id="resultList">
-      <div class="loading">Loading...</div>
+      <div class="loading">
+        Loading...
+      </div>
     </div>
 
   </div>
@@ -250,11 +336,14 @@ input[type="date"]{
 
 
 <!-- CALENDAR -->
+
 <section id="calendar" class="page">
 
   <div class="calendar-card">
 
-    <h2>📅 Calendar</h2>
+    <h2>
+      📅 Calendar
+    </h2>
 
     <p class="date-title">
       Result ကြည့်ချင်တဲ့နေ့ကို ရွေးပါ
@@ -266,6 +355,7 @@ input[type="date"]{
     >
 
   </div>
+
 
   <div class="results">
 
@@ -287,20 +377,27 @@ input[type="date"]{
 
 
 <!-- GIFT -->
+
 <section id="gift" class="page">
 
   <div class="gift-card">
 
-    <div class="gift-icon">🎁</div>
+    <div class="gift-icon">
+      🎁
+    </div>
 
-    <h2>လက်ဆောင်</h2>
+    <h2>
+      လက်ဆောင်
+    </h2>
 
     <p>
-      တစ်နေ့စာ ဂဏန်းများကို ပုံအဖြစ်
-      တင်ပေးမည့်နေရာ
+      တစ်နေ့စာ ဂဏန်းများကို
+      ပုံအဖြစ် တင်ပေးမည့်နေရာ
     </p>
 
-    <p>Coming Soon</p>
+    <p>
+      Coming Soon
+    </p>
 
   </div>
 
@@ -308,13 +405,18 @@ input[type="date"]{
 
 
 <!-- MORE -->
+
 <section id="more" class="page">
 
   <div class="info-card">
 
-    <h2>ℹ️ About</h2>
+    <h2>
+      ℹ️ About
+    </h2>
 
-    <p>Thai Stock 2D Live Result</p>
+    <p>
+      Thai Stock 2D Live Result
+    </p>
 
     <p>
       Thai Stock data နှင့် Result များကို
@@ -327,28 +429,37 @@ input[type="date"]{
 
 
 <!-- NAV -->
+
 <nav class="bottom-nav">
 
-  <button class="nav-btn active"
-    onclick="showPage('home',this)">
+  <button
+    class="nav-btn active"
+    onclick="showPage('home',this)"
+  >
     <span>🏠</span>
     Home
   </button>
 
-  <button class="nav-btn"
-    onclick="showPage('calendar',this)">
+  <button
+    class="nav-btn"
+    onclick="showPage('calendar',this)"
+  >
     <span>📅</span>
     Calendar
   </button>
 
-  <button class="nav-btn"
-    onclick="showPage('gift',this)">
+  <button
+    class="nav-btn"
+    onclick="showPage('gift',this)"
+  >
     <span>🎁</span>
     လက်ဆောင်
   </button>
 
-  <button class="nav-btn"
-    onclick="showPage('more',this)">
+  <button
+    class="nav-btn"
+    onclick="showPage('more',this)"
+  >
     <span>ℹ️</span>
     More
   </button>
@@ -361,7 +472,7 @@ input[type="date"]{
 <script>
 
 /* =========================
-   API
+   THAI API
 ========================= */
 
 const LIVE_API =
@@ -372,27 +483,238 @@ const HISTORY_API =
 
 
 /* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+"https://acclbthzfzrfbwyslpvv.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_PxrCIfh0MfL6KT1iQxgqfw__IgNG1OY";
+
+
+/* =========================
    PAGE SWITCH
 ========================= */
 
 function showPage(pageId,button){
 
-  document.querySelectorAll(".page")
-    .forEach(page=>{
+  document
+    .querySelectorAll(".page")
+    .forEach(function(page){
+
       page.classList.remove("active");
+
     });
 
-  document.getElementById(pageId)
+
+  document
+    .getElementById(pageId)
     .classList.add("active");
 
-  document.querySelectorAll(".nav-btn")
-    .forEach(btn=>{
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(function(btn){
+
       btn.classList.remove("active");
+
     });
 
+
   if(button){
+
     button.classList.add("active");
+
   }
+
+}
+
+
+/* =========================
+   SUPABASE FETCH
+========================= */
+
+async function supabaseGet(query){
+
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/rest/v1/" +
+      query,
+      {
+        method:"GET",
+
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":
+            "Bearer " + SUPABASE_KEY
+        },
+
+        cache:"no-store"
+      }
+    );
+
+
+  if(!response.ok){
+
+    throw new Error(
+      "Supabase HTTP " +
+      response.status
+    );
+
+  }
+
+
+  return await response.json();
+
+}
+
+
+/* =========================
+   ADMIN 3D
+========================= */
+
+async function loadAdmin3D(){
+
+  const box =
+    document.getElementById("admin3D");
+
+
+  try{
+
+    const data =
+      await supabaseGet(
+        "admin_content" +
+        "?content_type=eq.3d" +
+        "&select=content,content_date,created_at" +
+        "&order=created_at.desc" +
+        "&limit=1"
+      );
+
+
+    if(!data.length){
+
+      box.innerHTML =
+        `<div class="loading">
+          3D Result မရှိသေးပါ
+        </div>`;
+
+      return;
+
+    }
+
+
+    const item = data[0];
+
+
+    box.innerHTML = `
+
+      <div class="admin-result">
+
+        <div class="admin-result-title">
+          🔢 3D Result
+        </div>
+
+        <div class="admin-result-number">
+          ${escapeHtml(item.content)}
+        </div>
+
+        <div class="result-time">
+          Date:
+          ${escapeHtml(
+            item.content_date || "--"
+          )}
+        </div>
+
+      </div>
+
+    `;
+
+
+  }catch(error){
+
+    console.log(
+      "Admin 3D Error:",
+      error
+    );
+
+    box.innerHTML =
+      `<div class="error">
+        3D Result ရယူမရပါ
+      </div>`;
+
+  }
+
+}
+
+
+/* =========================
+   NOTIFICATION
+========================= */
+
+async function loadNotification(){
+
+  const box =
+    document.getElementById(
+      "notificationBox"
+    );
+
+
+  try{
+
+    const data =
+      await supabaseGet(
+        "admin_content" +
+        "?content_type=eq.notification" +
+        "&select=title,content,created_at" +
+        "&order=created_at.desc" +
+        "&limit=1"
+      );
+
+
+    if(!data.length){
+
+      box.innerHTML = "";
+
+      return;
+
+    }
+
+
+    const item = data[0];
+
+
+    box.innerHTML = `
+
+      <div class="notice">
+
+        <div class="notice-title">
+          🔔 ${escapeHtml(
+            item.title || "Notification"
+          )}
+        </div>
+
+        <div class="notice-text">
+          ${escapeHtml(
+            item.content || ""
+          )}
+        </div>
+
+      </div>
+
+    `;
+
+
+  }catch(error){
+
+    console.log(
+      "Notification Error:",
+      error
+    );
+
+  }
+
 }
 
 
@@ -404,38 +726,79 @@ async function loadLiveData(){
 
   try{
 
-    const response = await fetch(
-      LIVE_API + "?t=" + Date.now(),
-      {cache:"no-store"}
-    );
+    const response =
+      await fetch(
+        LIVE_API +
+        "?t=" +
+        Date.now(),
+        {
+          cache:"no-store"
+        }
+      );
+
 
     if(!response.ok){
-      throw new Error("HTTP "+response.status);
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
     }
 
-    const data = await response.json();
+
+    const data =
+      await response.json();
+
 
     if(data.live){
 
-      document.getElementById("liveNumber")
+      document
+        .getElementById(
+          "liveNumber"
+        )
         .innerText =
-        data.live.twod || "--";
+        data.live.twod ||
+        "--";
 
-      document.getElementById("setValue")
+
+      document
+        .getElementById(
+          "setValue"
+        )
         .innerText =
-        data.live.set || "--";
+        data.live.set ||
+        "--";
 
-      document.getElementById("marketValue")
+
+      document
+        .getElementById(
+          "marketValue"
+        )
         .innerText =
-        data.live.value || "--";
+        data.live.value ||
+        "--";
 
-      document.getElementById("liveStatus")
+
+      document
+        .getElementById(
+          "liveStatus"
+        )
         .innerText =
         "🟢 Updated: " +
-        (data.live.time || "--");
+        (
+          data.live.time ||
+          "--"
+        );
+
     }
 
-    if(Array.isArray(data.result)){
+
+    if(
+      Array.isArray(
+        data.result
+      )
+    ){
 
       renderResults(
         data.result,
@@ -444,14 +807,24 @@ async function loadLiveData(){
 
     }
 
+
   }catch(error){
 
-    console.log(error);
+    console.log(
+      "Live Error:",
+      error
+    );
 
-    document.getElementById("liveStatus")
+
+    document
+      .getElementById(
+        "liveStatus"
+      )
       .innerText =
       "🔴 Connection Error";
+
   }
+
 }
 
 
@@ -474,287 +847,428 @@ function getSessionName(time){
     return "Closing Result";
 
   return "Result";
+
 }
 
 
 /* =========================
-   RENDER 2D
+   RENDER RESULTS
 ========================= */
 
-function renderResults(results,elementId){
+function renderResults(
+  results,
+  elementId
+){
 
   const box =
-    document.getElementById(elementId);
+    document.getElementById(
+      elementId
+    );
+
 
   if(!box)return;
 
-  if(!Array.isArray(results) || !results.length){
+
+  if(
+    !Array.isArray(results) ||
+    !results.length
+  ){
 
     box.innerHTML =
-    `<div class="loading">
-      Result မရှိသေးပါ
-    </div>`;
+      `<div class="loading">
+        Result မရှိသေးပါ
+      </div>`;
 
     return;
+
   }
 
-  box.innerHTML="";
 
-  results.forEach(item=>{
+  box.innerHTML = "";
+
+
+  results.forEach(function(item){
 
     const time =
       item.open_time ||
       item.time ||
       "--";
 
+
     const number =
       item.twod ||
       item.result ||
       "--";
 
+
     const row =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    row.className="result-row";
 
-    row.innerHTML=`
+    row.className =
+      "result-row";
+
+
+    row.innerHTML = `
 
       <div>
 
         <div class="result-time">
-          ${time}
+          ${escapeHtml(time)}
         </div>
 
         <div class="result-name">
-          ${getSessionName(time)}
+          ${escapeHtml(
+            getSessionName(time)
+          )}
         </div>
 
       </div>
 
       <div class="result-number">
-        ${number}
+        ${escapeHtml(number)}
       </div>
 
     `;
+
 
     box.appendChild(row);
 
   });
+
 }
 
 
 /* =========================
-   CALENDAR HISTORY
+   CALENDAR
 ========================= */
 
-document.getElementById("datePicker")
-.addEventListener("change",async function(){
+document
+  .getElementById("datePicker")
+  .addEventListener(
+    "change",
+    async function(){
 
-  const date=this.value;
-
-  if(!date)return;
-
-  const title =
-    document.getElementById("calendarDate");
-
-  const box =
-    document.getElementById("calendarResults");
-
-  title.innerText =
-    "📅 " + date + " Results";
-
-  box.innerHTML=`
-    <div class="loading">
-      🔄 ${date} Result ရှာနေပါတယ်...
-    </div>
-  `;
-
-  try{
-
-    /*
-      API format:
-      YYYY-MM-DD
-
-      ဥပမာ:
-      2021-11-05
-    */
-
-    const url =
-      HISTORY_API +
-      "?date=" +
-      encodeURIComponent(date) +
-      "&t=" +
-      Date.now();
-
-    const response =
-      await fetch(
-        url,
-        {cache:"no-store"}
-      );
-
-    if(!response.ok){
-
-      throw new Error(
-        "HTTP " + response.status
-      );
-
-    }
-
-    const data =
-      await response.json();
-
-    console.log(
-      "HISTORY:",
-      data
-    );
-
-    /*
-      API response ကို
-      array / result / data
-      ပုံစံတွေထဲက လက်ခံမယ်
-    */
-
-    let results=[];
-
-    if(Array.isArray(data)){
-
-      results=data;
-
-    }else if(
-      Array.isArray(data.result)
-    ){
-
-      results=data.result;
-
-    }else if(
-      Array.isArray(data.data)
-    ){
-
-      results=data.data;
-
-    }else if(
-      data.data &&
-      Array.isArray(data.data.result)
-    ){
-
-      results=data.data.result;
-
-    }
+      const date =
+        this.value;
 
 
-    if(!results.length){
+      if(!date)return;
 
-      box.innerHTML=`
+
+      const title =
+        document.getElementById(
+          "calendarDate"
+        );
+
+
+      const box =
+        document.getElementById(
+          "calendarResults"
+        );
+
+
+      title.innerText =
+        "📅 " +
+        date +
+        " Results";
+
+
+      box.innerHTML = `
         <div class="loading">
-          📭 ${date} အတွက် Result မတွေ့ပါ
+          🔄 ${date}
+          Result ရှာနေပါတယ်...
         </div>
       `;
 
-      return;
-    }
+
+      try{
+
+        /* ADMIN DATA FIRST */
+
+        const adminData =
+          await supabaseGet(
+            "admin_content" +
+            "?content_date=eq." +
+            encodeURIComponent(date) +
+            "&select=content_type,content_date,title,content,created_at" +
+            "&order=created_at.desc"
+          );
 
 
-    /*
-      History ထဲက
-      2D + 3D data ကို
-      ခွဲပြီးပြမယ်
-    */
+        /* THAI API */
 
-    box.innerHTML="";
-
-    results.forEach(item=>{
-
-      const time =
-        item.open_time ||
-        item.time ||
-        item.openTime ||
-        "--";
-
-      const twod =
-        item.twod ||
-        item.two_d ||
-        item["2d"] ||
-        "--";
-
-      const threed =
-        item.threed ||
-        item.three_d ||
-        item["3d"] ||
-        item.threeD ||
-        "--";
+        let apiData = [];
 
 
-      const row =
-        document.createElement("div");
+        try{
 
-      row.className="result-row";
+          const response =
+            await fetch(
+              HISTORY_API +
+              "?date=" +
+              encodeURIComponent(date) +
+              "&t=" +
+              Date.now(),
+              {
+                cache:"no-store"
+              }
+            );
 
-      row.innerHTML=`
 
-        <div>
+          if(response.ok){
 
-          <div class="result-time">
-            ${time}
-          </div>
+            const data =
+              await response.json();
 
-          <div class="result-name">
-            ${getSessionName(time)}
-          </div>
 
-        </div>
+            if(Array.isArray(data)){
 
-        <div style="text-align:right">
+              apiData = data;
 
-          <div class="result-number">
-            ${twod}
-          </div>
+            }else if(
+              Array.isArray(
+                data.result
+              )
+            ){
 
-          ${
-            threed !== "--"
-            ?
-            `<div style="
-              color:#42e69a;
-              font-size:14px;
-              margin-top:3px;
-            ">
-              3D: ${threed}
-            </div>`
-            :
-            ""
+              apiData =
+                data.result;
+
+            }else if(
+              Array.isArray(
+                data.data
+              )
+            ){
+
+              apiData =
+                data.data;
+
+            }else if(
+              data.data &&
+              Array.isArray(
+                data.data.result
+              )
+            ){
+
+              apiData =
+                data.data.result;
+
+            }
+
           }
 
-        </div>
+        }catch(apiError){
 
-      `;
+          console.log(
+            "History API Error:",
+            apiError
+          );
 
-      box.appendChild(row);
-
-    });
+        }
 
 
-  }catch(error){
+        box.innerHTML = "";
 
-    console.error(
-      "History Error:",
-      error
+
+        /* ADMIN RESULTS */
+
+        adminData.forEach(
+          function(item){
+
+            const row =
+              document.createElement(
+                "div"
+              );
+
+
+            row.className =
+              "result-row";
+
+
+            row.innerHTML = `
+
+              <div>
+
+                <div class="result-time">
+                  ${escapeHtml(
+                    item.content_type
+                  )}
+                </div>
+
+                <div class="result-name">
+                  ${escapeHtml(
+                    item.title || ""
+                  )}
+                </div>
+
+              </div>
+
+              <div class="result-number">
+                ${escapeHtml(
+                  item.content || "--"
+                )}
+              </div>
+
+            `;
+
+
+            box.appendChild(row);
+
+          }
+        );
+
+
+        /* API RESULTS */
+
+        apiData.forEach(
+          function(item){
+
+            const time =
+              item.open_time ||
+              item.time ||
+              item.openTime ||
+              "--";
+
+
+            const twod =
+              item.twod ||
+              item.two_d ||
+              item["2d"] ||
+              item.result ||
+              "--";
+
+
+            const threed =
+              item.threed ||
+              item.three_d ||
+              item["3d"] ||
+              item.threeD ||
+              "";
+
+
+            const row =
+              document.createElement(
+                "div"
+              );
+
+
+            row.className =
+              "result-row";
+
+
+            row.innerHTML = `
+
+              <div>
+
+                <div class="result-time">
+                  ${escapeHtml(time)}
+                </div>
+
+                <div class="result-name">
+                  ${escapeHtml(
+                    getSessionName(time)
+                  )}
+                </div>
+
+              </div>
+
+              <div style="text-align:right">
+
+                <div class="result-number">
+                  ${escapeHtml(twod)}
+                </div>
+
+                ${
+                  threed
+                  ?
+                  `<div style="
+                    color:#42e69a;
+                    font-size:14px;
+                  ">
+                    3D:
+                    ${escapeHtml(threed)}
+                  </div>`
+                  :
+                  ""
+                }
+
+              </div>
+
+            `;
+
+
+            box.appendChild(row);
+
+          }
+        );
+
+
+        if(
+          !adminData.length &&
+          !apiData.length
+        ){
+
+          box.innerHTML = `
+            <div class="loading">
+              📭 ${date}
+              အတွက် Result မတွေ့ပါ
+            </div>
+          `;
+
+        }
+
+      }catch(error){
+
+        console.error(
+          "Calendar Error:",
+          error
+        );
+
+
+        box.innerHTML = `
+          <div class="error">
+            ❌ Result ရယူမရပါ
+          </div>
+        `;
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(text){
+
+  return String(text || "")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
     );
 
-    box.innerHTML=`
-      <div class="error">
-
-        ❌ Result ရယူမရပါ
-
-        <br><br>
-
-        Internet / API ကို
-        ပြန်စစ်ပေးပါ
-
-      </div>
-    `;
-
-  }
-
-});
+}
 
 
 /* =========================
@@ -763,13 +1277,27 @@ document.getElementById("datePicker")
 
 loadLiveData();
 
+loadAdmin3D();
+
+loadNotification();
+
 
 /* =========================
-   LIVE AUTO UPDATE
+   AUTO UPDATE
 ========================= */
 
 setInterval(
   loadLiveData,
+  10000
+);
+
+setInterval(
+  loadAdmin3D,
+  10000
+);
+
+setInterval(
+  loadNotification,
   10000
 );
 
