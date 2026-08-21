@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My 2D Live</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#080812;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+header{
+  padding:18px;
+  text-align:center;
+  background:#15152a;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.live{
+  text-align:center;
+  padding:45px 20px;
+}
+
+.live-title{
+  color:#aaa;
+  font-size:16px;
+}
+
+.number{
+  font-size:100px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.updated{
+  color:#43e69a;
+}
+
+.box{
+  margin:15px;
+  padding:20px;
+  border-radius:20px;
+  background:#15151f;
+}
+
+.box h2{
+  margin-top:0;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  padding:18px 5px;
+  border-bottom:1px solid #292936;
+}
+
+.row b{
+  color:#ffc400;
+  font-size:30px;
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-around;
+  padding:14px 5px;
+  background:#15152a;
+}
+
+nav span{
+  font-size:12px;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<header>⚡ MY 2D LIVE</header>
+
+<section class="live">
+  <div class="live-title">LIVE 2D</div>
+
+  <div class="number" id="liveNumber">80</div>
+
+  <div class="updated" id="updated">
+    ● LIVE
+  </div>
+</section>
+
+<section class="box">
+
+  <h2>2D Results</h2>
+
+  <div class="row">
+    <span>11:00 AM</span>
+    <b>71</b>
+  </div>
+
+  <div class="row">
+    <span>12:01 PM</span>
+    <b>60</b>
+  </div>
+
+  <div class="row">
+    <span>03:00 PM</span>
+    <b>23</b>
+  </div>
+
+  <div class="row">
+    <span>04:30 PM</span>
+    <b>80</b>
+  </div>
+
+</section>
+
+<nav>
+  <span>⌂<br>Home</span>
+  <span>▣<br>History</span>
+  <span>▦<br>Calendar</span>
+  <span>★<br>3D</span>
+  <span>☰<br>More</span>
+</nav>
+
+</body>
+</html>
