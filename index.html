@@ -24,7 +24,6 @@ body{
   padding-bottom:85px;
 }
 
-/* HEADER */
 header{
   padding:20px;
   text-align:center;
@@ -36,7 +35,6 @@ header{
   z-index:10;
 }
 
-/* PAGE */
 .page{
   display:none;
 }
@@ -45,7 +43,6 @@ header{
   display:block;
 }
 
-/* LIVE CARD */
 .live-card{
   margin:16px;
   padding:25px 20px;
@@ -95,7 +92,6 @@ header{
   font-size:16px;
 }
 
-/* RESULT */
 .results{
   margin:16px;
   padding:20px;
@@ -135,7 +131,6 @@ header{
   font-weight:bold;
 }
 
-/* CALENDAR */
 .calendar-card{
   margin:16px;
   padding:20px;
@@ -159,7 +154,6 @@ input[type="date"]{
   color:#aaa;
 }
 
-/* GIFT */
 .gift-card{
   margin:16px;
   padding:30px 20px;
@@ -181,7 +175,6 @@ input[type="date"]{
   color:#999;
 }
 
-/* MORE */
 .info-card{
   margin:16px;
   padding:22px;
@@ -194,7 +187,6 @@ input[type="date"]{
   line-height:1.7;
 }
 
-/* BOTTOM NAV */
 .bottom-nav{
   position:fixed;
   bottom:0;
@@ -233,6 +225,19 @@ input[type="date"]{
   text-align:center;
   padding:20px;
 }
+
+.error{
+  color:#ff6868;
+  text-align:center;
+  padding:20px;
+}
+
+.date-result-title{
+  color:#aaa;
+  font-size:14px;
+  margin-bottom:10px;
+}
+
 </style>
 </head>
 
@@ -374,8 +379,8 @@ input[type="date"]{
 
     <p>
       Live data နှင့် Result များကို
-      API မှတစ်ဆင့် ရယူပြသရန်
-      တည်ဆောက်ထားသော Web ဖြစ်ပါတယ်။
+      Thai Stock 2D API မှတစ်ဆင့်
+      အလိုအလျောက် ရယူပြသထားပါတယ်။
     </p>
 
   </div>
@@ -395,7 +400,6 @@ input[type="date"]{
     Home
   </button>
 
-
   <button
     class="nav-btn"
     onclick="showPage('calendar',this)"
@@ -404,7 +408,6 @@ input[type="date"]{
     Calendar
   </button>
 
-
   <button
     class="nav-btn"
     onclick="showPage('gift',this)"
@@ -412,7 +415,6 @@ input[type="date"]{
     <span>🎁</span>
     လက်ဆောင်
   </button>
-
 
   <button
     class="nav-btn"
@@ -429,67 +431,447 @@ input[type="date"]{
 
 <script>
 
-/* PAGE SWITCH */
+/* =================================
+   API SETTINGS
+================================= */
+
+const LIVE_API =
+  "https://api.thaistock2d.com/live";
+
+const RESULT_API =
+  "https://api.thaistock2d.com/2d_result";
+
+
+/* =================================
+   PAGE SWITCH
+================================= */
 
 function showPage(pageId, button){
 
-  document.querySelectorAll('.page')
+  document.querySelectorAll(".page")
     .forEach(page => {
-      page.classList.remove('active');
+      page.classList.remove("active");
     });
 
-  document.getElementById(pageId)
-    .classList.add('active');
+  const page =
+    document.getElementById(pageId);
+
+  if(page){
+    page.classList.add("active");
+  }
 
 
-  document.querySelectorAll('.nav-btn')
+  document.querySelectorAll(".nav-btn")
     .forEach(btn => {
-      btn.classList.remove('active');
+      btn.classList.remove("active");
     });
 
-  button.classList.add('active');
+  if(button){
+    button.classList.add("active");
+  }
+
 }
 
 
+/* =================================
+   GET LIVE DATA
+================================= */
 
-/* CALENDAR DATE */
+async function loadLiveData(){
+
+  try{
+
+    const response =
+      await fetch(
+        LIVE_API + "?t=" + Date.now(),
+        {
+          cache:"no-store"
+        }
+      );
+
+
+    if(!response.ok){
+      throw new Error(
+        "HTTP " + response.status
+      );
+    }
+
+
+    const data =
+      await response.json();
+
+
+    /* LIVE */
+
+    if(data.live){
+
+      document
+        .getElementById("liveNumber")
+        .innerText =
+          data.live.twod || "--";
+
+
+      document
+        .getElementById("setValue")
+        .innerText =
+          data.live.set || "--";
+
+
+      document
+        .getElementById("marketValue")
+        .innerText =
+          data.live.value || "--";
+
+
+      document
+        .getElementById("liveStatus")
+        .innerText =
+          "🟢 Updated: " +
+          (
+            data.live.time ||
+            data.server_time ||
+            "--"
+          );
+
+    }
+
+
+    /* TODAY RESULT */
+
+    if(Array.isArray(data.result)){
+
+      renderResults(
+        data.result,
+        "resultList"
+      );
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "Live API Error:",
+      error
+    );
+
+
+    document
+      .getElementById("liveStatus")
+      .innerText =
+        "🔴 Connection Error";
+
+  }
+
+}
+
+
+/* =================================
+   RESULT NAME
+================================= */
+
+function getSessionName(time){
+
+  switch(time){
+
+    case "11:00:00":
+      return "Morning Result";
+
+    case "12:01:00":
+      return "12:01 Result";
+
+    case "15:00:00":
+      return "Afternoon Result";
+
+    case "16:30:00":
+      return "Closing Result";
+
+    default:
+      return "Result";
+
+  }
+
+}
+
+
+/* =================================
+   RENDER RESULT
+================================= */
+
+function renderResults(
+  results,
+  elementId
+){
+
+  const box =
+    document.getElementById(elementId);
+
+
+  if(!box) return;
+
+
+  if(
+    !Array.isArray(results) ||
+    results.length === 0
+  ){
+
+    box.innerHTML = `
+      <div class="loading">
+        Result မရှိသေးပါ
+      </div>
+    `;
+
+    return;
+  }
+
+
+  box.innerHTML = "";
+
+
+  results.forEach(item => {
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "result-row";
+
+
+    row.innerHTML = `
+
+      <div>
+
+        <div class="result-time">
+          ${item.open_time ||
+            item.time ||
+            "--"}
+        </div>
+
+        <div class="result-name">
+          ${getSessionName(
+            item.open_time ||
+            item.time
+          )}
+        </div>
+
+      </div>
+
+      <div class="result-number">
+        ${item.twod || "--"}
+      </div>
+
+    `;
+
+
+    box.appendChild(row);
+
+  });
+
+}
+
+
+/* =================================
+   FORMAT DATE
+   API လိုအပ်တဲ့ DD-MM-YYYY
+================================= */
+
+function formatApiDate(date){
+
+  const parts =
+    date.split("-");
+
+  if(parts.length !== 3){
+    return date;
+  }
+
+  const year =
+    parts[0];
+
+  const month =
+    parts[1];
+
+  const day =
+    parts[2];
+
+  return day + "-" +
+         month + "-" +
+         year;
+
+}
+
+
+/* =================================
+   CALENDAR
+================================= */
 
 document
-  .getElementById('datePicker')
-  .addEventListener('change', function(){
+  .getElementById("datePicker")
+  .addEventListener(
+    "change",
+    async function(){
 
-    const date = this.value;
+      const date =
+        this.value;
 
-    if(!date) return;
 
-    document.getElementById('calendarDate')
-      .innerText = date + ' Results';
+      if(!date){
+        return;
+      }
 
-    document.getElementById('calendarResults')
-      .innerHTML = `
+
+      document
+        .getElementById("calendarDate")
+        .innerText =
+          date + " Results";
+
+
+      const box =
+        document
+          .getElementById(
+            "calendarResults"
+          );
+
+
+      box.innerHTML = `
         <div class="loading">
           Loading ${date}...
         </div>
       `;
 
-    /*
-      နောက်တစ်ဆင့်မှာ
-      Thai Stock API ကို ဒီနေရာကနေ ချိတ်မယ်။
-    */
-  });
+
+      try{
+
+        /*
+          API documentation အရ
+          Date format = DD-MM-YYYY
+        */
+
+        const apiDate =
+          formatApiDate(date);
 
 
-/* 
-  API ကို နောက်တစ်ဆင့်မှာ ချိတ်မယ်။
+        const response =
+          await fetch(
+            RESULT_API +
+            "?date=" +
+            encodeURIComponent(
+              apiDate
+            ) +
+            "&t=" +
+            Date.now(),
+            {
+              cache:"no-store"
+            }
+          );
 
-  Live:
-  /live
 
-  Calendar:
-  date အလိုက် API
+        if(!response.ok){
 
-  အခု UI ကိုပဲ စမ်းထားတာပါ။
+          throw new Error(
+            "HTTP " +
+            response.status
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        /*
+          API response က
+          array ဖြစ်နိုင်ပါတယ်။
+        */
+
+        let results = [];
+
+
+        if(Array.isArray(data)){
+
+          if(
+            data[0] &&
+            Array.isArray(
+              data[0].child
+            )
+          ){
+
+            results =
+              data[0].child;
+
+          }else{
+
+            results = data;
+
+          }
+
+        }
+
+
+        /*
+          API data ကို
+          calendar result အဖြစ်ပြ
+        */
+
+        if(results.length){
+
+          renderResults(
+            results,
+            "calendarResults"
+          );
+
+        }else{
+
+          box.innerHTML = `
+            <div class="loading">
+              ${date} အတွက် Result မတွေ့ပါ
+            </div>
+          `;
+
+        }
+
+
+      }catch(error){
+
+        console.error(
+          "Calendar API Error:",
+          error
+        );
+
+
+        box.innerHTML = `
+          <div class="error">
+            Result ရယူမရပါ
+          </div>
+        `;
+
+      }
+
+    }
+  );
+
+
+/* =================================
+   AUTO UPDATE
+================================= */
+
+/*
+  Web စဖွင့်တာနဲ့
+  Live data ယူ
 */
+
+loadLiveData();
+
+
+/*
+  10 seconds တစ်ခါ
+  Live API ပြန်စစ်
+*/
+
+setInterval(
+  loadLiveData,
+  10000
+);
 
 </script>
 
