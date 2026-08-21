@@ -1,7 +1,299 @@
-<script type="module">
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Panel</title>
 
-import { createClient }
-from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#080812;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+.app{
+  width:100%;
+  max-width:500px;
+  min-height:100vh;
+  margin:auto;
+  padding-bottom:30px;
+}
+
+header{
+  padding:20px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  background:#15152a;
+}
+
+.card{
+  margin:16px;
+  padding:20px;
+  border-radius:20px;
+  background:#15151f;
+}
+
+h2{
+  margin:0 0 18px;
+}
+
+input,textarea{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  border:0;
+  outline:0;
+  border-radius:12px;
+  background:#24243a;
+  color:white;
+  font-size:16px;
+}
+
+textarea{
+  min-height:100px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:#ffc400;
+  color:#111;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.logout{
+  background:#292936;
+  color:white;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.status{
+  text-align:center;
+  color:#42e69a;
+  margin-top:12px;
+}
+
+.error{
+  text-align:center;
+  color:#ff6565;
+  margin-top:12px;
+}
+
+.item{
+  padding:14px 5px;
+  border-bottom:1px solid #292936;
+}
+
+.item:last-child{
+  border-bottom:0;
+}
+
+.item b{
+  color:#ffc400;
+}
+
+.small{
+  color:#888;
+  font-size:12px;
+  margin-top:5px;
+}
+
+.loading{
+  text-align:center;
+  color:#888;
+  padding:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  🔐 ADMIN PANEL
+</header>
+
+
+<!-- LOGIN -->
+
+<div id="loginBox" class="card">
+
+  <h2>Admin Login</h2>
+
+  <input
+    id="email"
+    type="email"
+    placeholder="Email"
+    autocomplete="email"
+  >
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+    autocomplete="current-password"
+  >
+
+  <button id="loginBtn">
+    🔐 Login
+  </button>
+
+  <div id="loginStatus"></div>
+
+</div>
+
+
+<!-- ADMIN -->
+
+<div id="adminBox" class="hidden">
+
+  <div class="status">
+    🟢 Admin Login ဝင်ထားပါတယ်
+  </div>
+
+
+  <!-- 3D -->
+
+  <div class="card">
+
+    <h2>🔢 3D Result</h2>
+
+    <input
+      id="threeDDate"
+      type="date"
+    >
+
+    <input
+      id="threeDValue"
+      type="text"
+      inputmode="numeric"
+      maxlength="3"
+      placeholder="3D ဂဏန်း (ဥပမာ 123)"
+    >
+
+    <button id="save3DBtn">
+      💾 3D Result သိမ်းမယ်
+    </button>
+
+    <div id="threeDStatus"></div>
+
+  </div>
+
+
+  <!-- NOTIFICATION -->
+
+  <div class="card">
+
+    <h2>🔔 Notification</h2>
+
+    <input
+      id="noticeTitle"
+      type="text"
+      placeholder="ခေါင်းစဉ်"
+    >
+
+    <textarea
+      id="noticeText"
+      placeholder="ကြော်ငြာစာ / Notification စာ"
+    ></textarea>
+
+    <button id="saveNoticeBtn">
+      📢 Notification တင်မယ်
+    </button>
+
+    <div id="noticeStatus"></div>
+
+  </div>
+
+
+  <!-- CALENDAR -->
+
+  <div class="card">
+
+    <h2>📅 Calendar Result</h2>
+
+    <input
+      id="calendarDate"
+      type="date"
+    >
+
+    <input
+      id="calendarValue"
+      type="text"
+      inputmode="numeric"
+      maxlength="2"
+      placeholder="2D ဂဏန်း (ဥပမာ 08)"
+    >
+
+    <button id="saveCalendarBtn">
+      💾 Calendar Result သိမ်းမယ်
+    </button>
+
+    <div id="calendarStatus"></div>
+
+  </div>
+
+
+  <!-- CONTENT -->
+
+  <div class="card">
+
+    <h2>📋 သိမ်းထားတာများ</h2>
+
+    <div id="contentList">
+      <div class="loading">
+        Loading...
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- LOGOUT -->
+
+  <div class="card">
+
+    <button
+      id="logoutBtn"
+      class="logout"
+    >
+      🚪 Logout
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+
+<script>
+
+/* ===============================
+   SUPABASE
+================================ */
 
 const SUPABASE_URL =
 "https://acclbthzfzrfbwyslpvv.supabase.co";
@@ -9,76 +301,661 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_PxrCIfh0MfL6KT1iQxgqfw__IgNG1OY";
 
-const supabase =
-createClient(
+
+/* ===============================
+   CHECK SUPABASE LIBRARY
+================================ */
+
+const loginStatus =
+document.getElementById("loginStatus");
+
+if(!window.supabase){
+
+  loginStatus.className = "error";
+
+  loginStatus.innerText =
+    "❌ Supabase Library မတက်ပါ။ Internet စစ်ပါ။";
+
+  throw new Error(
+    "Supabase library failed to load"
+  );
+}
+
+
+const db =
+window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
-window.login = async function(){
+
+/* ===============================
+   ELEMENTS
+================================ */
+
+const loginBox =
+document.getElementById("loginBox");
+
+const adminBox =
+document.getElementById("adminBox");
+
+const emailInput =
+document.getElementById("email");
+
+const passwordInput =
+document.getElementById("password");
+
+
+/* ===============================
+   SHOW ADMIN
+================================ */
+
+function showAdmin(){
+
+  loginBox.classList.add("hidden");
+
+  adminBox.classList.remove("hidden");
+
+  loadContent();
+}
+
+
+/* ===============================
+   LOGIN
+================================ */
+
+document
+.getElementById("loginBtn")
+.addEventListener("click", async function(){
 
   const email =
-    document.getElementById("email").value.trim();
+    emailInput.value.trim();
 
   const password =
-    document.getElementById("password").value;
+    passwordInput.value;
 
-  const status =
-    document.getElementById("loginStatus");
 
   if(!email || !password){
-    status.innerText =
+
+    loginStatus.className = "error";
+
+    loginStatus.innerText =
       "⚠️ Email နဲ့ Password ထည့်ပါ";
+
     return;
   }
 
-  status.innerText =
-    "🔄 Supabase ကို ချိတ်နေပါတယ်...";
 
-  try {
+  loginStatus.className = "";
 
-    const { data, error } =
-      await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
+  loginStatus.innerText =
+    "🔄 Login ဝင်နေပါတယ်...";
+
+
+  try{
+
+    const result =
+      await db.auth.signInWithPassword({
+
+        email:email,
+
+        password:password
+
       });
 
-    if(error){
-      status.className = "error";
-      status.innerText =
-        "❌ " + error.message;
+
+    if(result.error){
+
+      loginStatus.className =
+        "error";
+
+      loginStatus.innerText =
+        "❌ " +
+        result.error.message;
+
       return;
     }
 
-    if(!data.session){
-      status.className = "error";
-      status.innerText =
+
+    if(!result.data.session){
+
+      loginStatus.className =
+        "error";
+
+      loginStatus.innerText =
         "❌ Login session မရပါ";
+
       return;
     }
 
-    status.className = "status";
-    status.innerText =
+
+    loginStatus.className =
+      "status";
+
+    loginStatus.innerText =
       "✅ Login အောင်မြင်ပါတယ်";
 
-    document
-      .getElementById("loginBox")
-      .classList.add("hidden");
 
-    document
-      .getElementById("adminBox")
-      .classList.remove("hidden");
+    showAdmin();
 
-  } catch(e){
 
-    console.error(e);
+  }catch(error){
 
-    status.className = "error";
+    console.error(error);
 
-    status.innerHTML =
-      "❌ Supabase ကို ချိတ်မရပါ<br><br>" +
-      "URL / Internet / GitHub Pages ကို စစ်ပါ";
+    loginStatus.className =
+      "error";
+
+    loginStatus.innerText =
+      "❌ Failed to fetch — Internet / Supabase connection စစ်ပါ";
+
   }
-};
+
+});
+
+
+/* ===============================
+   CHECK LOGIN
+================================ */
+
+async function checkLogin(){
+
+  try{
+
+    const result =
+      await db.auth.getSession();
+
+
+    if(
+      result.data &&
+      result.data.session
+    ){
+
+      showAdmin();
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+checkLogin();
+
+
+/* ===============================
+   3D SAVE
+================================ */
+
+document
+.getElementById("save3DBtn")
+.addEventListener("click", async function(){
+
+  const date =
+    document
+      .getElementById("threeDDate")
+      .value;
+
+  const value =
+    document
+      .getElementById("threeDValue")
+      .value
+      .trim();
+
+
+  const status =
+    document
+      .getElementById("threeDStatus");
+
+
+  if(!date || !value){
+
+    status.className =
+      "error";
+
+    status.innerText =
+      "⚠️ Date နဲ့ 3D ဂဏန်း ထည့်ပါ";
+
+    return;
+  }
+
+
+  if(!/^\d{3}$/.test(value)){
+
+    status.className =
+      "error";
+
+    status.innerText =
+      "⚠️ 3D က ဂဏန်း 3 လုံး ဖြစ်ရမယ်";
+
+    return;
+  }
+
+
+  status.className = "";
+
+  status.innerText =
+    "🔄 သိမ်းနေပါတယ်...";
+
+
+  try{
+
+    const result =
+      await db
+        .from("admin_content")
+        .insert({
+
+          content_type:"3d",
+
+          content_date:date,
+
+          title:"3D Result",
+
+          content:value
+
+        });
+
+
+    if(result.error){
+
+      status.className =
+        "error";
+
+      status.innerText =
+        "❌ " +
+        result.error.message;
+
+      return;
+    }
+
+
+    status.className =
+      "status";
+
+    status.innerText =
+      "✅ 3D Result သိမ်းပြီးပါပြီ";
+
+    document
+      .getElementById("threeDValue")
+      .value = "";
+
+
+    loadContent();
+
+
+  }catch(error){
+
+    status.className =
+      "error";
+
+    status.innerText =
+      "❌ Save မရပါ";
+
+  }
+
+});
+
+
+/* ===============================
+   NOTIFICATION SAVE
+================================ */
+
+document
+.getElementById("saveNoticeBtn")
+.addEventListener("click", async function(){
+
+  const title =
+    document
+      .getElementById("noticeTitle")
+      .value
+      .trim();
+
+  const text =
+    document
+      .getElementById("noticeText")
+      .value
+      .trim();
+
+
+  const status =
+    document
+      .getElementById("noticeStatus");
+
+
+  if(!title || !text){
+
+    status.className =
+      "error";
+
+    status.innerText =
+      "⚠️ ခေါင်းစဉ်နဲ့ စာ ထည့်ပါ";
+
+    return;
+  }
+
+
+  status.innerText =
+    "🔄 တင်နေပါတယ်...";
+
+
+  try{
+
+    const result =
+      await db
+        .from("admin_content")
+        .insert({
+
+          content_type:"notification",
+
+          title:title,
+
+          content:text
+
+        });
+
+
+    if(result.error){
+
+      status.className =
+        "error";
+
+      status.innerText =
+        "❌ " +
+        result.error.message;
+
+      return;
+    }
+
+
+    status.className =
+      "status";
+
+    status.innerText =
+      "✅ Notification တင်ပြီးပါပြီ";
+
+
+    document
+      .getElementById("noticeTitle")
+      .value = "";
+
+    document
+      .getElementById("noticeText")
+      .value = "";
+
+
+    loadContent();
+
+
+  }catch(error){
+
+    status.className =
+      "error";
+
+    status.innerText =
+      "❌ Save မရပါ";
+
+  }
+
+});
+
+
+/* ===============================
+   CALENDAR SAVE
+================================ */
+
+document
+.getElementById("saveCalendarBtn")
+.addEventListener("click", async function(){
+
+  const date =
+    document
+      .getElementById("calendarDate")
+      .value;
+
+  const value =
+    document
+      .getElementById("calendarValue")
+      .value
+      .trim();
+
+
+  const status =
+    document
+      .getElementById("calendarStatus");
+
+
+  if(!date || !value){
+
+    status.className =
+      "error";
+
+    status.innerText =
+      "⚠️ Date နဲ့ 2D ဂဏန်း ထည့်ပါ";
+
+    return;
+  }
+
+
+  if(!/^\d{2}$/.test(value)){
+
+    status.className =
+      "error";
+
+    status.innerText =
+      "⚠️ 2D က ဂဏန်း 2 လုံး ဖြစ်ရမယ်";
+
+    return;
+  }
+
+
+  status.innerText =
+    "🔄 သိမ်းနေပါတယ်...";
+
+
+  try{
+
+    const result =
+      await db
+        .from("admin_content")
+        .insert({
+
+          content_type:"calendar",
+
+          content_date:date,
+
+          title:"2D Result",
+
+          content:value
+
+        });
+
+
+    if(result.error){
+
+      status.className =
+        "error";
+
+      status.innerText =
+        "❌ " +
+        result.error.message;
+
+      return;
+    }
+
+
+    status.className =
+      "status";
+
+    status.innerText =
+      "✅ Calendar Result သိမ်းပြီးပါပြီ";
+
+
+    document
+      .getElementById("calendarValue")
+      .value = "";
+
+
+    loadContent();
+
+
+  }catch(error){
+
+    status.className =
+      "error";
+
+    status.innerText =
+      "❌ Save မရပါ";
+
+  }
+
+});
+
+
+/* ===============================
+   LOAD CONTENT
+================================ */
+
+async function loadContent(){
+
+  const box =
+    document
+      .getElementById("contentList");
+
+
+  box.innerHTML =
+    '<div class="loading">Loading...</div>';
+
+
+  try{
+
+    const result =
+      await db
+        .from("admin_content")
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        )
+        .limit(30);
+
+
+    if(result.error){
+
+      box.innerHTML =
+        '<div class="error">' +
+        result.error.message +
+        '</div>';
+
+      return;
+    }
+
+
+    const data =
+      result.data || [];
+
+
+    if(data.length === 0){
+
+      box.innerHTML =
+        "Data မရှိသေးပါ";
+
+      return;
+    }
+
+
+    box.innerHTML = "";
+
+
+    data.forEach(function(item){
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "item";
+
+
+      div.innerHTML =
+
+        "<b>" +
+        escapeHtml(
+          item.content_type || ""
+        ) +
+        "</b><br>" +
+
+        escapeHtml(
+          item.title || ""
+        ) +
+        "<br>" +
+
+        escapeHtml(
+          item.content || ""
+        ) +
+
+        '<div class="small">' +
+
+        escapeHtml(
+          item.content_date || ""
+        ) +
+
+        "</div>";
+
+
+      box.appendChild(div);
+
+    });
+
+
+  }catch(error){
+
+    console.error(error);
+
+    box.innerHTML =
+      '<div class="error">' +
+      "Data ရယူမရပါ" +
+      '</div>';
+
+  }
+
+}
+
+
+/* ===============================
+   ESCAPE HTML
+================================ */
+
+function escapeHtml(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* ===============================
+   LOGOUT
+================================ */
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click", async function(){
+
+  await db.auth.signOut();
+
+  location.reload();
+
+});
 
 </script>
+
+</body>
+</html>
