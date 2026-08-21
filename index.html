@@ -231,13 +231,6 @@ input[type="date"]{
   text-align:center;
   padding:20px;
 }
-
-.date-result-title{
-  color:#aaa;
-  font-size:14px;
-  margin-bottom:10px;
-}
-
 </style>
 </head>
 
@@ -301,7 +294,6 @@ input[type="date"]{
 </section>
 
 
-
 <!-- CALENDAR -->
 <section id="calendar" class="page">
 
@@ -340,7 +332,6 @@ input[type="date"]{
 </section>
 
 
-
 <!-- GIFT -->
 <section id="gift" class="page">
 
@@ -353,7 +344,8 @@ input[type="date"]{
     <h2>လက်ဆောင်</h2>
 
     <p>
-      တစ်နေ့စာ ဂဏန်းများကို ပုံအဖြစ် တင်ပေးမည့်နေရာ
+      တစ်နေ့စာ ဂဏန်းများကို ပုံအဖြစ်
+      တင်ပေးမည့်နေရာ
     </p>
 
     <p>
@@ -363,7 +355,6 @@ input[type="date"]{
   </div>
 
 </section>
-
 
 
 <!-- MORE -->
@@ -386,7 +377,6 @@ input[type="date"]{
   </div>
 
 </section>
-
 
 
 <!-- BOTTOM NAV -->
@@ -432,7 +422,7 @@ input[type="date"]{
 <script>
 
 /* =================================
-   API SETTINGS
+   API
 ================================= */
 
 const LIVE_API =
@@ -448,20 +438,19 @@ const RESULT_API =
 
 function showPage(pageId, button){
 
-  document.querySelectorAll(".page")
+  document
+    .querySelectorAll(".page")
     .forEach(page => {
       page.classList.remove("active");
     });
 
-  const page =
-    document.getElementById(pageId);
-
-  if(page){
-    page.classList.add("active");
-  }
+  document
+    .getElementById(pageId)
+    .classList.add("active");
 
 
-  document.querySelectorAll(".nav-btn")
+  document
+    .querySelectorAll(".nav-btn")
     .forEach(btn => {
       btn.classList.remove("active");
     });
@@ -474,7 +463,7 @@ function showPage(pageId, button){
 
 
 /* =================================
-   GET LIVE DATA
+   LIVE DATA
 ================================= */
 
 async function loadLiveData(){
@@ -483,7 +472,9 @@ async function loadLiveData(){
 
     const response =
       await fetch(
-        LIVE_API + "?t=" + Date.now(),
+        LIVE_API +
+        "?t=" +
+        Date.now(),
         {
           cache:"no-store"
         }
@@ -492,7 +483,8 @@ async function loadLiveData(){
 
     if(!response.ok){
       throw new Error(
-        "HTTP " + response.status
+        "HTTP " +
+        response.status
       );
     }
 
@@ -500,8 +492,6 @@ async function loadLiveData(){
     const data =
       await response.json();
 
-
-    /* LIVE */
 
     if(data.live){
 
@@ -536,8 +526,6 @@ async function loadLiveData(){
     }
 
 
-    /* TODAY RESULT */
-
     if(Array.isArray(data.result)){
 
       renderResults(
@@ -548,13 +536,13 @@ async function loadLiveData(){
     }
 
 
-  }catch(error){
+  }
+  catch(error){
 
     console.error(
       "Live API Error:",
       error
     );
-
 
     document
       .getElementById("liveStatus")
@@ -572,30 +560,28 @@ async function loadLiveData(){
 
 function getSessionName(time){
 
-  switch(time){
-
-    case "11:00:00":
-      return "Morning Result";
-
-    case "12:01:00":
-      return "12:01 Result";
-
-    case "15:00:00":
-      return "Afternoon Result";
-
-    case "16:30:00":
-      return "Closing Result";
-
-    default:
-      return "Result";
-
+  if(time === "11:00:00"){
+    return "Morning Result";
   }
 
+  if(time === "12:01:00"){
+    return "12:01 Result";
+  }
+
+  if(time === "15:00:00"){
+    return "Afternoon Result";
+  }
+
+  if(time === "16:30:00"){
+    return "Closing Result";
+  }
+
+  return "Result";
 }
 
 
 /* =================================
-   RENDER RESULT
+   RENDER RESULTS
 ================================= */
 
 function renderResults(
@@ -604,7 +590,9 @@ function renderResults(
 ){
 
   const box =
-    document.getElementById(elementId);
+    document.getElementById(
+      elementId
+    );
 
 
   if(!box) return;
@@ -622,6 +610,7 @@ function renderResults(
     `;
 
     return;
+
   }
 
 
@@ -630,8 +619,20 @@ function renderResults(
 
   results.forEach(item => {
 
+    const time =
+      item.open_time ||
+      item.time ||
+      "--";
+
+
+    const number =
+      item.twod ||
+      "--";
+
+
     const row =
       document.createElement("div");
+
 
     row.className =
       "result-row";
@@ -642,22 +643,17 @@ function renderResults(
       <div>
 
         <div class="result-time">
-          ${item.open_time ||
-            item.time ||
-            "--"}
+          ${time}
         </div>
 
         <div class="result-name">
-          ${getSessionName(
-            item.open_time ||
-            item.time
-          )}
+          ${getSessionName(time)}
         </div>
 
       </div>
 
       <div class="result-number">
-        ${item.twod || "--"}
+        ${number}
       </div>
 
     `;
@@ -672,7 +668,6 @@ function renderResults(
 
 /* =================================
    FORMAT DATE
-   API လိုအပ်တဲ့ DD-MM-YYYY
 ================================= */
 
 function formatApiDate(date){
@@ -680,22 +675,19 @@ function formatApiDate(date){
   const parts =
     date.split("-");
 
+
   if(parts.length !== 3){
     return date;
   }
 
-  const year =
-    parts[0];
 
-  const month =
-    parts[1];
-
-  const day =
-    parts[2];
-
-  return day + "-" +
-         month + "-" +
-         year;
+  return (
+    parts[2] +
+    "-" +
+    parts[1] +
+    "-" +
+    parts[0]
+  );
 
 }
 
@@ -714,51 +706,54 @@ document
         this.value;
 
 
-      if(!date){
-        return;
-      }
+      if(!date) return;
 
 
-      document
-        .getElementById("calendarDate")
-        .innerText =
-          date + " Results";
+      const calendarDate =
+        document.getElementById(
+          "calendarDate"
+        );
 
 
-      const box =
-        document
-          .getElementById(
-            "calendarResults"
-          );
+      const calendarResults =
+        document.getElementById(
+          "calendarResults"
+        );
 
 
-      box.innerHTML = `
+      calendarDate.innerText =
+        "📅 " +
+        date +
+        " Results";
+
+
+      calendarResults.innerHTML = `
         <div class="loading">
-          Loading ${date}...
+          🔄 ${date}
+          Result ရှာနေပါတယ်...
         </div>
       `;
 
 
       try{
 
-        /*
-          API documentation အရ
-          Date format = DD-MM-YYYY
-        */
-
         const apiDate =
           formatApiDate(date);
 
 
+        const url =
+          RESULT_API +
+          "?date=" +
+          encodeURIComponent(
+            apiDate
+          ) +
+          "&t=" +
+          Date.now();
+
+
         const response =
           await fetch(
-            RESULT_API +
-            "?date=" +
-            encodeURIComponent(
-              apiDate
-            ) +
-            "&t=" +
-            Date.now(),
+            url,
             {
               cache:"no-store"
             }
@@ -779,9 +774,16 @@ document
           await response.json();
 
 
+        console.log(
+          "Calendar API Data:",
+          data
+        );
+
+
         /*
-          API response က
-          array ဖြစ်နိုင်ပါတယ်။
+          API response
+          ပုံစံအမျိုးမျိုးကို
+          လက်ခံနိုင်အောင် စီထားတယ်
         */
 
         let results = [];
@@ -789,59 +791,80 @@ document
 
         if(Array.isArray(data)){
 
-          if(
-            data[0] &&
-            Array.isArray(
-              data[0].child
-            )
-          ){
+          results = data;
 
-            results =
-              data[0].child;
+        }
 
-          }else{
+        else if(
+          Array.isArray(data.result)
+        ){
 
-            results = data;
+          results =
+            data.result;
 
-          }
+        }
+
+        else if(
+          data.data &&
+          Array.isArray(data.data)
+        ){
+
+          results =
+            data.data;
+
+        }
+
+        else if(
+          data.data &&
+          Array.isArray(
+            data.data.result
+          )
+        ){
+
+          results =
+            data.data.result;
 
         }
 
 
-        /*
-          API data ကို
-          calendar result အဖြစ်ပြ
-        */
+        if(
+          !results ||
+          results.length === 0
+        ){
 
-        if(results.length){
-
-          renderResults(
-            results,
-            "calendarResults"
-          );
-
-        }else{
-
-          box.innerHTML = `
+          calendarResults.innerHTML = `
             <div class="loading">
-              ${date} အတွက် Result မတွေ့ပါ
+              📭 ${date}
+              အတွက် Result မရှိပါ
             </div>
           `;
 
+          return;
+
         }
 
 
-      }catch(error){
+        renderResults(
+          results,
+          "calendarResults"
+        );
+
+
+      }
+      catch(error){
 
         console.error(
-          "Calendar API Error:",
+          "Calendar Error:",
           error
         );
 
 
-        box.innerHTML = `
+        calendarResults.innerHTML = `
           <div class="error">
-            Result ရယူမရပါ
+            ❌ Result ရယူမရပါ
+            <br><br>
+            Internet / API ကို
+            ပြန်စစ်ပေးပါ
           </div>
         `;
 
@@ -852,21 +875,15 @@ document
 
 
 /* =================================
-   AUTO UPDATE
+   START
 ================================= */
-
-/*
-  Web စဖွင့်တာနဲ့
-  Live data ယူ
-*/
 
 loadLiveData();
 
 
-/*
-  10 seconds တစ်ခါ
-  Live API ပြန်စစ်
-*/
+/* =================================
+   AUTO LIVE UPDATE
+================================= */
 
 setInterval(
   loadLiveData,
@@ -876,4 +893,4 @@ setInterval(
 </script>
 
 </body>
-</html>
+  </html>
