@@ -1,138 +1,233 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My 2D Live</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2D / 3D Live</title>
 
-<style>
-*{
-  box-sizing:border-box;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body{
-  margin:0;
-  background:#080812;
-  color:#fff;
-  font-family:Arial,sans-serif;
-}
+    body {
+      margin: 0;
+      background: #080812;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
 
-header{
-  padding:18px;
-  text-align:center;
-  background:#15152a;
-  font-size:22px;
-  font-weight:bold;
-}
+    .app {
+      max-width: 500px;
+      margin: auto;
+    }
 
-.live{
-  text-align:center;
-  padding:45px 20px;
-}
+    header {
+      padding: 20px;
+      text-align: center;
+      font-size: 23px;
+      font-weight: bold;
+      background: #15152a;
+    }
 
-.live-title{
-  color:#aaa;
-  font-size:16px;
-}
+    .live {
+      text-align: center;
+      padding: 45px 20px;
+    }
 
-.number{
-  font-size:100px;
-  font-weight:bold;
-  margin:15px 0;
-}
+    .live-title {
+      color: #aaa;
+      font-size: 18px;
+    }
 
-.updated{
-  color:#43e69a;
-}
+    #liveNumber {
+      font-size: 100px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
 
-.box{
-  margin:15px;
-  padding:20px;
-  border-radius:20px;
-  background:#15151f;
-}
+    #updated {
+      color: #42e69a;
+    }
 
-.box h2{
-  margin-top:0;
-}
+    .buttons {
+      display: flex;
+      gap: 10px;
+      padding: 15px;
+    }
 
-.row{
-  display:flex;
-  justify-content:space-between;
-  padding:18px 5px;
-  border-bottom:1px solid #292936;
-}
+    button {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #24243a;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+    }
 
-.row b{
-  color:#ffc400;
-  font-size:30px;
-}
+    button:active {
+      transform: scale(0.97);
+    }
 
-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  display:flex;
-  justify-content:space-around;
-  padding:14px 5px;
-  background:#15152a;
-}
+    .results {
+      margin: 15px;
+      padding: 20px;
+      border-radius: 20px;
+      background: #15151f;
+    }
 
-nav span{
-  font-size:12px;
-  color:#aaa;
-}
-</style>
+    .results h2 {
+      margin-top: 0;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 5px;
+      border-bottom: 1px solid #292936;
+    }
+
+    .row b {
+      color: #ffc400;
+      font-size: 30px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      background: #24243a;
+      color: white;
+      font-size: 16px;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>⚡ MY 2D LIVE</header>
+<div class="app">
 
-<section class="live">
-  <div class="live-title">LIVE 2D</div>
+  <header>
+    2D / 3D LIVE
+  </header>
 
-  <div class="number" id="liveNumber">80</div>
+  <div class="live">
+    <div class="live-title">LIVE 2D</div>
 
-  <div class="updated" id="updated">
-    ● LIVE
-  </div>
-</section>
+    <div id="liveNumber">--</div>
 
-<section class="box">
-
-  <h2>2D Results</h2>
-
-  <div class="row">
-    <span>11:00 AM</span>
-    <b>71</b>
+    <div id="updated">
+      Waiting...
+    </div>
   </div>
 
-  <div class="row">
-    <span>12:01 PM</span>
-    <b>60</b>
+  <div class="buttons">
+
+    <button onclick="show2D()">
+      2D
+    </button>
+
+    <button onclick="show3D()">
+      3D
+    </button>
+
+    <button onclick="showCalendar()">
+      📅 Calendar
+    </button>
+
   </div>
 
-  <div class="row">
-    <span>03:00 PM</span>
-    <b>23</b>
+  <div id="resultBox" class="results">
+
+    <h2 id="resultTitle">2D Result</h2>
+
+    <div class="row">
+      <span>Result</span>
+      <b id="resultNumber">--</b>
+    </div>
+
   </div>
 
-  <div class="row">
-    <span>04:30 PM</span>
-    <b>80</b>
+  <div id="calendarBox" class="results hidden">
+
+    <h2>📅 Date ရွေးပါ</h2>
+
+    <input
+      type="date"
+      id="datePicker"
+      onchange="loadDate()"
+    >
+
+    <div id="dateResult" style="margin-top:20px;">
+      Date ရွေးပြီးပါက Result ပြပါမယ်
+    </div>
+
   </div>
 
-</section>
+</div>
 
-<nav>
-  <span>⌂<br>Home</span>
-  <span>▣<br>History</span>
-  <span>▦<br>Calendar</span>
-  <span>★<br>3D</span>
-  <span>☰<br>More</span>
-</nav>
+<script>
+
+  // လက်ရှိ Live Result
+  let current2D = "--";
+  let current3D = "---";
+
+
+  function show2D() {
+
+    document.getElementById("resultBox").classList.remove("hidden");
+    document.getElementById("calendarBox").classList.add("hidden");
+
+    document.getElementById("resultTitle").innerText = "2D Result";
+
+    document.getElementById("resultNumber").innerText = current2D;
+
+  }
+
+
+  function show3D() {
+
+    document.getElementById("resultBox").classList.remove("hidden");
+    document.getElementById("calendarBox").classList.add("hidden");
+
+    document.getElementById("resultTitle").innerText = "3D Result";
+
+    document.getElementById("resultNumber").innerText = current3D;
+
+  }
+
+
+  function showCalendar() {
+
+    document.getElementById("calendarBox").classList.remove("hidden");
+    document.getElementById("resultBox").classList.add("hidden");
+
+  }
+
+
+  function loadDate() {
+
+    const date =
+      document.getElementById("datePicker").value;
+
+    if (!date) return;
+
+    document.getElementById("dateResult").innerHTML =
+      "📅 " + date + "<br><br>" +
+      "2D Result — --<br>" +
+      "3D Result — --";
+
+  }
+
+</script>
 
 </body>
 </html>
