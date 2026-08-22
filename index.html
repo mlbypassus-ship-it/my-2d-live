@@ -749,6 +749,52 @@ window.addEventListener("pageshow", function(){
 });
 
 </script>
+<script>
 
+const SUPABASE_URL =
+  "https://acclbthzfzrfbwyslpvv.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_PxrCIfh0MfL6KT1iQxgqfw__IgNG1OY";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+async function checkLogin(){
+
+  const {
+    data,
+    error
+  } = await supabaseClient.auth.getSession();
+
+
+  if(error){
+
+    console.error(error);
+    return;
+
+  }
+
+
+  if(!data.session){
+
+    window.location.replace(
+      "https://mlbypassus-ship-it.github.io/my-2d-live/login.html"
+    );
+
+    return;
+
+  }
+
+}
+
+
+checkLogin();
+
+</script>
 </body>
 </html>
