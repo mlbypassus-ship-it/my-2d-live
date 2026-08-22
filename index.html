@@ -3,250 +3,365 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>2D LIVE</title>
+<meta name="theme-color" content="#080b16">
+
+<title>MM-Real-Earn</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
-  margin:0;
-  background:#080812;
+  background:#070a12;
   color:#fff;
-  font-family:Arial,sans-serif;
+  font-family:Arial,"Noto Sans Myanmar",sans-serif;
+  min-height:100vh;
 }
 
 .app{
+  width:100%;
   max-width:500px;
   min-height:100vh;
   margin:auto;
-  padding-bottom:85px;
+  padding-bottom:90px;
+  background:
+    radial-gradient(circle at 20% 10%,#17315c55,transparent 30%),
+    radial-gradient(circle at 90% 30%,#5c2b7650,transparent 30%),
+    linear-gradient(180deg,#0b1020,#070a12);
 }
 
-header{
-  padding:20px;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  background:#15152a;
+/* HEADER */
+
+.header{
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:20;
+  padding:16px;
+  background:#0b1020dd;
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid #ffffff12;
 }
 
-.page{display:none}
-.page.active{display:block}
-
-.live-card{
-  margin:16px;
-  padding:25px 20px;
-  border-radius:24px;
-  background:linear-gradient(145deg,#17172b,#10101c);
-  text-align:center;
-}
-
-.live-label{
-  color:#aaa;
-  font-size:16px;
-}
-
-.live-number{
-  font-size:90px;
-  font-weight:bold;
-  margin:8px 0;
-}
-
-.live-status{
-  color:#42e69a;
-  font-size:14px;
-}
-
-.market-info{
-  display:flex;
-  gap:10px;
-  margin-top:20px;
-}
-
-.market-box{
-  flex:1;
-  background:#202035;
-  padding:12px 5px;
-  border-radius:14px;
-}
-
-.market-box small{
-  display:block;
-  color:#999;
-  margin-bottom:5px;
-}
-
-.market-box b{
-  font-size:16px;
-}
-
-.results{
-  margin:16px;
-  padding:20px;
-  border-radius:22px;
-  background:#15151f;
-}
-
-.results h2{
-  margin:0 0 15px;
-  font-size:20px;
-}
-
-.result-row{
+.header-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:16px 5px;
-  border-bottom:1px solid #292936;
 }
 
-.result-row:last-child{
-  border-bottom:none;
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.result-time{
-  color:#aaa;
+.logo-icon{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  background:linear-gradient(135deg,#ffd43b,#ff8a00);
+  box-shadow:0 8px 25px #ffb00030;
 }
 
-.result-name{
-  font-size:14px;
-  margin-top:4px;
-}
-
-.result-number{
-  color:#ffc400;
-  font-size:30px;
-  font-weight:bold;
-}
-
-.admin-result{
-  border:1px solid #ffc400;
-  border-radius:15px;
-  padding:15px;
-  margin-bottom:12px;
-}
-
-.admin-result-title{
-  color:#ffc400;
-  font-weight:bold;
-}
-
-.admin-result-number{
-  font-size:45px;
-  font-weight:bold;
-  text-align:center;
-  margin:5px 0;
-}
-
-.notice{
-  margin:16px;
-  padding:18px;
-  border-radius:20px;
-  background:#15151f;
-  border-left:4px solid #ffc400;
-}
-
-.notice-title{
-  color:#ffc400;
-  font-weight:bold;
+.logo-text b{
+  display:block;
   font-size:18px;
 }
 
-.notice-text{
-  margin-top:8px;
-  line-height:1.6;
-  color:#ddd;
+.logo-text small{
+  color:#8d96aa;
+  font-size:11px;
 }
 
-.calendar-card{
+/* COIN */
+
+.coin-box{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 12px;
+  border-radius:14px;
+  background:#ffffff0c;
+  border:1px solid #ffffff12;
+}
+
+.coin{
+  font-size:19px;
+}
+
+.coin-value{
+  color:#ffd43b;
+  font-weight:bold;
+}
+
+/* NOTICE */
+
+.notice{
+  margin:14px 16px 0;
+  height:34px;
+  overflow:hidden;
+  border-radius:10px;
+  background:#ffffff08;
+  border:1px solid #ffffff0d;
+  display:flex;
+  align-items:center;
+}
+
+.notice-label{
+  flex-shrink:0;
+  padding:0 10px;
+  color:#ffd43b;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.marquee{
+  white-space:nowrap;
+  animation:scroll 12s linear infinite;
+  color:#c9ceda;
+  font-size:12px;
+}
+
+@keyframes scroll{
+  from{transform:translateX(100%)}
+  to{transform:translateX(-100%)}
+}
+
+/* HERO */
+
+.hero{
+  margin:16px;
+  padding:25px 20px;
+  border-radius:25px;
+  background:
+    radial-gradient(circle at 80% 20%,#ffd43b20,transparent 30%),
+    linear-gradient(135deg,#171d35,#101522);
+  border:1px solid #ffffff12;
+  box-shadow:0 15px 45px #00000035;
+}
+
+.hero-title{
+  color:#8d96aa;
+  font-size:13px;
+}
+
+.hero h1{
+  margin-top:7px;
+  font-size:28px;
+}
+
+.hero p{
+  margin-top:8px;
+  color:#9da5b7;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.earn-button{
+  margin-top:18px;
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#ffd43b,#ff9d00);
+  color:#111;
+  font-size:15px;
+  font-weight:bold;
+}
+
+/* QUICK */
+
+.section-title{
+  margin:22px 16px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.section-title h2{
+  font-size:18px;
+}
+
+.section-title span{
+  color:#727b90;
+  font-size:12px;
+}
+
+/* CARDS */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin:0 16px;
+}
+
+.card{
+  min-height:125px;
+  padding:18px;
+  border-radius:20px;
+  background:#ffffff08;
+  border:1px solid #ffffff0d;
+  transition:.2s;
+}
+
+.card:active{
+  transform:scale(.97);
+}
+
+.card-icon{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  background:#ffffff0d;
+}
+
+.card h3{
+  margin-top:12px;
+  font-size:15px;
+}
+
+.card p{
+  margin-top:5px;
+  color:#747d91;
+  font-size:11px;
+}
+
+/* DAILY */
+
+.daily{
   margin:16px;
   padding:20px;
   border-radius:22px;
-  background:#15151f;
+  background:linear-gradient(135deg,#121a2c,#171226);
+  border:1px solid #ffffff0d;
 }
 
-input[type="date"]{
-  width:100%;
-  padding:15px;
-  border:0;
-  outline:none;
-  border-radius:12px;
-  background:#24243a;
-  color:white;
-  font-size:16px;
+.daily-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.date-title{
-  margin-top:20px;
-  color:#aaa;
+.daily-top h2{
+  font-size:17px;
 }
 
-.gift-card,
-.info-card{
+.daily-top span{
+  color:#ffd43b;
+  font-size:12px;
+}
+
+.progress{
+  height:9px;
+  margin-top:16px;
+  border-radius:10px;
+  background:#ffffff0d;
+  overflow:hidden;
+}
+
+.progress-bar{
+  width:35%;
+  height:100%;
+  border-radius:10px;
+  background:linear-gradient(90deg,#ffd43b,#ff8a00);
+}
+
+.daily-info{
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+  color:#858ea1;
+  font-size:11px;
+}
+
+/* WITHDRAW */
+
+.withdraw{
   margin:16px;
-  padding:30px 20px;
+  padding:20px;
   border-radius:22px;
-  background:#15151f;
+  background:#ffffff08;
+  border:1px solid #ffffff0d;
+}
+
+.withdraw h2{
+  font-size:17px;
+}
+
+.withdraw p{
+  margin-top:7px;
+  color:#7f8799;
+  font-size:12px;
+}
+
+.withdraw-row{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.payment{
+  flex:1;
+  padding:13px;
+  border-radius:14px;
+  background:#ffffff08;
+  border:1px solid #ffffff0d;
   text-align:center;
+  font-size:13px;
 }
 
-.gift-icon{
-  font-size:60px;
+.payment span{
+  display:block;
+  font-size:22px;
+  margin-bottom:5px;
 }
 
-.gift-card p,
-.info-card p{
-  color:#999;
-  line-height:1.7;
-}
+/* BOTTOM */
 
-.bottom-nav{
+.bottom{
   position:fixed;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
   width:100%;
   max-width:500px;
-  height:72px;
+  height:74px;
   display:flex;
-  background:#15152a;
-  border-top:1px solid #292936;
-  z-index:20;
+  background:#0d1220ee;
+  backdrop-filter:blur(18px);
+  border-top:1px solid #ffffff12;
+  z-index:30;
 }
 
-.nav-btn{
+.nav{
   flex:1;
   border:0;
   background:none;
-  color:#777;
-  font-size:12px;
-  padding:8px 2px;
+  color:#667086;
+  font-size:10px;
 }
 
-.nav-btn span{
+.nav span{
   display:block;
-  font-size:23px;
+  font-size:22px;
   margin-bottom:4px;
 }
 
-.nav-btn.active{
-  color:#ffc400;
+.nav.active{
+  color:#ffd43b;
 }
 
-.loading{
-  color:#777;
-  text-align:center;
-  padding:20px;
-}
-
-.error{
-  color:#ff6868;
-  text-align:center;
-  padding:20px;
-}
 </style>
 </head>
 
@@ -254,1054 +369,223 @@ input[type="date"]{
 
 <div class="app">
 
-<header>
-  2D / 3D LIVE
-</header>
+  <!-- HEADER -->
 
+  <header class="header">
 
-<!-- HOME -->
+    <div class="header-row">
 
-<section id="home" class="page active">
+      <div class="logo">
 
-  <div class="live-card">
+        <div class="logo-icon">
+          🪙
+        </div>
 
-    <div class="live-label">
-      🔴 LIVE 2D
-    </div>
+        <div class="logo-text">
+          <b>MM-Real-Earn</b>
+          <small>Earn • Play • Reward</small>
+        </div>
 
-    <div id="liveNumber" class="live-number">
-      --
-    </div>
-
-    <div id="liveStatus" class="live-status">
-      Connecting...
-    </div>
-
-    <div class="market-info">
-
-      <div class="market-box">
-        <small>SET</small>
-        <b id="setValue">--</b>
       </div>
 
-      <div class="market-box">
-        <small>VALUE</small>
-        <b id="marketValue">--</b>
+      <div class="coin-box">
+        <span class="coin">🪙</span>
+        <span class="coin-value" id="coinBalance">
+          0
+        </span>
       </div>
 
+    </div>
+
+  </header>
+
+
+  <!-- NOTICE -->
+
+  <div class="notice">
+
+    <div class="notice-label">
+      🔔 NOTI
+    </div>
+
+    <div class="marquee">
+      MM-Real-Earn မှာ ဂိမ်းဆော့ပြီး Coin စုနိုင်ပါတယ် • Daily Reward အသစ်များ ရရှိနိုင်ပါပြီ 🎁
     </div>
 
   </div>
 
 
-  <!-- ADMIN 3D -->
+  <!-- HERO -->
 
-  <div class="results">
+  <section class="hero">
 
-    <h2>
-      🔢 Admin 3D Result
-    </h2>
-
-    <div id="admin3D">
-      <div class="loading">
-        Loading...
-      </div>
+    <div class="hero-title">
+      မင်္ဂလာပါ 👋
     </div>
 
-  </div>
+    <h1>
+      Coin စုပါ၊ Reward ရယူပါ
+    </h1>
 
-
-  <!-- NOTIFICATION -->
-
-  <div id="notificationBox"></div>
-
-
-  <!-- TODAY -->
-
-  <div class="results">
-
-    <h2>
-      📊 Today's Results
-    </h2>
-
-    <div id="resultList">
-      <div class="loading">
-        Loading...
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- CALENDAR -->
-
-<section id="calendar" class="page">
-
-  <div class="calendar-card">
-
-    <h2>
-      📅 Calendar
-    </h2>
-
-    <p class="date-title">
-      Result ကြည့်ချင်တဲ့နေ့ကို ရွေးပါ
+    <p>
+      Mini Game ဆော့ပါ၊ Daily Test ဖြေပါ၊
+      သတ်မှတ်ထားတဲ့ Reward များကို ရယူပြီး
+      Coin စုဆောင်းနိုင်ပါတယ်။
     </p>
 
-    <input
-      type="date"
-      id="datePicker"
-    >
+    <button class="earn-button">
+      🚀 Earn Coin စတင်မယ်
+    </button>
+
+  </section>
+
+
+  <!-- QUICK MENU -->
+
+  <div class="section-title">
+
+    <h2>⚡ Quick Earn</h2>
+
+    <span>ပိုမိုရယူရန်</span>
 
   </div>
 
 
-  <div class="results">
+  <div class="cards">
 
-    <h2 id="calendarDate">
-      📅 2D / 3D Results
-    </h2>
+    <div class="card">
 
-    <div id="calendarResults">
-
-      <div class="loading">
-        Date ရွေးပါ
+      <div class="card-icon">
+        🎮
       </div>
 
+      <h3>Mini Games</h3>
+
+      <p>
+        Game ဆော့ပြီး Coin ရယူပါ
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-icon">
+        📝
+      </div>
+
+      <h3>Daily Quiz</h3>
+
+      <p>
+        မြန်မာ Quiz ဖြေပြီး Coin ရယူပါ
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-icon">
+        🎬
+      </div>
+
+      <h3>Reward Video</h3>
+
+      <p>
+        ခွင့်ပြုထားသော Reward Video များ
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-icon">
+        👥
+      </div>
+
+      <h3>Refer & Earn</h3>
+
+      <p>
+        သူငယ်ချင်းခေါ်ပြီး Bonus ရယူပါ
+      </p>
+
     </div>
 
   </div>
 
-</section>
 
+  <!-- DAILY -->
 
-<!-- GIFT -->
+  <section class="daily">
 
-<section id="gift" class="page">
+    <div class="daily-top">
 
-  <div class="gift-card">
+      <h2>
+        🎁 Daily Progress
+      </h2>
 
-    <div class="gift-icon">
-      🎁
+      <span>
+        7 Days
+      </span>
+
     </div>
 
+    <div class="progress">
+
+      <div class="progress-bar"></div>
+
+    </div>
+
+    <div class="daily-info">
+
+      <span>
+        Today's Progress
+      </span>
+
+      <span>
+        35%
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- WITHDRAW -->
+
+  <section class="withdraw">
+
     <h2>
-      လက်ဆောင်
+      💸 ငွေထုတ်ယူရန်
     </h2>
 
     <p>
-      တစ်နေ့စာ ဂဏန်းများကို
-      ပုံအဖြစ် တင်ပေးမည့်နေရာ
+      သတ်မှတ်ထားသော Coin ပြည့်မီပါက
+      KPay / Wave Money ဖြင့် ငွေထုတ်ယူနိုင်ပါသည်။
     </p>
 
-    <p>
-      Coming Soon
-    </p>
-
-  </div>
-
-</section>
-
-
-<!-- MORE -->
-
-<section id="more" class="page">
-
-  <div class="info-card">
-
-    <h2>
-      ℹ️ About
-    </h2>
-
-    <p>
-      Thai Stock 2D Live Result
-    </p>
-
-    <p>
-      Thai Stock data နှင့် Result များကို
-      API မှတစ်ဆင့် ရယူပြသထားပါတယ်။
-    </p>
-
-  </div>
-
-</section>
-
-
-<!-- NAV -->
-
-<nav class="bottom-nav">
-
-  <button
-    class="nav-btn active"
-    onclick="showPage('home',this)"
-  >
-    <span>🏠</span>
-    Home
-  </button>
-
-  <button
-    class="nav-btn"
-    onclick="showPage('calendar',this)"
-  >
-    <span>📅</span>
-    Calendar
-  </button>
-
-  <button
-    class="nav-btn"
-    onclick="showPage('gift',this)"
-  >
-    <span>🎁</span>
-    လက်ဆောင်
-  </button>
-
-  <button
-    class="nav-btn"
-    onclick="showPage('more',this)"
-  >
-    <span>ℹ️</span>
-    More
-  </button>
-
-</nav>
-
-</div>
-
-
-<script>
-
-/* =========================
-   THAI API
-========================= */
-
-const LIVE_API =
-"https://api.thaistock2d.com/live";
-
-const HISTORY_API =
-"https://api.thaistock2d.com/history";
-
-
-/* =========================
-   SUPABASE
-========================= */
-
-const SUPABASE_URL =
-"https://acclbthzfzrfbwyslpvv.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_PxrCIfh0MfL6KT1iQxgqfw__IgNG1OY";
-
-
-/* =========================
-   PAGE SWITCH
-========================= */
-
-function showPage(pageId,button){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(function(page){
-
-      page.classList.remove("active");
-
-    });
-
-
-  document
-    .getElementById(pageId)
-    .classList.add("active");
-
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(function(btn){
-
-      btn.classList.remove("active");
-
-    });
-
-
-  if(button){
-
-    button.classList.add("active");
-
-  }
-
-}
-
-
-/* =========================
-   SUPABASE FETCH
-========================= */
-
-async function supabaseGet(query){
-
-  const response =
-    await fetch(
-      SUPABASE_URL +
-      "/rest/v1/" +
-      query,
-      {
-        method:"GET",
-
-        headers:{
-          "apikey":SUPABASE_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_KEY
-        },
-
-        cache:"no-store"
-      }
-    );
-
-
-  if(!response.ok){
-
-    throw new Error(
-      "Supabase HTTP " +
-      response.status
-    );
-
-  }
-
-
-  return await response.json();
-
-}
-
-
-/* =========================
-   ADMIN 3D
-========================= */
-
-async function loadAdmin3D(){
-
-  const box =
-    document.getElementById("admin3D");
-
-
-  try{
-
-    const data =
-      await supabaseGet(
-        "admin_content" +
-        "?content_type=eq.3d" +
-        "&select=content,content_date,created_at" +
-        "&order=created_at.desc" +
-        "&limit=1"
-      );
-
-
-    if(!data.length){
-
-      box.innerHTML =
-        `<div class="loading">
-          3D Result မရှိသေးပါ
-        </div>`;
-
-      return;
-
-    }
-
-
-    const item = data[0];
-
-
-    box.innerHTML = `
-
-      <div class="admin-result">
-
-        <div class="admin-result-title">
-          🔢 3D Result
-        </div>
-
-        <div class="admin-result-number">
-          ${escapeHtml(item.content)}
-        </div>
-
-        <div class="result-time">
-          Date:
-          ${escapeHtml(
-            item.content_date || "--"
-          )}
-        </div>
-
+    <div class="withdraw-row">
+
+      <div class="payment">
+        <span>💚</span>
+        KPay
       </div>
 
-    `;
-
-
-  }catch(error){
-
-    console.log(
-      "Admin 3D Error:",
-      error
-    );
-
-    box.innerHTML =
-      `<div class="error">
-        3D Result ရယူမရပါ
-      </div>`;
-
-  }
-
-}
-
-
-/* =========================
-   NOTIFICATION
-========================= */
-
-async function loadNotification(){
-
-  const box =
-    document.getElementById(
-      "notificationBox"
-    );
-
-
-  try{
-
-    const data =
-      await supabaseGet(
-        "admin_content" +
-        "?content_type=eq.notification" +
-        "&select=title,content,created_at" +
-        "&order=created_at.desc" +
-        "&limit=1"
-      );
-
-
-    if(!data.length){
-
-      box.innerHTML = "";
-
-      return;
-
-    }
-
-
-    const item = data[0];
-
-
-    box.innerHTML = `
-
-      <div class="notice">
-
-        <div class="notice-title">
-          🔔 ${escapeHtml(
-            item.title || "Notification"
-          )}
-        </div>
-
-        <div class="notice-text">
-          ${escapeHtml(
-            item.content || ""
-          )}
-        </div>
-
+      <div class="payment">
+        <span>💙</span>
+        Wave Money
       </div>
 
-    `;
+    </div>
 
+  </section>
 
-  }catch(error){
 
-    console.log(
-      "Notification Error:",
-      error
-    );
+  <!-- BOTTOM NAV -->
 
-  }
+  <nav class="bottom">
 
-}
-
-
-/* =========================
-   LIVE
-========================= */
-
-async function loadLiveData(){
-
-  try{
-
-    const response =
-      await fetch(
-        LIVE_API +
-        "?t=" +
-        Date.now(),
-        {
-          cache:"no-store"
-        }
-      );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "HTTP " +
-        response.status
-      );
-
-    }
-
-
-    const data =
-      await response.json();
-
-
-    if(data.live){
-
-      document
-        .getElementById(
-          "liveNumber"
-        )
-        .innerText =
-        data.live.twod ||
-        "--";
-
-
-      document
-        .getElementById(
-          "setValue"
-        )
-        .innerText =
-        data.live.set ||
-        "--";
-
-
-      document
-        .getElementById(
-          "marketValue"
-        )
-        .innerText =
-        data.live.value ||
-        "--";
-
-
-      document
-        .getElementById(
-          "liveStatus"
-        )
-        .innerText =
-        "🟢 Updated: " +
-        (
-          data.live.time ||
-          "--"
-        );
-
-    }
-
-
-    if(
-      Array.isArray(
-        data.result
-      )
-    ){
-
-      renderResults(
-        data.result,
-        "resultList"
-      );
-
-    }
-
-
-  }catch(error){
-
-    console.log(
-      "Live Error:",
-      error
-    );
-
-
-    document
-      .getElementById(
-        "liveStatus"
-      )
-      .innerText =
-      "🔴 Connection Error";
-
-  }
-
-}
-
-
-/* =========================
-   RESULT NAME
-========================= */
-
-function getSessionName(time){
-
-  if(time === "11:00:00")
-    return "Morning Result";
-
-  if(time === "12:01:00")
-    return "12:01 Result";
-
-  if(time === "15:00:00")
-    return "Afternoon Result";
-
-  if(time === "16:30:00")
-    return "Closing Result";
-
-  return "Result";
-
-}
-
-
-/* =========================
-   RENDER RESULTS
-========================= */
-
-function renderResults(
-  results,
-  elementId
-){
-
-  const box =
-    document.getElementById(
-      elementId
-    );
-
-
-  if(!box)return;
-
-
-  if(
-    !Array.isArray(results) ||
-    !results.length
-  ){
-
-    box.innerHTML =
-      `<div class="loading">
-        Result မရှိသေးပါ
-      </div>`;
-
-    return;
-
-  }
-
-
-  box.innerHTML = "";
-
-
-  results.forEach(function(item){
-
-    const time =
-      item.open_time ||
-      item.time ||
-      "--";
-
-
-    const number =
-      item.twod ||
-      item.result ||
-      "--";
-
-
-    const row =
-      document.createElement(
-        "div"
-      );
-
-
-    row.className =
-      "result-row";
-
-
-    row.innerHTML = `
-
-      <div>
-
-        <div class="result-time">
-          ${escapeHtml(time)}
-        </div>
-
-        <div class="result-name">
-          ${escapeHtml(
-            getSessionName(time)
-          )}
-        </div>
-
-      </div>
-
-      <div class="result-number">
-        ${escapeHtml(number)}
-      </div>
-
-    `;
-
-
-    box.appendChild(row);
-
-  });
-
-}
-
-
-/* =========================
-   CALENDAR
-========================= */
-
-document
-  .getElementById("datePicker")
-  .addEventListener(
-    "change",
-    async function(){
-
-      const date =
-        this.value;
-
-
-      if(!date)return;
-
-
-      const title =
-        document.getElementById(
-          "calendarDate"
-        );
-
-
-      const box =
-        document.getElementById(
-          "calendarResults"
-        );
-
-
-      title.innerText =
-        "📅 " +
-        date +
-        " Results";
-
-
-      box.innerHTML = `
-        <div class="loading">
-          🔄 ${date}
-          Result ရှာနေပါတယ်...
-        </div>
-      `;
-
-
-      try{
-
-        /* ADMIN DATA FIRST */
-
-        const adminData =
-          await supabaseGet(
-            "admin_content" +
-            "?content_date=eq." +
-            encodeURIComponent(date) +
-            "&select=content_type,content_date,title,content,created_at" +
-            "&order=created_at.desc"
-          );
-
-
-        /* THAI API */
-
-        let apiData = [];
-
-
-        try{
-
-          const response =
-            await fetch(
-              HISTORY_API +
-              "?date=" +
-              encodeURIComponent(date) +
-              "&t=" +
-              Date.now(),
-              {
-                cache:"no-store"
-              }
-            );
-
-
-          if(response.ok){
-
-            const data =
-              await response.json();
-
-
-            if(Array.isArray(data)){
-
-              apiData = data;
-
-            }else if(
-              Array.isArray(
-                data.result
-              )
-            ){
-
-              apiData =
-                data.result;
-
-            }else if(
-              Array.isArray(
-                data.data
-              )
-            ){
-
-              apiData =
-                data.data;
-
-            }else if(
-              data.data &&
-              Array.isArray(
-                data.data.result
-              )
-            ){
-
-              apiData =
-                data.data.result;
-
-            }
-
-          }
-
-        }catch(apiError){
-
-          console.log(
-            "History API Error:",
-            apiError
-          );
-
-        }
-
-
-        box.innerHTML = "";
-
-
-        /* ADMIN RESULTS */
-
-        adminData.forEach(
-          function(item){
-
-            const row =
-              document.createElement(
-                "div"
-              );
-
-
-            row.className =
-              "result-row";
-
-
-            row.innerHTML = `
-
-              <div>
-
-                <div class="result-time">
-                  ${escapeHtml(
-                    item.content_type
-                  )}
-                </div>
-
-                <div class="result-name">
-                  ${escapeHtml(
-                    item.title || ""
-                  )}
-                </div>
-
-              </div>
-
-              <div class="result-number">
-                ${escapeHtml(
-                  item.content || "--"
-                )}
-              </div>
-
-            `;
-
-
-            box.appendChild(row);
-
-          }
-        );
-
-
-        /* API RESULTS */
-
-        apiData.forEach(
-          function(item){
-
-            const time =
-              item.open_time ||
-              item.time ||
-              item.openTime ||
-              "--";
-
-
-            const twod =
-              item.twod ||
-              item.two_d ||
-              item["2d"] ||
-              item.result ||
-              "--";
-
-
-            const threed =
-              item.threed ||
-              item.three_d ||
-              item["3d"] ||
-              item.threeD ||
-              "";
-
-
-            const row =
-              document.createElement(
-                "div"
-              );
-
-
-            row.className =
-              "result-row";
-
-
-            row.innerHTML = `
-
-              <div>
-
-                <div class="result-time">
-                  ${escapeHtml(time)}
-                </div>
-
-                <div class="result-name">
-                  ${escapeHtml(
-                    getSessionName(time)
-                  )}
-                </div>
-
-              </div>
-
-              <div style="text-align:right">
-
-                <div class="result-number">
-                  ${escapeHtml(twod)}
-                </div>
-
-                ${
-                  threed
-                  ?
-                  `<div style="
-                    color:#42e69a;
-                    font-size:14px;
-                  ">
-                    3D:
-                    ${escapeHtml(threed)}
-                  </div>`
-                  :
-                  ""
-                }
-
-              </div>
-
-            `;
-
-
-            box.appendChild(row);
-
-          }
-        );
-
-
-        if(
-          !adminData.length &&
-          !apiData.length
-        ){
-
-          box.innerHTML = `
-            <div class="loading">
-              📭 ${date}
-              အတွက် Result မတွေ့ပါ
-            </div>
-          `;
-
-        }
-
-      }catch(error){
-
-        console.error(
-          "Calendar Error:",
-          error
-        );
-
-
-        box.innerHTML = `
-          <div class="error">
-            ❌ Result ရယူမရပါ
-          </div>
-        `;
-
-      }
-
-    }
-  );
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHtml(text){
-
-  return String(text || "")
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-loadLiveData();
-
-loadAdmin3D();
-
-loadNotification();
-
-
-/* =========================
-   AUTO UPDATE
-========================= */
-
-setInterval(
-  loadLiveData,
-  10000
-);
-
-setInterval(
-  loadAdmin3D,
-  10000
-);
-
-setInterval(
-  loadNotification,
-  10000
-);
-
-</script>
-
-</body>
-</html>
+    <button class="nav active">
+      <span>🏠</span>
+     
