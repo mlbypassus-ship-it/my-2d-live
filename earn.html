@@ -676,14 +676,14 @@ function addCoin(amount){
   let coins =
     Number(
       localStorage.getItem(
-        "mm_coins"
+        "mm_real_earn_coins"
       ) || 0
     );
 
   coins += amount;
 
   localStorage.setItem(
-    "mm_coins",
+    "mm_real_earn_coins",
     coins
   );
 
