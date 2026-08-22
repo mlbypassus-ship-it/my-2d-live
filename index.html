@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="my">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#070912">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0">
+
+<meta
+  name="theme-color"
+  content="#070912">
 
 <title>MM-Real-Earn</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -18,7 +25,6 @@
 
 :root{
   --bg:#070912;
-  --card:#101522;
   --gold:#ffd43b;
   --gold2:#ff9b00;
   --text:#fff;
@@ -27,421 +33,714 @@
 }
 
 body{
+
   min-height:100vh;
+
   background:
-    radial-gradient(circle at 15% 0%,#243b6b55,transparent 28%),
-    radial-gradient(circle at 100% 25%,#7b3f8a35,transparent 30%),
+    radial-gradient(
+      circle at 15% 0%,
+      #243b6b55,
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 100% 25%,
+      #7b3f8a35,
+      transparent 30%
+    ),
     var(--bg);
+
   color:var(--text);
-  font-family:Arial,"Noto Sans Myanmar",sans-serif;
+
+  font-family:
+    Arial,
+    "Noto Sans Myanmar",
+    sans-serif;
+
 }
 
 .app{
+
   width:100%;
+
   max-width:520px;
+
   min-height:100vh;
+
   margin:auto;
+
   padding-bottom:100px;
+
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
+
   position:sticky;
+
   top:0;
+
   z-index:50;
+
   padding:15px 16px;
+
   background:#080b14ee;
+
   backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--line);
+
+  border-bottom:
+    1px solid var(--line);
+
 }
 
 .header-row{
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   gap:10px;
+
 }
 
 .brand{
+
   display:flex;
+
   align-items:center;
+
   gap:10px;
+
 }
 
 .logo{
+
   width:45px;
+
   height:45px;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   border-radius:15px;
+
   font-size:23px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold),
+      var(--gold2)
+    );
+
+  box-shadow:
+    0 8px 25px #ffb30030;
+
 }
 
 .brand-text b{
+
   display:block;
+
   font-size:17px;
+
 }
 
 .brand-text small{
+
   display:block;
+
   margin-top:3px;
+
   color:var(--muted);
+
   font-size:10px;
+
 }
 
-.balance{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  padding:9px 11px;
-  border:1px solid #ffd43b25;
-  border-radius:14px;
-  background:#ffd43b0d;
-}
 
-.balance-value{
-  color:var(--gold);
-  font-size:14px;
-  font-weight:bold;
-}
-
-/* NOTI */
+/* =========================
+   NOTIFICATION
+========================= */
 
 .noti{
-  margin:14px 16px 0;
+
+  margin:
+    14px 16px 0;
+
   min-height:42px;
+
   display:flex;
+
   align-items:center;
+
   overflow:hidden;
-  border:1px solid var(--line);
+
+  border:
+    1px solid var(--line);
+
   border-radius:14px;
+
   background:#ffffff08;
+
 }
 
 .noti-label{
-  padding:12px;
+
+  height:100%;
+
+  display:flex;
+
+  align-items:center;
+
+  padding:0 12px;
+
   flex-shrink:0;
+
   color:var(--gold);
+
   font-size:12px;
+
   font-weight:bold;
+
   background:#ffd43b0b;
+
 }
 
 .noti-text{
+
   padding:0 12px;
+
   color:#c5cad6;
+
   font-size:11px;
+
   white-space:nowrap;
+
 }
 
-/* WELCOME */
+
+/* =========================
+   WELCOME
+========================= */
 
 .welcome{
+
   margin:16px;
+
   padding:24px 20px;
+
   position:relative;
+
   overflow:hidden;
-  border:1px solid #ffffff12;
+
+  border:
+    1px solid #ffffff12;
+
   border-radius:25px;
+
   background:
-    radial-gradient(circle at 90% 10%,#ffd43b25,transparent 30%),
-    radial-gradient(circle at 0% 100%,#5d3b9b25,transparent 35%),
-    linear-gradient(145deg,#171e31,#0e1421);
+
+    radial-gradient(
+      circle at 90% 10%,
+      #ffd43b25,
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 0% 100%,
+      #5d3b9b25,
+      transparent 35%
+    ),
+
+    linear-gradient(
+      145deg,
+      #171e31,
+      #0e1421
+    );
+
+  box-shadow:
+    0 20px 55px #00000045;
+
 }
 
 .welcome small{
+
   color:var(--muted);
+
   font-size:12px;
+
 }
 
 .welcome h1{
+
   margin-top:7px;
+
   font-size:27px;
+
   line-height:1.3;
+
 }
 
 .welcome p{
+
   margin-top:9px;
+
   color:#969fb2;
+
   font-size:12px;
+
   line-height:1.7;
+
 }
 
-/* SECTION */
+
+/* =========================
+   SECTION
+========================= */
 
 .section{
-  margin:22px 16px 12px;
+
+  margin:
+    22px 16px 12px;
+
 }
 
 .section-head{
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   margin-bottom:12px;
+
 }
 
 .section-head h2{
+
   font-size:17px;
+
 }
 
 .section-head span{
+
   color:#687287;
+
   font-size:10px;
+
 }
 
-/* ACTIONS */
+
+/* =========================
+   ACTIONS
+========================= */
 
 .actions{
+
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:12px;
+
 }
 
 .action{
+
   min-height:145px;
+
   padding:17px;
+
   position:relative;
+
   overflow:hidden;
+
   text-align:left;
+
   color:#fff;
-  border:1px solid var(--line);
+
+  border:
+    1px solid var(--line);
+
   border-radius:21px;
-  background:linear-gradient(145deg,#121927,#0d121e);
+
+  background:
+    linear-gradient(
+      145deg,
+      #121927,
+      #0d121e
+    );
+
+  box-shadow:
+    0 10px 30px #00000022;
+
   cursor:pointer;
+
+  transition:.2s;
+
 }
 
 .action:active{
+
   transform:scale(.97);
+
 }
 
 .action-icon{
+
   width:46px;
+
   height:46px;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   border-radius:15px;
+
   font-size:23px;
+
   background:#ffffff0b;
+
 }
 
 .action h3{
+
   margin-top:13px;
+
   font-size:14px;
+
 }
 
 .action p{
+
   margin-top:5px;
+
   color:#747e92;
+
   font-size:10px;
+
   line-height:1.5;
+
 }
 
 .action.gold{
-  border-color:#ffd43b25;
+
+  border-color:
+    #ffd43b25;
+
   background:
-    radial-gradient(circle at 100% 0%,#ffd43b18,transparent 40%),
-    linear-gradient(145deg,#171b27,#101520);
+
+    radial-gradient(
+      circle at 100% 0%,
+      #ffd43b18,
+      transparent 40%
+    ),
+
+    linear-gradient(
+      145deg,
+      #171b27,
+      #101520
+    );
+
 }
 
-/* COIN CARD */
+.action.gold
+.action-icon{
 
-.coin-card{
-  margin:16px;
-  padding:20px;
-  border:1px solid #ffd43b22;
-  border-radius:22px;
   background:
-    radial-gradient(circle at 100% 0%,#ffd43b18,transparent 38%),
-    linear-gradient(145deg,#151b29,#0d121d);
+    #ffd43b18;
+
 }
 
-.coin-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
 
-.coin-top span{
-  color:#8d96aa;
-  font-size:11px;
-}
-
-.coin-top b{
-  color:var(--gold);
-  font-size:12px;
-}
-
-.big-coin{
-  margin-top:9px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.big-coin span{
-  font-size:31px;
-}
-
-.big-coin strong{
-  font-size:28px;
-  color:var(--gold);
-}
-
-/* REFER */
+/* =========================
+   REFER
+========================= */
 
 .refer{
+
   margin:16px;
+
   padding:20px;
+
   border-radius:22px;
-  border:1px solid #ffffff12;
-  background:linear-gradient(135deg,#17152a,#101520);
+
+  border:
+    1px solid #ffffff12;
+
+  background:
+    linear-gradient(
+      135deg,
+      #17152a,
+      #101520
+    );
+
 }
 
 .refer-head{
+
   display:flex;
+
   gap:12px;
+
   align-items:center;
+
 }
 
 .refer-icon{
+
   width:45px;
+
   height:45px;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   border-radius:14px;
+
   background:#8d5cff18;
+
   font-size:22px;
+
 }
 
 .refer h2{
+
   font-size:16px;
+
 }
 
 .refer p{
+
   margin-top:4px;
+
   color:#7f899c;
+
   font-size:11px;
+
 }
 
 .refer-btn{
+
   width:100%;
+
   margin-top:15px;
+
   padding:13px;
+
   border:0;
+
   border-radius:13px;
+
   color:#111;
+
   font-size:13px;
+
   font-weight:bold;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold),
+      var(--gold2)
+    );
+
 }
 
-/* SUPPORT */
+
+/* =========================
+   SUPPORT
+========================= */
 
 .support{
+
   margin:16px;
+
   padding:19px;
+
   display:flex;
+
   align-items:center;
+
   gap:13px;
-  border:1px solid #ffffff10;
+
+  border:
+    1px solid #ffffff10;
+
   border-radius:20px;
+
   background:#ffffff07;
+
 }
 
 .support-icon{
+
   width:44px;
+
   height:44px;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   border-radius:14px;
+
   background:#20d16d15;
+
   font-size:21px;
+
 }
 
 .support-text{
+
   flex:1;
+
 }
 
 .support-text b{
+
   display:block;
+
   font-size:13px;
+
 }
 
 .support-text small{
+
   display:block;
+
   margin-top:5px;
+
   color:#7e889b;
+
   font-size:10px;
+
   word-break:break-all;
+
 }
 
 .support-btn{
+
   padding:10px 12px;
-  border:1px solid #ffffff12;
+
+  border:
+    1px solid #ffffff12;
+
   border-radius:11px;
+
   background:#ffffff09;
+
   color:#fff;
+
   font-size:11px;
+
 }
 
-/* BOTTOM */
+
+/* =========================
+   BOTTOM NAV
+========================= */
 
 .bottom{
+
   position:fixed;
+
   left:50%;
+
   bottom:0;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   width:100%;
+
   max-width:520px;
+
   height:78px;
+
   display:flex;
+
   z-index:100;
+
   background:#0b101cee;
+
   backdrop-filter:blur(20px);
-  border-top:1px solid #ffffff12;
+
+  border-top:
+    1px solid #ffffff12;
+
 }
 
 .nav{
+
   flex:1;
+
   border:0;
+
   background:none;
+
   color:#687287;
+
   font-size:9px;
+
   cursor:pointer;
+
 }
 
 .nav span{
+
   display:block;
+
   margin-bottom:5px;
+
   font-size:21px;
+
 }
 
 .nav.active{
+
   color:var(--gold);
+
 }
 
-/* STATUS */
+.nav:active{
 
-#loadStatus{
-  text-align:center;
-  margin:8px 16px;
-  color:#687287;
-  font-size:10px;
+  transform:scale(.94);
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
 <div class="app">
 
-<!-- HEADER -->
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header class="header">
 
@@ -455,7 +754,9 @@ body{
 
       <div class="brand-text">
 
-        <b>MM-Real-Earn</b>
+        <b>
+          MM-Real-Earn
+        </b>
 
         <small>
           Earn • Play • Reward
@@ -465,44 +766,37 @@ body{
 
     </div>
 
-
-    <div class="balance">
-
-      <span>
-        🪙
-      </span>
-
-      <span
-        class="balance-value"
-        id="coinBalance">
-
-        0
-
-      </span>
-
-    </div>
-
   </div>
 
 </header>
 
 
-<!-- NOTIFICATION -->
+<!-- =========================
+     NOTIFICATION
+========================= -->
 
 <div class="noti">
 
   <div class="noti-label">
+
     🔔 NOTI
+
   </div>
 
   <div class="noti-text">
-    MM-Real-Earn မှာ Game ဆော့ပြီး Coin စုနိုင်ပါတယ် • YouTube Video ကြည့်ပြီး Reward ရယူနိုင်ပါတယ် 🎁
+
+    MM-Real-Earn မှာ
+    Game ဆော့ပြီး Coin စုနိုင်ပါတယ်
+    • Video ကြည့်ပြီး Reward ရယူနိုင်ပါတယ် 🎁
+
   </div>
 
 </div>
 
 
-<!-- WELCOME -->
+<!-- =========================
+     WELCOME
+========================= -->
 
 <section class="welcome">
 
@@ -511,19 +805,28 @@ body{
   </small>
 
   <h1>
+
     Coin စုပါ<br>
+
     Reward ရယူပါ
+
   </h1>
 
   <p>
-    Game ဆော့ခြင်း၊ Video ကြည့်ခြင်းနဲ့
-    Coin စုဆောင်းပြီး Reward ရယူနိုင်ပါတယ်။
+
+    Game ဆော့ခြင်း၊
+    Video ကြည့်ခြင်းနဲ့
+    Coin စုဆောင်းပြီး
+    Reward ရယူနိုင်ပါတယ်။
+
   </p>
 
 </section>
 
 
-<!-- QUICK EARN -->
+<!-- =========================
+     QUICK EARN
+========================= -->
 
 <section class="section">
 
@@ -542,10 +845,13 @@ body{
 
   <div class="actions">
 
+
+    <!-- EARN -->
+
     <button
       class="action gold"
       type="button"
-      onclick="openPage('earn.html')">
+      onclick="goTo('earn.html')">
 
       <div class="action-icon">
         🎬
@@ -556,16 +862,19 @@ body{
       </h3>
 
       <p>
-        Video ကြည့်ပြီး Coin ရယူပါ
+        Video ကြည့်ပြီး
+        Coin ရယူပါ
       </p>
 
     </button>
 
 
+    <!-- GAMES -->
+
     <button
       class="action"
       type="button"
-      onclick="openPage('games.html')">
+      onclick="goTo('games.html')">
 
       <div class="action-icon">
         🎮
@@ -576,16 +885,19 @@ body{
       </h3>
 
       <p>
-        Mini Game ဆော့ပြီး Coin ရယူပါ
+        Mini Game ဆော့ပြီး
+        Coin ရယူပါ
       </p>
 
     </button>
 
 
+    <!-- WALLET -->
+
     <button
       class="action"
       type="button"
-      onclick="openPage('wallet.html')">
+      onclick="goTo('wallet.html')">
 
       <div class="action-icon">
         💰
@@ -596,16 +908,19 @@ body{
       </h3>
 
       <p>
-        Coin ပြည့်ရင် ငွေထုတ်ယူနိုင်ပါတယ်
+        Coin ပြည့်ရင်
+        ငွေထုတ်ယူနိုင်ပါတယ်
       </p>
 
     </button>
 
 
+    <!-- PROFILE -->
+
     <button
       class="action"
       type="button"
-      onclick="openPage('profile.html')">
+      onclick="goTo('profile.html')">
 
       <div class="action-icon">
         👤
@@ -616,49 +931,21 @@ body{
       </h3>
 
       <p>
-        Account နဲ့ History ကြည့်ပါ
+        Account နဲ့
+        History ကြည့်ပါ
       </p>
 
     </button>
 
-  </div>
-
-</section>
-
-
-<!-- COIN -->
-
-<section class="coin-card">
-
-  <div class="coin-top">
-
-    <span>
-      🪙 လက်ရှိ Coin Balance
-    </span>
-
-    <b>
-      MM-REAL-EARN
-    </b>
-
-  </div>
-
-
-  <div class="big-coin">
-
-    <span>
-      🪙
-    </span>
-
-    <strong id="bigCoinBalance">
-      0
-    </strong>
 
   </div>
 
 </section>
 
 
-<!-- REFER -->
+<!-- =========================
+     REFER
+========================= -->
 
 <section class="refer">
 
@@ -686,7 +973,7 @@ body{
   <button
     class="refer-btn"
     type="button"
-    onclick="openPage('refer.html')">
+    onclick="goTo('refer.html')">
 
     👥 Refer လုပ်ရန်
 
@@ -695,7 +982,9 @@ body{
 </section>
 
 
-<!-- SUPPORT -->
+<!-- =========================
+     SUPPORT
+========================= -->
 
 <section class="support">
 
@@ -727,21 +1016,22 @@ body{
 </section>
 
 
-<div id="loadStatus">
-  Balance ကို စစ်ဆေးနေပါတယ်...
-</div>
-
-
-<!-- BOTTOM NAV -->
+<!-- =========================
+     BOTTOM NAV
+========================= -->
 
 <nav class="bottom">
+
 
   <button
     class="nav active"
     type="button"
     onclick="goHome()">
 
-    <span>🏠</span>
+    <span>
+      🏠
+    </span>
+
     Home
 
   </button>
@@ -750,9 +1040,12 @@ body{
   <button
     class="nav"
     type="button"
-    onclick="openPage('games.html')">
+    onclick="goTo('games.html')">
 
-    <span>🎮</span>
+    <span>
+      🎮
+    </span>
+
     Games
 
   </button>
@@ -761,9 +1054,12 @@ body{
   <button
     class="nav"
     type="button"
-    onclick="openPage('earn.html')">
+    onclick="goTo('earn.html')">
 
-    <span>🎬</span>
+    <span>
+      🎬
+    </span>
+
     Earn
 
   </button>
@@ -772,9 +1068,12 @@ body{
   <button
     class="nav"
     type="button"
-    onclick="openPage('wallet.html')">
+    onclick="goTo('wallet.html')">
 
-    <span>💰</span>
+    <span>
+      💰
+    </span>
+
     Wallet
 
   </button>
@@ -783,41 +1082,28 @@ body{
   <button
     class="nav"
     type="button"
-    onclick="openPage('profile.html')">
+    onclick="goTo('profile.html')">
 
-    <span>👤</span>
+    <span>
+      👤
+    </span>
+
     Profile
 
   </button>
 
+
 </nav>
+
 
 </div>
 
 
 <script>
 
-/* =====================================
-   SUPABASE
-===================================== */
-
-const SUPABASE_URL =
-  "https://acclbthzfzrfbwyslpvv.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_PxrCIfh0MfL6KT1iQxgqfw__IgNG1OY";
-
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-/* =====================================
-   PAGE NAVIGATION
-===================================== */
+/* =========================
+   HOME
+========================= */
 
 function goHome(){
 
@@ -827,13 +1113,21 @@ function goHome(){
 }
 
 
-function openPage(page){
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function goTo(page){
 
   window.location.href =
     "./" + page;
 
 }
 
+
+/* =========================
+   CUSTOMER SERVICE
+========================= */
 
 function contactSupport(){
 
@@ -842,207 +1136,9 @@ function contactSupport(){
 
 }
 
-
-/* =====================================
-   SHOW BALANCE
-===================================== */
-
-function showBalance(balance){
-
-  const value =
-    Number(balance || 0)
-      .toLocaleString();
-
-
-  const coin =
-    document.getElementById(
-      "coinBalance"
-    );
-
-
-  const big =
-    document.getElementById(
-      "bigCoinBalance"
-    );
-
-
-  if(coin){
-
-    coin.textContent =
-      value;
-
-  }
-
-
-  if(big){
-
-    big.textContent =
-      value;
-
-  }
-
-}
-
-
-/* =====================================
-   LOAD LOGIN + BALANCE
-===================================== */
-
-async function startApp(){
-
-  const status =
-    document.getElementById(
-      "loadStatus"
-    );
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-    await supabaseClient.auth.getSession();
-
-
-    if(error){
-
-      console.error(
-        "Session Error:",
-        error
-      );
-
-      if(status){
-        status.textContent =
-          "Session စစ်ဆေးမရပါ";
-      }
-
-      return;
-
-    }
-
-
-    const session =
-      data.session;
-
-
-    /*
-      Login မဝင်ထားရင်
-      Login page သွား
-    */
-
-    if(!session){
-
-      window.location.href =
-        "./login.html";
-
-      return;
-
-    }
-
-
-    /*
-      Profile balance
-    */
-
-    const {
-      data:profile,
-      error:profileError
-    } =
-    await supabaseClient
-      .from("profiles")
-      .select("balance")
-      .eq(
-        "id",
-        session.user.id
-      )
-      .maybeSingle();
-
-
-    if(profileError){
-
-      console.error(
-        "Profile Error:",
-        profileError
-      );
-
-      showBalance(0);
-
-      if(status){
-        status.textContent =
-          "Balance မဖတ်နိုင်ပါ";
-      }
-
-      return;
-
-    }
-
-
-    if(profile){
-
-      showBalance(
-        profile.balance
-      );
-
-    }
-    else{
-
-      showBalance(0);
-
-    }
-
-
-    if(status){
-
-      status.textContent =
-        "";
-
-    }
-
-  }
-
-  catch(error){
-
-    console.error(
-      "App Error:",
-      error
-    );
-
-    showBalance(0);
-
-    if(status){
-
-      status.textContent =
-        "Connection Error";
-
-    }
-
-  }
-
-}
-
-
-/* =====================================
-   PAGE RETURN / REFRESH
-===================================== */
-
-window.addEventListener(
-  "pageshow",
-  function(){
-
-    startApp();
-
-  }
-);
-
-
-/* =====================================
-   START
-===================================== */
-
-startApp();
-
 </script>
 
+
 </body>
+
 </html>
