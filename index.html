@@ -719,14 +719,34 @@ body{
 
 /* COIN DISPLAY */
 
-const savedCoins =
-  Number(localStorage.getItem("mm_real_earn_coins") || 0);
+function updateHomeCoin(){
 
-document.getElementById("coinBalance").innerText =
-  savedCoins.toLocaleString();
+  const savedCoins =
+    Number(localStorage.getItem("mm_real_earn_coins") || 0);
 
-document.getElementById("bigCoinBalance").innerText =
-  savedCoins.toLocaleString();
+  const coinBalance =
+    document.getElementById("coinBalance");
+
+  if(coinBalance){
+    coinBalance.innerText =
+      savedCoins.toLocaleString();
+  }
+
+  const bigCoinBalance =
+    document.getElementById("bigCoinBalance");
+
+  if(bigCoinBalance){
+    bigCoinBalance.innerText =
+      savedCoins.toLocaleString();
+  }
+
+}
+
+updateHomeCoin();
+
+window.addEventListener("pageshow", function(){
+  updateHomeCoin();
+});
 
 </script>
 
