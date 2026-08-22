@@ -509,11 +509,11 @@ body{
     <p>မြန်မာ Quiz ဖြေပြီး Coin ရယူပါ</p>
   </div>
 
-  <div class="card">
-    <div class="card-icon">🎬</div>
-    <h3>Reward Video</h3>
-    <p>Reward ရနိုင်သော Video များ</p>
-  </div>
+<div class="card" onclick="openRewardVideo()">
+  <div class="card-icon">🎬</div>
+  <h3>Reward Video</h3>
+  <p>Reward ရနိုင်သော Video များ</p>
+</div>
 
   <div class="card">
     <div class="card-icon">👥</div>
@@ -858,6 +858,1534 @@ function submitWithdraw(){
 }
 
 </script>
+<!-- GAMES PAGE -->
+<section id="gamesPage" style="display:none;padding:16px 16px 100px">
 
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+    <div>
+      <div style="color:#8d96aa;font-size:12px">MM-Real-Earn</div>
+      <h2 style="margin-top:5px">🎮 Mini Games</h2>
+    </div>
+
+    <div class="coin-box">
+      🪙 <span id="gameCoinBalance">0</span>
+    </div>
+  </div>
+
+  <div class="cards">
+
+    <button class="card" onclick="startGame('lucky')" style="text-align:left;color:#fff">
+      <div class="card-icon">🎯</div>
+      <h3>Lucky Tap</h3>
+      <p>နှိပ်ပြီး Coin ရယူပါ</p>
+    </button>
+
+    <button class="card" onclick="startGame('quiz')" style="text-align:left;color:#fff">
+      <div class="card-icon">🧠</div>
+      <h3>Quick Quiz</h3>
+      <p>မြန်မာမေးခွန်းများ ဖြေပါ</p>
+    </button>
+
+    <button class="card" onclick="startGame('catch')" style="text-align:left;color:#fff">
+      <div class="card-icon">🪙</div>
+      <h3>Coin Catch</h3>
+      <p>Coin ဖမ်းပြီး Reward ရယူပါ</p>
+    </button>
+
+    <button class="card" onclick="startGame('box')" style="text-align:left;color:#fff">
+      <div class="card-icon">🎁</div>
+      <h3>Mystery Box</h3>
+      <p>Box ဖွင့်ပြီး Reward ရယူပါ</p>
+    </button>
+
+    <button class="card" onclick="startGame('speed')" style="text-align:left;color:#fff">
+      <div class="card-icon">⚡</div>
+      <h3>Speed Tap</h3>
+      <p>မြန်မြန်နှိပ်ပြီး Coin ရယူပါ</p>
+    </button>
+
+  </div>
+
+  <div id="gameArea" style="display:none;margin-top:18px">
+
+    <div class="daily">
+      <div class="daily-top">
+        <h2 id="gameTitle">🎮 Game</h2>
+        <span id="gameReward">+0 Coin</span>
+      </div>
+
+      <div id="gameContent" style="margin-top:18px"></div>
+
+      <button
+        onclick="closeGame()"
+        style="width:100%;margin-top:15px;padding:13px;border:0;border-radius:13px;background:#ffffff10;color:#fff">
+        ← Games သို့ ပြန်
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+
+let gameCoins = 0;
+
+function updateGameCoin(){
+
+  document.getElementById("gameCoinBalance").innerText = gameCoins;
+
+  document.getElementById("coinBalance").innerText = gameCoins;
+
+}
+
+
+/* GAME START */
+
+function startGame(type){
+
+  const page = document.getElementById("gamesPage");
+  const area = document.getElementById("gameArea");
+  const title = document.getElementById("gameTitle");
+  const reward = document.getElementById("gameReward");
+  const content = document.getElementById("gameContent");
+
+  page.style.display = "block";
+  area.style.display = "block";
+
+  if(type === "lucky"){
+
+    title.innerText = "🎯 Lucky Tap";
+    reward.innerText = "+100 Coin";
+
+    content.innerHTML = `
+      <p style="color:#9da5b7;line-height:1.6">
+        ခလုတ်ကိုနှိပ်ပြီး Lucky Coin ရယူပါ။
+      </p>
+
+      <button
+        onclick="addCoins(100)"
+        style="width:100%;margin-top:15px;padding:18px;border:0;border-radius:15px;background:linear-gradient(135deg,#ffd43b,#ff9800);font-size:18px;font-weight:bold">
+        🪙 TAP & EARN
+      </button>
+    `;
+
+  }
+  if(type === "quiz"){
+
+  title.innerText = "🧠 Quick Quiz";
+  reward.innerText = "တစ်မေးခွန်း +50 Coin";
+
+  content.innerHTML = `
+    <div id="quizGame">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        color:#8992a5;
+        font-size:12px">
+
+        <span id="quizProgress">
+          Question 1 / 10
+        </span>
+
+        <span>
+          🪙 <b id="quizEarned">0</b>
+        </span>
+
+      </div>
+
+      <div id="quizQuestion"
+        style="
+        margin-top:18px;
+        font-size:16px;
+        line-height:1.8">
+      </div>
+
+      <div id="quizOptions"
+        style="margin-top:15px">
+      </div>
+
+      <div id="quizResult"
+        style="
+        margin-top:14px;
+        text-align:center;
+        line-height:1.6">
+      </div>
+
+    </div>
+  `;
+
+  startQuickQuiz();
+
+}
+
+
+/* =========================
+   QUICK QUIZ QUESTION BANK
+========================= */
+
+const quizQuestions = [
+
+  {
+    q:"မြန်မာနိုင်ငံ၏ မြို့တော်က ဘယ်မြို့လဲ?",
+    a:["နေပြည်တော်","ရန်ကုန်","မန္တလေး","ပုဂံ"],
+    correct:0
+  },
+
+  {
+    q:"မြန်မာနိုင်ငံ၏ အကြီးဆုံးမြို့က ဘယ်မြို့လဲ?",
+    a:["ရန်ကုန်","နေပြည်တော်","ပုသိမ်","မော်လမြိုင်"],
+    correct:0
+  },
+
+  {
+    q:"တစ်ပတ်မှာ ရက်ဘယ်နှစ်ရက်ရှိလဲ?",
+    a:["၅ ရက်","၆ ရက်","၇ ရက်","၈ ရက်"],
+    correct:2
+  },
+
+  {
+    q:"တစ်နှစ်မှာ လဘယ်နှစ်လရှိလဲ?",
+    a:["၁၀ လ","၁၁ လ","၁၂ လ","၁၃ လ"],
+    correct:2
+  },
+
+  {
+    q:"ရေ၏ ဓာတုဖော်မြူလာက ဘာလဲ?",
+    a:["CO₂","H₂O","O₂","NaCl"],
+    correct:1
+  },
+
+  {
+    q:"ကမ္ဘာပေါ်တွင် သဘာဝအလင်းပေးသော ကြယ်က ဘာလဲ?",
+    a:["လ","နေ","ကမ္ဘာ","အင်္ဂါ"],
+    correct:1
+  },
+
+  {
+    q:"မြန်မာနိုင်ငံ၏ အမျိုးသားအလံတွင် အရောင်ဘယ်နှစ်ရောင်ပါလဲ?",
+    a:["၂ ရောင်","၃ ရောင်","၄ ရောင်","၅ ရောင်"],
+    correct:1
+  },
+
+  {
+    q:"10 + 15 = ဘယ်လောက်လဲ?",
+    a:["20","25","30","35"],
+    correct:1
+  },
+
+  {
+    q:"50 - 18 = ဘယ်လောက်လဲ?",
+    a:["22","28","32","38"],
+    correct:2
+  },
+
+  {
+    q:"5 × 6 = ဘယ်လောက်လဲ?",
+    a:["20","25","30","35"],
+    correct:2
+  },
+
+  {
+    q:"100 ÷ 4 = ဘယ်လောက်လဲ?",
+    a:["20","25","30","40"],
+    correct:1
+  },
+
+  {
+    q:"ကမ္ဘာကြီးကို လှည့်ပတ်နေသော သဘာဝဂြိုဟ်တုက ဘာလဲ?",
+    a:["နေ","လ","အင်္ဂါ","သောကြာ"],
+    correct:1
+  },
+
+  {
+    q:"အင်္ဂလိပ်ဘာသာတွင် Alphabet စာလုံးဘယ်နှစ်လုံးရှိလဲ?",
+    a:["24","25","26","27"],
+    correct:2
+  },
+
+  {
+    q:"မြန်မာနိုင်ငံ၏ ငွေကြေးယူနစ်က ဘာလဲ?",
+    a:["ဒေါ်လာ","ဘတ်","ကျပ်","ယွမ်"],
+    correct:2
+  },
+
+  {
+    q:"ကမ္ဘာပေါ်တွင် အကြီးဆုံး သမုဒ္ဒရာက ဘာလဲ?",
+    a:["အတ္တလန္တိတ်","ပစိဖိတ်","အိန္ဒိယ","အာတိတ်"],
+    correct:1
+  },
+
+  {
+    q:"2 × 8 = ဘယ်လောက်လဲ?",
+    a:["12","14","16","18"],
+    correct:2
+  },
+
+  {
+    q:"30 + 45 = ဘယ်လောက်လဲ?",
+    a:["65","70","75","80"],
+    correct:2
+  },
+
+  {
+    q:"90 - 35 = ဘယ်လောက်လဲ?",
+    a:["45","50","55","60"],
+    correct:2
+  },
+
+  {
+    q:"တစ်ရက်မှာ နာရီဘယ်နှစ်နာရီရှိလဲ?",
+    a:["12","18","24","30"],
+    correct:2
+  },
+
+  {
+    q:"တစ်နာရီမှာ မိနစ်ဘယ်နှစ်မိနစ်ရှိလဲ?",
+    a:["30","45","60","90"],
+    correct:2
+  },
+
+  {
+    q:"မြန်မာနိုင်ငံတွင် အများဆုံးအသုံးပြုသော ဘာသာစကားက ဘာလဲ?",
+    a:["မြန်မာဘာသာ","ဂျပန်ဘာသာ","ကိုရီးယားဘာသာ","ပြင်သစ်ဘာသာ"],
+    correct:0
+  },
+
+  {
+    q:"ပုံမှန်အပူချိန်တွင် ရေသည် ဘယ်အခြေအနေဖြစ်လဲ?",
+    a:["အစိုင်အခဲ","အရည်","ဓာတ်ငွေ့","သတ္တု"],
+    correct:1
+  },
+
+  {
+    q:"၁ ကီလိုဂရမ်မှာ ဂရမ်ဘယ်နှစ်ဂရမ်ရှိလဲ?",
+    a:["100","500","1000","1500"],
+    correct:2
+  },
+
+  {
+    q:"၁ မီတာမှာ စင်တီမီတာဘယ်နှစ်စင်တီမီတာရှိလဲ?",
+    a:["10","50","100","1000"],
+    correct:2
+  },
+
+  {
+    q:"7 + 8 = ဘယ်လောက်လဲ?",
+    a:["13","14","15","16"],
+    correct:2
+  }
+
+];
+
+
+/* =========================
+   START QUIZ
+========================= */
+
+let quizList = [];
+let quizIndex = 0;
+let quizEarned = 0;
+
+
+function startQuickQuiz(){
+
+  quizIndex = 0;
+  quizEarned = 0;
+
+  quizList =
+    [...quizQuestions]
+    .sort(() => Math.random() - 0.5)
+    .slice(0,10);
+
+  showQuizQuestion();
+
+}
+
+
+/* =========================
+   SHOW QUESTION
+========================= */
+
+function showQuizQuestion(){
+
+  const item =
+    quizList[quizIndex];
+
+  document.getElementById("quizProgress").innerText =
+    "Question " + (quizIndex + 1) + " / " + quizList.length;
+
+  document.getElementById("quizEarned").innerText =
+    quizEarned;
+
+  document.getElementById("quizQuestion").innerText =
+    item.q;
+
+  const options =
+    document.getElementById("quizOptions");
+
+  options.innerHTML = "";
+
+  item.a.forEach(function(answer,index){
+
+    const button =
+      document.createElement("button");
+
+    button.innerText =
+      answer;
+
+    button.style.cssText = `
+      width:100%;
+      margin-top:10px;
+      padding:14px;
+      border:1px solid #ffffff12;
+      border-radius:13px;
+      background:#ffffff08;
+      color:#fff;
+      font-size:14px;
+    `;
+
+    button.onclick =
+      function(){
+
+        quizAnswerNew(index);
+
+      };
+
+    options.appendChild(button);
+
+  });
+
+}
+
+
+/* =========================
+   ANSWER
+========================= */
+
+function quizAnswerNew(answer){
+
+  const item =
+    quizList[quizIndex];
+
+  const buttons =
+    document
+      .getElementById("quizOptions")
+      .querySelectorAll("button");
+
+  buttons.forEach(function(btn){
+    btn.disabled = true;
+  });
+
+
+  if(answer === item.correct){
+
+    quizEarned += 50;
+
+    addCoins(50);
+
+    document.getElementById("quizResult").innerHTML =
+      "✅ မှန်ပါတယ်! +50 Coin ရရှိပါပြီ";
+
+  }else{
+
+    document.getElementById("quizResult").innerHTML =
+      "❌ မမှန်ပါ။ အဖြေမှန်က <b>" +
+      item.a[item.correct] +
+      "</b> ပါ။";
+
+  }
+
+
+  setTimeout(function(){
+
+    quizIndex++;
+
+    if(quizIndex >= quizList.length){
+
+      document.getElementById("quizQuestion").innerHTML =
+        "🎉 ဒီနေ့ Quiz 10 ခု ပြီးပါပြီ!";
+
+      document.getElementById("quizOptions").innerHTML =
+        `<div style="
+          padding:18px;
+          text-align:center;
+          color:#ffd43b;
+          font-size:18px">
+
+          🪙 ဒီနေ့ရရှိသော Coin<br>
+          <b style="font-size:28px">
+            +${quizEarned}
+          </b>
+
+        </div>`;
+
+      document.getElementById("quizResult").innerText =
+        "မနက်ဖြန် Daily Quiz အသစ်များ ပြန်ရနိုင်ပါတယ်။";
+
+      return;
+
+    }
+
+    document.getElementById("quizResult").innerText = "";
+
+    showQuizQuestion();
+
+  },1200);
+
+}
+
+  
+
+  }
+
+  if(type === "catch"){
+
+    title.innerText = "🪙 Coin Catch";
+    reward.innerText = "+50 Coin";
+
+    content.innerHTML = `
+      <p style="color:#9da5b7">
+        Coin ကိုနှိပ်ပြီး ဖမ်းပါ။
+      </p>
+
+      <button onclick="giveGameCoin(50)"
+        style="margin-top:18px;width:100%;height:120px;border:0;border-radius:20px;background:#ffffff08;color:#ffd43b;font-size:45px">
+        🪙
+      </button>
+    `;
+
+  }
+
+  if(type === "box"){
+
+    title.innerText = "🎁 Mystery Box";
+    reward.innerText = "Random Reward";
+
+    content.innerHTML = `
+      <p style="color:#9da5b7">
+        Mystery Box ကိုဖွင့်ပြီး Reward ရယူပါ။
+      </p>
+
+      <button onclick="mysteryReward()"
+        style="width:100%;margin-top:18px;padding:25px;border:0;border-radius:18px;background:linear-gradient(135deg,#6c4cff,#b04cff);color:#fff;font-size:24px">
+        🎁 OPEN BOX
+      </button>
+
+      <div id="boxResult" style="margin-top:15px;text-align:center"></div>
+    `;
+
+  }
+
+  if(type === "speed"){
+
+    title.innerText = "⚡ Speed Tap";
+    reward.innerText = "+20 Coin / Tap";
+
+    content.innerHTML = `
+      <p style="color:#9da5b7">
+        10 စက္ကန့်အတွင်း တတ်နိုင်သမျှ မြန်မြန်နှိပ်ပါ။
+      </p>
+
+      <button id="speedButton" onclick="speedTap()"
+        style="width:100%;margin-top:18px;height:110px;border:0;border-radius:20px;background:linear-gradient(135deg,#ffcc00,#ff7000);font-size:28px;font-weight:bold">
+        ⚡ TAP!
+      </button>
+
+      <div id="speedScore"
+        style="text-align:center;margin-top:15px;color:#ffd43b;font-size:18px">
+        0 Tap
+      </div>
+    `;
+
+    startSpeedGame();
+
+  }
+
+}
+
+
+/* COIN */
+
+function giveGameCoin(amount){
+
+  gameCoins += amount;
+
+  updateGameCoin();
+
+}
+
+
+/* QUIZ */
+
+function quizAnswer(correct){
+
+  const result = document.getElementById("quizResult");
+
+  if(correct){
+
+    gameCoins += 200;
+
+    updateGameCoin();
+
+    result.style.color="#42e69a";
+    result.innerText="✅ မှန်ပါတယ်! +200 Coin";
+
+  }else{
+
+    result.style.color="#ff6868";
+    result.innerText="❌ မမှန်ပါ";
+
+  }
+
+}
+
+
+/* MYSTERY BOX */
+
+function mysteryReward(){
+
+  const rewards = [50,100,150,200,300];
+
+  const reward =
+    rewards[Math.floor(Math.random()*rewards.length)];
+
+  gameCoins += reward;
+
+  updateGameCoin();
+
+  document.getElementById("boxResult").innerHTML =
+    "🎉 သင်ရရှိသော Reward <br><br><b style='color:#ffd43b;font-size:22px'>+" +
+    reward +
+    " Coin</b>";
+
+}
+
+
+/* SPEED TAP */
+
+let speedCount = 0;
+let speedRunning = false;
+let speedTimer;
+
+function startSpeedGame(){
+
+  speedCount = 0;
+  speedRunning = true;
+
+  document.getElementById("speedScore").innerText =
+    "0 Tap";
+
+  clearTimeout(speedTimer);
+
+  speedTimer = setTimeout(function(){
+
+    speedRunning = false;
+
+    const earned = speedCount * 20;
+
+    gameCoins += earned;
+
+    updateGameCoin();
+
+    document.getElementById("speedScore").innerHTML =
+      "⏱️ ပြီးပါပြီ<br><br>+" +
+      earned +
+      " Coin";
+
+  },10000);
+
+}
+
+
+function speedTap(){
+
+  if(!speedRunning) return;
+
+  speedCount++;
+
+  document.getElementById("speedScore").innerText =
+    speedCount + " Tap";
+
+}
+
+
+/* CLOSE */
+
+function closeGame(){
+
+  document.getElementById("gameArea").style.display="none";
+
+}
+
+
+/* GAMES NAV */
+
+document.querySelectorAll(".nav")[1].onclick = function(){
+
+  document.querySelector(".hero").style.display="none";
+  document.querySelector(".section-title").style.display="none";
+  document.querySelector(".cards").style.display="none";
+  document.querySelector(".daily").style.display="none";
+  document.querySelector(".withdraw-preview").style.display="none";
+
+  document.getElementById("gamesPage").style.display="block";
+
+  updateGameCoin();
+
+};
+function showHome(){
+
+  document.querySelector(".hero").style.display="block";
+  document.querySelector(".section-title").style.display="flex";
+  document.querySelector(".cards").style.display="grid";
+  document.querySelector(".daily").style.display="block";
+  document.querySelector(".withdraw-preview").style.display="block";
+
+  document.getElementById("gamesPage").style.display="none";
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(x => x.classList.remove("active"));
+
+  document
+    .querySelectorAll(".nav")[0]
+    .classList.add("active");
+
+}
+
+
+/* HOME NAV */
+
+document.querySelectorAll(".nav")[0].onclick = function(){
+
+  showHome();
+
+};
+
+
+/* GAMES NAV */
+
+document.querySelectorAll(".nav")[1].onclick = function(){
+
+  document.querySelector(".hero").style.display="none";
+  document.querySelector(".section-title").style.display="none";
+  document.querySelector(".cards").style.display="none";
+  document.querySelector(".daily").style.display="none";
+  document.querySelector(".withdraw-preview").style.display="none";
+
+  document.getElementById("gamesPage").style.display="block";
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(x => x.classList.remove("active"));
+
+  document
+    .querySelectorAll(".nav")[1]
+    .classList.add("active");
+
+  updateGameCoin();
+
+};
+  /* =========================
+   EARN PAGE
+========================= */
+
+function showEarn(){
+
+  document.querySelector(".hero").style.display="none";
+  document.querySelector(".section-title").style.display="none";
+  document.querySelector(".cards").style.display="none";
+  document.querySelector(".daily").style.display="none";
+  document.querySelector(".withdraw-preview").style.display="none";
+
+  document.getElementById("gamesPage").style.display="none";
+
+  let earnPage = document.getElementById("earnPage");
+
+  if(!earnPage){
+
+    earnPage = document.createElement("section");
+
+    earnPage.id = "earnPage";
+
+    earnPage.style.padding = "16px 16px 100px";
+
+    earnPage.innerHTML = `
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:18px">
+
+        <div>
+          <div style="color:#8d96aa;font-size:12px">
+            MM-Real-Earn
+          </div>
+
+          <h2 style="margin-top:5px">
+            🪙 Earn Coin
+          </h2>
+        </div>
+
+        <div class="coin-box">
+          🪙 <span id="earnCoinBalance">0</span>
+        </div>
+
+      </div>
+
+
+      <div class="daily">
+
+        <div class="daily-top">
+          <h2>📝 Daily Test</h2>
+          <span>+500 Coin</span>
+        </div>
+
+        <p style="
+          margin-top:12px;
+          color:#9da5b7;
+          font-size:13px;
+          line-height:1.6">
+
+          နေ့စဉ် မေးခွန်းများ ဖြေပြီး
+          Coin ရယူပါ။
+        </p>
+
+        <button
+          onclick="dailyTest()"
+          style="
+          width:100%;
+          margin-top:16px;
+          padding:14px;
+          border:0;
+          border-radius:14px;
+          background:linear-gradient(135deg,#ffd43b,#ff9800);
+          color:#111;
+          font-weight:bold">
+
+          📝 Daily Test စမယ်
+
+        </button>
+
+      </div>
+
+
+      <div class="daily">
+
+        <div class="daily-top">
+          <h2>🎬 Reward Video</h2>
+          <span>+200 Coin</span>
+        </div>
+
+        <p style="
+          margin-top:12px;
+          color:#9da5b7;
+          font-size:13px;
+          line-height:1.6">
+
+          Reward ရနိုင်သော Video ကို
+          ကြည့်ပြီး Coin ရယူပါ။
+        </p>
+
+        <button
+          onclick="watchRewardVideo()"
+          style="
+          width:100%;
+          margin-top:16px;
+          padding:14px;
+          border:0;
+          border-radius:14px;
+          background:#ffffff10;
+          color:#fff;
+          font-weight:bold">
+
+          ▶️ Video ကြည့်မယ်
+
+        </button>
+
+        <div id="videoStatus"
+          style="
+          margin-top:12px;
+          text-align:center;
+          color:#ffd43b">
+        </div>
+
+      </div>
+
+
+      <div class="daily">
+
+        <div class="daily-top">
+          <h2>👥 Refer & Earn</h2>
+          <span>Bonus</span>
+        </div>
+
+        <p style="
+          margin-top:12px;
+          color:#9da5b7;
+          font-size:13px;
+          line-height:1.6">
+
+          သူငယ်ချင်းများကို ဖိတ်ခေါ်ပြီး
+          Referral Bonus ရယူနိုင်ပါတယ်။
+
+        </p>
+
+        <button
+          onclick="showReferralInfo()"
+          style="
+          width:100%;
+          margin-top:16px;
+          padding:14px;
+          border:0;
+          border-radius:14px;
+          background:#ffffff10;
+          color:#fff;
+          font-weight:bold">
+
+          🔗 Refer & Earn
+
+        </button>
+
+        <div id="referStatus"
+          style="
+          margin-top:12px;
+          text-align:center;
+          color:#ffd43b">
+        </div>
+
+      </div>
+
+    `;
+
+    document
+      .querySelector(".app")
+      .insertBefore(
+        earnPage,
+        document.querySelector(".bottom")
+      );
+
+  }
+
+  earnPage.style.display="block";
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(x => x.classList.remove("active"));
+
+  document
+    .querySelectorAll(".nav")[2]
+    .classList.add("active");
+
+  updateEarnCoin();
+
+}
+
+
+/* EARN COIN DISPLAY */
+
+function updateEarnCoin(){
+
+  const el =
+    document.getElementById("earnCoinBalance");
+
+  if(el){
+    el.innerText = gameCoins;
+  }
+
+  updateGameCoin();
+
+}
+
+
+/* DAILY TEST */
+
+function dailyTest(){
+
+  const answer =
+    prompt("မြန်မာနိုင်ငံ၏ မြို့တော်က ဘယ်မြို့လဲ?");
+
+  if(!answer) return;
+
+  if(
+    answer.trim() === "နေပြည်တော်" ||
+    answer.trim() === "နေပြည်တော်မြို့"
+  ){
+
+    gameCoins += 500;
+
+    updateEarnCoin();
+
+    alert("✅ မှန်ပါတယ်! +500 Coin");
+
+  }else{
+
+    alert("❌ မမှန်ပါ။ ထပ်ကြိုးစားပါ။");
+
+  }
+
+}
+
+
+/* REWARD VIDEO */
+
+function watchRewardVideo(){
+
+  const status =
+    document.getElementById("videoStatus");
+
+  status.innerText =
+    "⏳ Video Reward စစ်ဆေးနေပါတယ်...";
+
+  setTimeout(function(){
+
+    gameCoins += 200;
+
+    updateEarnCoin();
+
+    status.innerText =
+      "🎉 +200 Coin ရရှိပါပြီ";
+
+  },3000);
+
+}
+
+
+/* REFER */
+
+function showReferralInfo(){
+
+  document.getElementById("referStatus").innerHTML =
+    "👥 Referral System ကို Account + Database ချိတ်ပြီးနောက်<br>" +
+    "အမှန်တကယ် အသုံးပြုနိုင်အောင် ပြုလုပ်မယ်။";
+
+}
+
+
+/* EARN NAV */
+
+document.querySelectorAll(".nav")[2].onclick = function(){
+
+  showEarn();
+
+};
+  /* =========================
+   WALLET PAGE
+========================= */
+
+function showWallet(){
+
+  document.querySelector(".hero").style.display="none";
+  document.querySelector(".section-title").style.display="none";
+  document.querySelector(".cards").style.display="none";
+  document.querySelector(".daily").style.display="none";
+  document.querySelector(".withdraw-preview").style.display="none";
+
+  document.getElementById("gamesPage").style.display="none";
+
+  const earnPage =
+    document.getElementById("earnPage");
+
+  if(earnPage){
+    earnPage.style.display="none";
+  }
+
+  document.getElementById("withdrawModal").style.display="flex";
+
+  document.getElementById("withdrawBalance").innerText =
+    gameCoins || 0;
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(x => x.classList.remove("active"));
+
+  document
+    .querySelectorAll(".nav")[3]
+    .classList.add("active");
+
+}
+
+
+/* WALLET NAV */
+
+document.querySelectorAll(".nav")[3].onclick = function(){
+
+  showWallet();
+
+};
+  /* =========================
+   PROFILE PAGE
+========================= */
+
+function showProfile(){
+
+  document.querySelector(".hero").style.display="none";
+  document.querySelector(".section-title").style.display="none";
+  document.querySelector(".cards").style.display="none";
+  document.querySelector(".daily").style.display="none";
+  document.querySelector(".withdraw-preview").style.display="none";
+
+  document.getElementById("gamesPage").style.display="none";
+
+  const earnPage =
+    document.getElementById("earnPage");
+
+  if(earnPage){
+    earnPage.style.display="none";
+  }
+
+  let profilePage =
+    document.getElementById("profilePage");
+
+  if(!profilePage){
+
+    profilePage = document.createElement("section");
+
+    profilePage.id = "profilePage";
+
+    profilePage.style.padding =
+      "16px 16px 100px";
+
+    profilePage.innerHTML = `
+
+      <div style="
+        text-align:center;
+        padding:25px 20px;
+        border-radius:22px;
+        background:#ffffff08;
+        border:1px solid #ffffff0d">
+
+        <div style="
+          width:75px;
+          height:75px;
+          margin:auto;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          border-radius:50%;
+          background:linear-gradient(135deg,#ffd43b,#ff8a00);
+          font-size:38px">
+
+          👤
+
+        </div>
+
+        <h2 style="margin-top:14px">
+          MM-Real-Earn User
+        </h2>
+
+        <p style="
+          margin-top:6px;
+          color:#858ea1;
+          font-size:12px">
+
+          Account ID: Guest
+
+        </p>
+
+      </div>
+
+
+      <div class="daily">
+
+        <div class="daily-top">
+          <h2>🪙 Coin Balance</h2>
+          <span>My Wallet</span>
+        </div>
+
+        <div style="
+          margin-top:18px;
+          text-align:center;
+          color:#ffd43b;
+          font-size:30px;
+          font-weight:bold">
+
+          🪙 <span id="profileCoins">0</span>
+
+        </div>
+
+      </div>
+
+
+      <div class="daily">
+
+        <h2 style="font-size:17px">
+          🔐 Account
+        </h2>
+
+        <p style="
+          margin-top:10px;
+          color:#858ea1;
+          font-size:12px;
+          line-height:1.6">
+
+          Google Account ဖြင့် Login ဝင်ပြီး
+          ကိုယ့် Coin၊ Game Progress နှင့်
+          Withdraw History များကို
+          သိမ်းဆည်းနိုင်အောင် နောက်ပိုင်းမှာ
+          Account System ချိတ်ဆက်မယ်။
+
+        </p>
+
+        <button
+          onclick="googleLoginInfo()"
+          style="
+          width:100%;
+          margin-top:15px;
+          padding:14px;
+          border:0;
+          border-radius:13px;
+          background:#fff;
+          color:#111;
+          font-weight:bold">
+
+          🔵 Continue with Google
+
+        </button>
+
+        <div id="loginStatus"
+          style="
+          margin-top:12px;
+          text-align:center;
+          font-size:12px">
+        </div>
+
+      </div>
+
+    `;
+
+    document
+      .querySelector(".app")
+      .insertBefore(
+        profilePage,
+        document.querySelector(".bottom")
+      );
+
+  }
+
+  profilePage.style.display="block";
+
+  document.getElementById("profileCoins").innerText =
+    gameCoins || 0;
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(x => x.classList.remove("active"));
+
+  document
+    .querySelectorAll(".nav")[4]
+    .classList.add("active");
+
+}
+
+
+/* GOOGLE LOGIN */
+
+function googleLoginInfo(){
+
+  document.getElementById("loginStatus").innerText =
+    "🔐 Google Login ကို Auth System ချိတ်ပြီးမှ အမှန်တကယ် Login ဝင်နိုင်ပါမယ်။";
+
+}
+
+
+/* PROFILE NAV */
+
+document.querySelectorAll(".nav")[4].onclick = function(){
+
+  showProfile();
+
+};
+  function hideAllPages(){
+
+  document.querySelector(".hero").style.display="none";
+  document.querySelector(".section-title").style.display="none";
+  document.querySelector(".cards").style.display="none";
+  document.querySelector(".daily").style.display="none";
+  document.querySelector(".withdraw-preview").style.display="none";
+
+  document.getElementById("gamesPage").style.display="none";
+
+  const earnPage =
+    document.getElementById("earnPage");
+
+  if(earnPage){
+    earnPage.style.display="none";
+  }
+
+  const profilePage =
+    document.getElementById("profilePage");
+
+  if(profilePage){
+    profilePage.style.display="none";
+  }
+}
+
+
+/* HOME */
+
+document.querySelectorAll(".nav")[0].onclick = function(){
+
+  hideAllPages();
+
+  document.querySelector(".hero").style.display="block";
+  document.querySelector(".section-title").style.display="flex";
+  document.querySelector(".cards").style.display="grid";
+  document.querySelector(".daily").style.display="block";
+  document.querySelector(".withdraw-preview").style.display="block";
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(x => x.classList.remove("active"));
+
+  this.classList.add("active");
+
+};
+
+
+/* GAMES */
+
+document.querySelectorAll(".nav")[1].onclick = function(){
+
+  hideAllPages();
+
+  document.getElementById("gamesPage").style.display="block";
+
+  updateGameCoin();
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(x => x.classList.remove("active"));
+
+  this.classList.add("active");
+
+};
+
+
+/* EARN */
+
+document.querySelectorAll(".nav")[2].onclick = function(){
+
+  hideAllPages();
+
+  showEarn();
+
+};
+
+
+/* WALLET */
+
+document.querySelectorAll(".nav")[3].onclick = function(){
+
+  hideAllPages();
+
+  document.getElementById("withdrawModal").style.display="flex";
+
+  document.getElementById("withdrawBalance").innerText =
+    gameCoins || 0;
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(x => x.classList.remove("active"));
+
+  this.classList.add("active");
+
+};
+
+
+/* PROFILE */
+
+document.querySelectorAll(".nav")[4].onclick = function(){
+
+  hideAllPages();
+
+  showProfile();
+
+};
+  /* =========================
+   COIN STORAGE
+========================= */
+
+let savedCoins = localStorage.getItem("mm_real_earn_coins");
+
+if(savedCoins !== null){
+  gameCoins = Number(savedCoins);
+}else{
+  gameCoins = 0;
+}
+
+
+/* ADD COIN */
+
+function addCoins(amount){
+
+  amount = Number(amount);
+
+  if(!Number.isFinite(amount) || amount <= 0){
+    return;
+  }
+
+  gameCoins += amount;
+
+  localStorage.setItem(
+    "mm_real_earn_coins",
+    gameCoins
+  );
+
+  updateAllCoinDisplays();
+
+}
+
+
+/* UPDATE ALL COIN DISPLAY */
+
+function updateAllCoinDisplays(){
+
+  const main =
+    document.getElementById("coinBalance");
+
+  const game =
+    document.getElementById("gameCoinBalance");
+
+  const earn =
+    document.getElementById("earnCoinBalance");
+
+  const wallet =
+    document.getElementById("withdrawBalance");
+
+  const profile =
+    document.getElementById("profileCoins");
+
+
+  if(main){
+    main.innerText = gameCoins;
+  }
+
+  if(game){
+    game.innerText = gameCoins;
+  }
+
+  if(earn){
+    earn.innerText = gameCoins;
+  }
+
+  if(wallet){
+    wallet.innerText = gameCoins;
+  }
+
+  if(profile){
+    profile.innerText = gameCoins;
+  }
+
+}
+
+
+/* START */
+
+updateAllCoinDisplays();
+  /* =========================
+   REWARD VIDEO
+========================= */
+
+let rewardVideoCount =
+  Number(localStorage.getItem("mm_reward_video_count") || 0);
+
+let rewardVideoDate =
+  localStorage.getItem("mm_reward_video_date");
+
+function resetRewardVideoDaily(){
+
+  const today =
+    new Date().toISOString().slice(0,10);
+
+  if(rewardVideoDate !== today){
+
+    rewardVideoDate = today;
+    rewardVideoCount = 0;
+
+    localStorage.setItem(
+      "mm_reward_video_date",
+      today
+    );
+
+    localStorage.setItem(
+      "mm_reward_video_count",
+      "0"
+    );
+
+  }
+
+}
+
+resetRewardVideoDaily();
+
+
+function openRewardVideo(){
+
+  resetRewardVideoDaily();
+
+  if(rewardVideoCount >= 30){
+
+    alert(
+      "🎬 ဒီနေ့ Reward Video 30 ကြိမ် ပြည့်သွားပါပြီ။"
+    );
+
+    return;
+  }
+
+  const reward =
+    ((rewardVideoCount + 1) % 10 === 0)
+    ? 2000
+    : 0;
+
+  rewardVideoCount++;
+
+  localStorage.setItem(
+    "mm_reward_video_count",
+    rewardVideoCount
+  );
+
+  if(reward > 0){
+
+    addCoins(reward);
+
+    alert(
+      "🎉 10 ကြိမ်ပြည့်ပါပြီ!\n\n" +
+      "+2,000 Coin ရရှိပါပြီ 🪙"
+    );
+
+  }else{
+
+    alert(
+      "▶️ Reward Video ပြီးပါပြီ။\n\n" +
+      "နောက်ထပ် " +
+      (10 - (rewardVideoCount % 10)) +
+      " ကြိမ်ပြည့်ရင် +2,000 Coin ရပါမယ်။"
+    );
+
+  }
+
+  updateRewardVideoUI();
+
+}
+
+
+function updateRewardVideoUI(){
+
+  const count =
+    document.getElementById("rewardVideoCount");
+
+  if(count){
+
+    count.innerText =
+      rewardVideoCount + " / 30";
+
+  }
+
+}
+    </script>
 </body>
 </html>
