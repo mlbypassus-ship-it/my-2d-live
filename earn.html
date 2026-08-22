@@ -53,7 +53,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:10px;
+  gap:8px;
 }
 
 .back{
@@ -140,7 +140,7 @@ body{
   line-height:1.7;
 }
 
-/* VIDEO */
+/* VIDEO CARD */
 
 .video-card{
   margin:16px;
@@ -170,7 +170,7 @@ body{
   font-size:12px;
 }
 
-/* VIDEO BOX */
+/* VIDEO */
 
 .video-box{
   width:100%;
@@ -224,8 +224,53 @@ body{
   font-size:18px;
 }
 
-.info .gold{
+.gold{
   color:#ffd43b;
+}
+
+/* WATCH BUTTON */
+
+.watch-button{
+  width:100%;
+
+  margin-top:16px;
+
+  padding:15px;
+
+  border:0;
+  border-radius:14px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ffd43b,
+    #ff9800
+  );
+
+  color:#111;
+
+  font-size:15px;
+  font-weight:bold;
+}
+
+.watch-button:disabled{
+  opacity:.45;
+}
+
+/* STATUS */
+
+.status{
+  text-align:center;
+
+  margin-top:12px;
+
+  min-height:24px;
+
+  color:#9da5b7;
+
+  font-size:12px;
+
+  line-height:1.6;
 }
 
 /* PROGRESS */
@@ -297,51 +342,6 @@ body{
   font-size:11px;
 }
 
-/* WATCH BUTTON */
-
-.watch-button{
-  width:100%;
-
-  margin-top:16px;
-
-  padding:15px;
-
-  border:0;
-  border-radius:14px;
-
-  background:
-  linear-gradient(
-    135deg,
-    #ffd43b,
-    #ff9800
-  );
-
-  color:#111;
-
-  font-size:15px;
-  font-weight:bold;
-}
-
-.watch-button:disabled{
-  opacity:.45;
-}
-
-/* STATUS */
-
-.status{
-  text-align:center;
-
-  margin-top:12px;
-
-  min-height:22px;
-
-  color:#9da5b7;
-
-  font-size:12px;
-
-  line-height:1.6;
-}
-
 </style>
 
 </head>
@@ -393,11 +393,11 @@ body{
   </h1>
 
   <p>
-    Reward Video ကိုကြည့်ပြီး
-    Daily Coin Reward ရယူနိုင်ပါတယ်။
-    Video ကို တကယ်ဖွင့်ပြီး
-    10 စက္ကန့်ကြည့်ပြီးမှ
-    Coin ရရှိပါမယ်။
+    Watch ခလုတ်ကိုနှိပ်ပြီး
+    Video ကိုတကယ်ဖွင့်ကြည့်ပါ။
+    Video PLAYING ဖြစ်ပြီး
+    10 စက္ကန့်ပြည့်မှသာ
+    Random Coin Reward ရရှိပါမယ်။
   </p>
 
 </section>
@@ -462,9 +462,10 @@ body{
   <button
     class="watch-button"
     id="watchButton"
-    onclick="claimReward()">
+    onclick="claimReward()"
+    disabled>
 
-    🎁 Video ကြည့်ပြီး Reward ယူမယ်
+    ⏳ Video ပြင်ဆင်နေသည်...
 
   </button>
 
@@ -472,6 +473,9 @@ body{
   <div
     class="status"
     id="watchStatus">
+
+    YouTube Video ပြင်ဆင်နေပါတယ်...
+
   </div>
 
 </section>
@@ -523,20 +527,29 @@ body{
 
 <script>
 
-/* =========================
+/* =====================================
    SETTINGS
-========================= */
+===================================== */
 
 const DAILY_LIMIT = 30;
 
 
-/* =========================
-   RANDOM REWARD
-========================= */
+/*
+  မင်းပေးထားတဲ့ YouTube Video
+  https://youtube.com/shorts/ha7t8JdMl94
+*/
+
+const YOUTUBE_VIDEO_ID =
+  "ha7t8JdMl94";
+
+
+/* Random Reward */
 
 const REWARDS = [
   100,
+  150,
   200,
+  250,
   300,
   400,
   500,
@@ -548,9 +561,9 @@ const REWARDS = [
 ];
 
 
-/* =========================
+/* =====================================
    VIDEO STORAGE
-========================= */
+===================================== */
 
 let videoCount =
   Number(
@@ -566,9 +579,9 @@ let videoDate =
   );
 
 
-/* =========================
-   YOUTUBE
-========================= */
+/* =====================================
+   YOUTUBE PLAYER VARIABLES
+===================================== */
 
 let ytPlayer = null;
 
@@ -579,204 +592,9 @@ let rewardStarted = false;
 let rewardClaimed = false;
 
 
-/* =========================
-   YOUTUBE API READY
-========================= */
-
-function onYouTubeIframeAPIReady(){
-
-  ytPlayer =
-    new YT.Player(
-      "youtubePlayer",
-      {
-        videoId:"ha7t8JdMl94",
-
-        playerVars:{
-          autoplay:0,
-          controls:1,
-          rel:0,
-          playsinline:1
-        },
-
-        events:{
-          onReady:
-            onPlayerReady,
-
-          onStateChange:
-            onPlayerStateChange
-        }
-
-      }
-    );
-
-}
-
-
-/* =========================
-   PLAYER READY
-========================= */
-
-function onPlayerReady(){
-
-  const status =
-    document.getElementById(
-      "watchStatus"
-    );
-
-  status.innerText =
-    "▶️ Watch ခလုတ်ကိုနှိပ်ပြီး Video စတင်ကြည့်ပါ။";
-
-}
-
-
-/* =========================
-   PLAYER STATE
-========================= */
-
-function onPlayerStateChange(event){
-
-  const button =
-    document.getElementById(
-      "watchButton"
-    );
-
-  const status =
-    document.getElementById(
-      "watchStatus"
-    );
-
-
-  /* =====================
-     PLAYING
-  ===================== */
-
-  if(
-    event.data ===
-    YT.PlayerState.PLAYING
-  ){
-
-    if(!rewardStarted){
-
-      rewardStarted = true;
-
-      let seconds = 10;
-
-      button.disabled = true;
-
-      status.style.color =
-        "#ffd43b";
-
-      status.innerText =
-        "▶️ Video ကြည့်နေပါသည်... " +
-        seconds +
-        "s";
-
-
-      rewardTimer =
-        setInterval(
-          function(){
-
-            seconds--;
-
-
-            if(seconds > 0){
-
-              status.innerText =
-                "▶️ Video ကြည့်နေပါသည်... " +
-                seconds +
-                "s";
-
-            }else{
-
-              clearInterval(
-                rewardTimer
-              );
-
-              rewardTimer = null;
-
-              giveVideoReward();
-
-            }
-
-          },
-          1000
-        );
-
-    }
-
-  }
-
-
-  /* =====================
-     PAUSED
-  ===================== */
-
-  if(
-    event.data ===
-    YT.PlayerState.PAUSED
-  ){
-
-    if(
-      rewardStarted &&
-      !rewardClaimed
-    ){
-
-      clearInterval(
-        rewardTimer
-      );
-
-      rewardTimer = null;
-
-      rewardStarted = false;
-
-      button.disabled = false;
-
-      button.innerText =
-        "▶️ Video ပြန်ဖွင့်မယ်";
-
-      status.style.color =
-        "#ffcc66";
-
-      status.innerText =
-        "⏸️ Video ရပ်ထားပါတယ်။ ပြန်ဖွင့်ပြီး ဆက်ကြည့်ပါ။";
-
-    }
-
-  }
-
-
-  /* =====================
-     ENDED
-  ===================== */
-
-  if(
-    event.data ===
-    YT.PlayerState.ENDED
-  ){
-
-    clearInterval(
-      rewardTimer
-    );
-
-    rewardTimer = null;
-
-    if(
-      rewardStarted &&
-      !rewardClaimed
-    ){
-
-      giveVideoReward();
-
-    }
-
-  }
-
-}
-
-
-/* =========================
+/* =====================================
    NEW DAY
-========================= */
+===================================== */
 
 function checkNewDay(){
 
@@ -808,9 +626,9 @@ function checkNewDay(){
 }
 
 
-/* =========================
+/* =====================================
    COIN
-========================= */
+===================================== */
 
 function getCoins(){
 
@@ -835,18 +653,18 @@ function updateCoinDisplay(){
     );
 
 
+  const videoCoinBalance =
+    document.getElementById(
+      "videoCoinBalance"
+    );
+
+
   if(coinBalance){
 
     coinBalance.innerText =
       coins.toLocaleString();
 
   }
-
-
-  const videoCoinBalance =
-    document.getElementById(
-      "videoCoinBalance"
-    );
 
 
   if(videoCoinBalance){
@@ -859,9 +677,9 @@ function updateCoinDisplay(){
 }
 
 
-/* =========================
+/* =====================================
    ADD COIN
-========================= */
+===================================== */
 
 function addCoin(amount){
 
@@ -884,29 +702,57 @@ function addCoin(amount){
 }
 
 
-/* =========================
+/* =====================================
    UPDATE UI
-========================= */
+===================================== */
 
 function updateUI(){
 
   checkNewDay();
 
 
-  document.getElementById(
-    "videoCount"
-  ).innerText =
-    videoCount +
-    " / " +
-    DAILY_LIMIT;
+  const videoCountElement =
+    document.getElementById(
+      "videoCount"
+    );
 
 
-  document.getElementById(
-    "progressCount"
-  ).innerText =
-    videoCount +
-    " / " +
-    DAILY_LIMIT;
+  const progressCountElement =
+    document.getElementById(
+      "progressCount"
+    );
+
+
+  const progressBar =
+    document.getElementById(
+      "progressBar"
+    );
+
+
+  const progressText =
+    document.getElementById(
+      "progressText"
+    );
+
+
+  if(videoCountElement){
+
+    videoCountElement.innerText =
+      videoCount +
+      " / " +
+      DAILY_LIMIT;
+
+  }
+
+
+  if(progressCountElement){
+
+    progressCountElement.innerText =
+      videoCount +
+      " / " +
+      DAILY_LIMIT;
+
+  }
 
 
   const percent =
@@ -917,17 +763,21 @@ function updateUI(){
     );
 
 
-  document.getElementById(
-    "progressBar"
-  ).style.width =
-    percent + "%";
+  if(progressBar){
+
+    progressBar.style.width =
+      percent + "%";
+
+  }
 
 
-  document.getElementById(
-    "progressText"
-  ).innerText =
-    Math.round(percent) +
-    "%";
+  if(progressText){
+
+    progressText.innerText =
+      Math.round(percent) +
+      "%";
+
+  }
 
 
   updateCoinDisplay();
@@ -954,9 +804,288 @@ function updateUI(){
 }
 
 
-/* =========================
+/* =====================================
+   YOUTUBE API
+===================================== */
+
+function onYouTubeIframeAPIReady(){
+
+  ytPlayer =
+    new YT.Player(
+      "youtubePlayer",
+      {
+
+        videoId:
+          YOUTUBE_VIDEO_ID,
+
+        playerVars:{
+          autoplay:0,
+          controls:1,
+          rel:0,
+          playsinline:1
+        },
+
+        events:{
+
+          onReady:
+            onPlayerReady,
+
+          onStateChange:
+            onPlayerStateChange
+
+        }
+
+      }
+    );
+
+}
+
+
+/* =====================================
+   PLAYER READY
+===================================== */
+
+function onPlayerReady(){
+
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
+
+
+  const status =
+    document.getElementById(
+      "watchStatus"
+    );
+
+
+  button.disabled = false;
+
+
+  button.innerText =
+    "🎁 Video ကြည့်ပြီး Reward ယူမယ်";
+
+
+  status.style.color =
+    "#9da5b7";
+
+
+  status.innerText =
+    "▶️ Watch ခလုတ်ကိုနှိပ်ပြီး Video စတင်ပါ။";
+
+}
+
+
+/* =====================================
+   PLAYER STATE
+===================================== */
+
+function onPlayerStateChange(event){
+
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
+
+
+  const status =
+    document.getElementById(
+      "watchStatus"
+    );
+
+
+  /*
+    VIDEO PLAYING
+  */
+
+  if(
+    event.data ===
+    YT.PlayerState.PLAYING
+  ){
+
+    /*
+      Timer မစရသေးရင်
+      10 seconds စတင်
+    */
+
+    if(!rewardStarted){
+
+      rewardStarted = true;
+
+
+      let seconds = 10;
+
+
+      button.disabled = true;
+
+
+      status.style.color =
+        "#ffd43b";
+
+
+      status.innerText =
+        "▶️ Video ကြည့်နေပါသည်... " +
+        seconds +
+        "s";
+
+
+      rewardTimer =
+        setInterval(
+          function(){
+
+            /*
+              Video တကယ် PLAYING
+              ဖြစ်နေသေးလား စစ်
+            */
+
+            if(
+              !ytPlayer ||
+              ytPlayer.getPlayerState() !==
+              YT.PlayerState.PLAYING
+            ){
+
+              clearInterval(
+                rewardTimer
+              );
+
+              rewardTimer = null;
+
+              rewardStarted = false;
+
+              return;
+
+            }
+
+
+            seconds--;
+
+
+            if(seconds > 0){
+
+              status.innerText =
+                "▶️ Video ကြည့်နေပါသည်... " +
+                seconds +
+                "s";
+
+            }
+
+
+            /*
+              10 seconds ပြည့်
+            */
+
+            if(seconds <= 0){
+
+              clearInterval(
+                rewardTimer
+              );
+
+              rewardTimer = null;
+
+
+              giveVideoReward();
+
+            }
+
+          },
+          1000
+        );
+
+    }
+
+  }
+
+
+  /*
+    VIDEO PAUSED
+  */
+
+  if(
+    event.data ===
+    YT.PlayerState.PAUSED
+  ){
+
+    if(
+      rewardStarted &&
+      !rewardClaimed
+    ){
+
+      clearInterval(
+        rewardTimer
+      );
+
+      rewardTimer = null;
+
+
+      rewardStarted = false;
+
+
+      button.disabled = false;
+
+
+      button.innerText =
+        "▶️ Video ပြန်ဖွင့်မယ်";
+
+
+      status.style.color =
+        "#ffcc66";
+
+
+      status.innerText =
+        "⏸️ Video ရပ်ထားပါတယ်။ ပြန်ဖွင့်ပြီး 10s ကြည့်ပါ။";
+
+    }
+
+  }
+
+
+  /*
+    VIDEO ENDED
+  */
+
+  if(
+    event.data ===
+    YT.PlayerState.ENDED
+  ){
+
+    clearInterval(
+      rewardTimer
+    );
+
+    rewardTimer = null;
+
+
+    /*
+      10 seconds မပြည့်သေးရင်
+      Reward မပေး
+    */
+
+    if(
+      !rewardClaimed &&
+      !rewardStarted
+    ){
+
+      button.disabled = false;
+
+      button.innerText =
+        "🎁 Video ပြန်ကြည့်မယ်";
+
+      status.style.color =
+        "#9da5b7";
+
+      status.innerText =
+        "Video ပြီးပါပြီ။ 10s မပြည့်သေးလို့ Reward မရပါ။";
+
+    }
+
+  }
+
+}
+
+
+/* =====================================
    WATCH BUTTON
-========================= */
+===================================== */
 
 function claimReward(){
 
@@ -975,14 +1104,51 @@ function claimReward(){
   }
 
 
-  if(!ytPlayer){
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
 
+
+  const status =
     document.getElementById(
       "watchStatus"
-    ).innerText =
-      "⏳ YouTube Video ပြင်ဆင်နေပါသည်...";
+    );
+
+
+  /*
+    YouTube Player မရသေး
+  */
+
+  if(!ytPlayer){
+
+    button.disabled = true;
+
+
+    status.style.color =
+      "#ffcc66";
+
+
+    status.innerText =
+      "⏳ YouTube Video ပြင်ဆင်နေပါတယ်... ခဏစောင့်ပါ။";
+
 
     return;
+
+  }
+
+
+  /*
+    Timer အဟောင်းရှိရင် ရပ်
+  */
+
+  if(rewardTimer){
+
+    clearInterval(
+      rewardTimer
+    );
+
+    rewardTimer = null;
 
   }
 
@@ -992,6 +1158,140 @@ function claimReward(){
   rewardClaimed = false;
 
 
+  button.disabled = true;
+
+
+  button.innerText =
+    "▶️ Video ဖွင့်နေသည်...";
+
+
+  status.style.color =
+    "#ffd43b";
+
+
+  status.innerText =
+    "🎬 YouTube Video ဖွင့်နေပါတယ်...";
+
+
+  try{
+
+    /*
+      Video အစကနေစ
+    */
+
+    ytPlayer.seekTo(
+      0,
+      true
+    );
+
+
+    /*
+      Auto Play
+    */
+
+    ytPlayer.playVideo();
+
+  }
+
+  catch(error){
+
+    button.disabled = false;
+
+
+    button.innerText =
+      "🎁 Video ကြည့်ပြီး Reward ယူမယ်";
+
+
+    status.style.color =
+      "#ff6868";
+
+
+    status.innerText =
+      "❌ Video ဖွင့်မရပါ။ ထပ်ကြိုးစားပါ။";
+
+  }
+
+}
+
+
+/* =====================================
+   RANDOM REWARD
+===================================== */
+
+function giveVideoReward(){
+
+  /*
+    တစ်ကြိမ်ထက်ပိုပြီး
+    Reward မပေးအောင်
+  */
+
+  if(rewardClaimed){
+
+    return;
+
+  }
+
+
+  checkNewDay();
+
+
+  if(
+    videoCount >=
+    DAILY_LIMIT
+  ){
+
+    updateUI();
+
+    return;
+
+  }
+
+
+  /*
+    Reward Lock
+  */
+
+  rewardClaimed = true;
+
+
+  rewardStarted = false;
+
+
+  /*
+    Random Coin
+  */
+
+  const reward =
+    REWARDS[
+      Math.floor(
+        Math.random() *
+        REWARDS.length
+      )
+    ];
+
+
+  /*
+    Video Count +1
+  */
+
+  videoCount++;
+
+
+  localStorage.setItem(
+    "mm_video_count",
+    videoCount
+  );
+
+
+  /*
+    Coin + Reward
+  */
+
+  addCoin(
+    reward
+  );
+
+
   const button =
     document.getElementById(
       "watchButton"
@@ -999,4 +1299,77 @@ function claimReward(){
 
 
   const status =
-    document.getElementBy
+    document.getElementById(
+      "watchStatus"
+    );
+
+
+  button.disabled = false;
+
+
+  button.innerText =
+    "🎁 နောက် Video ကြည့်မယ်";
+
+
+  status.style.color =
+    "#42e69a";
+
+
+  status.innerText =
+    "🎉 +" +
+    reward.toLocaleString() +
+    " Coin ရရှိပါပြီ 🪙";
+
+
+  updateUI();
+
+}
+
+
+/* =====================================
+   HOME
+===================================== */
+
+function goHome(){
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+/* =====================================
+   START
+===================================== */
+
+checkNewDay();
+
+updateUI();
+
+
+/* =====================================
+   PAGE SHOW
+===================================== */
+
+window.addEventListener(
+  "pageshow",
+  function(){
+
+    checkNewDay();
+
+    updateUI();
+
+  }
+);
+
+</script>
+
+
+<!-- YOUTUBE IFRAME API -->
+
+<script
+  src="https://www.youtube.com/iframe_api">
+</script>
+
+</body>
+</html>
