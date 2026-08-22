@@ -681,26 +681,134 @@ function updateCoinDisplay(){
    ADD COIN
 ===================================== */
 
-function addCoin(amount){
+async function addCoin(amount){
 
-  let coins =
-    getCoins();
+  try{
 
+    /* Login စစ် */
 
-  coins +=
-    Number(amount);
-
-
-  localStorage.setItem(
-    "mm_real_earn_coins",
-    coins
-  );
+    const {
+      data: sessionData,
+      error: sessionError
+    } =
+    await supabaseClient.auth.getSession();
 
 
-  updateCoinDisplay();
+    if(sessionError || !sessionData.session){
 
-}
+      console.error(
+        "Login Error:",
+        sessionError
+      );
 
+      return false;
+
+    }
+
+
+    const user =
+      sessionData.session.user;
+
+
+    /* လက်ရှိ balance ကို Database ကနေယူ */
+
+    const {
+      data: profile,
+      error: profileError
+    } =
+    await supabaseClient
+      .from("profiles")
+      .select("balance")
+      .eq("id", user.id)
+      .single();
+
+
+    if(profileError){
+
+      console.error(
+        "Load Balance Error:",
+        profileError
+      );
+
+      return false;
+
+    }
+
+
+    const oldBalance =
+      Number(profile.balance || 0);
+
+
+    const newBalance =
+      oldBalance + Number(amount);
+
+
+    /* Database ထဲ တကယ်သိမ်း */
+
+    const {
+      data: updatedProfile,
+      error: updateError
+    } =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        balance: newBalance
+      })
+      .eq("id", user.id)
+      .select("balance")
+      .single();
+
+
+    if(updateError){
+
+      console.error(
+        "DATABASE UPDATE ERROR:",
+        updateError
+      );
+
+      alert(
+        "Coin သိမ်းမရပါ\n\n" +
+        updateError.message
+      );
+
+      return false;
+
+    }
+
+
+    /* Screen Balance update */
+
+    currentBalance =
+      Number(
+        updatedProfile.balance || 0
+      );
+
+
+    updateCoinDisplay();
+
+
+    console.log(
+      "Coin Saved:",
+      currentBalance
+    );
+
+
+    return true;
+
+  }
+
+  catch(error){
+
+    console.error(
+      "ADD COIN ERROR:",
+      error
+    );
+
+    return false;
+
+  }
+
+    }
 
 /* =====================================
    UPDATE UI
