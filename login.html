@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#080b16">
+
+<title>MM-Real-Earn • Login</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#070a12;
+  color:#fff;
+  font-family:Arial,"Noto Sans Myanmar",sans-serif;
+}
+
+.app{
+  width:100%;
+  max-width:430px;
+  padding:20px;
+}
+
+.card{
+  padding:30px 22px;
+  border-radius:28px;
+
+  background:
+    radial-gradient(circle at 80% 10%,#ffd43b20,transparent 30%),
+    linear-gradient(145deg,#151c30,#0e1320);
+
+  border:1px solid #ffffff12;
+  box-shadow:0 20px 60px #0008;
+  text-align:center;
+}
+
+.logo{
+  width:72px;
+  height:72px;
+  margin:0 auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:22px;
+
+  background:linear-gradient(
+    135deg,
+    #ffd43b,
+    #ff8a00
+  );
+
+  font-size:38px;
+}
+
+h1{
+  margin-top:18px;
+  font-size:25px;
+}
+
+.subtitle{
+  margin-top:8px;
+  color:#8992a5;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.google-btn{
+  width:100%;
+  margin-top:25px;
+  padding:15px;
+
+  border:1px solid #ffffff15;
+  border-radius:15px;
+
+  background:#fff;
+  color:#111;
+
+  font-size:15px;
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
+.google-btn:disabled{
+  opacity:.55;
+}
+
+.status{
+  min-height:24px;
+  margin-top:15px;
+
+  color:#8992a5;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.note{
+  margin-top:22px;
+  padding:13px;
+
+  border-radius:14px;
+
+  background:#ffffff08;
+  border:1px solid #ffffff0d;
+
+  color:#727b90;
+  font-size:11px;
+  line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="card">
+
+    <div class="logo">
+      🪙
+    </div>
+
+    <h1>
+      MM-Real-Earn
+    </h1>
+
+    <p class="subtitle">
+      Earn • Play • Reward
+      <br>
+      Google Account ဖြင့် Login ဝင်ပါ။
+    </p>
+
+    <button
+      class="google-btn"
+      id="googleBtn"
+      onclick="loginWithGoogle()">
+
+      🔐 Continue with Google
+
+    </button>
+
+    <div
+      class="status"
+      id="status">
+    </div>
+
+    <div class="note">
+      Google Account တစ်ခုကို User တစ်ယောက်အဖြစ်
+      သတ်မှတ်ပြီး Coin Balance ကို Account နဲ့
+      ချိတ်ဆက်သိမ်းဆည်းမယ်။
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   SUPABASE
+===================================== */
+
+const SUPABASE_URL =
+  "https://acclbthzfzrfbwyslpvv.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_PxrCIfh0MfL6KT1iQxgqfw__IgNG1OY";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+function showStatus(message,color){
+
+  const status =
+    document.getElementById("status");
+
+  status.innerText =
+    message;
+
+  status.style.color =
+    color || "#8992a5";
+
+}
+
+
+/* =====================================
+   GOOGLE LOGIN
+===================================== */
+
+async function loginWithGoogle(){
+
+  const button =
+    document.getElementById("googleBtn");
+
+  button.disabled = true;
+
+  button.innerText =
+    "⏳ Google Login...";
+
+
+  showStatus(
+    "Google Login ဖွင့်နေပါတယ်...",
+    "#ffd43b"
+  );
+
+
+  try{
+
+    const { error } =
+      await supabaseClient.auth.signInWithOAuth({
+
+        provider:"google",
+
+        options:{
+
+          redirectTo:
+            window.location.origin +
+            "/index.html"
+
+        }
+
+      });
+
+
+    if(error){
+
+      console.error(error);
+
+      showStatus(
+        "❌ Login မအောင်မြင်ပါ။ " +
+        error.message,
+        "#ff6868"
+      );
+
+      button.disabled = false;
+
+      button.innerText =
+        "🔐 Continue with Google";
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "❌ Login Error ဖြစ်သွားပါတယ်။",
+      "#ff6868"
+    );
+
+    button.disabled = false;
+
+    button.innerText =
+      "🔐 Continue with Google";
+
+  }
+
+}
+
+
+/* =====================================
+   CHECK LOGIN
+===================================== */
+
+async function checkLogin(){
+
+  const {
+    data
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if(data.session){
+
+    window.location.href =
+      "index.html";
+
+  }
+
+}
+
+
+/* =====================================
+   AUTH STATE
+===================================== */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event,session){
+
+    if(session){
+
+      window.location.href =
+        "index.html";
+
+    }
+
+  }
+);
+
+
+/* =====================================
+   START
+===================================== */
+
+checkLogin();
+
+</script>
+
+</body>
+</html>
