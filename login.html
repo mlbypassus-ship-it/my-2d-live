@@ -7,8 +7,6 @@
 
 <title>MM-Real-Earn • Login</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 *{
   box-sizing:border-box;
@@ -21,88 +19,71 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#070a12;
+  background:
+    radial-gradient(circle at 20% 10%,#17315c55,transparent 30%),
+    radial-gradient(circle at 90% 30%,#5c2b7650,transparent 30%),
+    linear-gradient(180deg,#0b1020,#070a12);
   color:#fff;
   font-family:Arial,"Noto Sans Myanmar",sans-serif;
 }
 
-.app{
-  width:100%;
-  max-width:430px;
-  padding:20px;
-}
-
-.card{
+.login{
+  width:calc(100% - 32px);
+  max-width:420px;
   padding:30px 22px;
   border-radius:28px;
-
-  background:
-    radial-gradient(circle at 80% 10%,#ffd43b20,transparent 30%),
-    linear-gradient(145deg,#151c30,#0e1320);
-
+  background:#111827dd;
   border:1px solid #ffffff12;
-  box-shadow:0 20px 60px #0008;
+  box-shadow:0 25px 70px #0008;
   text-align:center;
 }
 
 .logo{
   width:72px;
   height:72px;
-  margin:0 auto;
-
+  margin:auto;
   display:flex;
   align-items:center;
   justify-content:center;
-
   border-radius:22px;
-
-  background:linear-gradient(
-    135deg,
-    #ffd43b,
-    #ff8a00
-  );
-
   font-size:38px;
+  background:linear-gradient(135deg,#ffd43b,#ff8a00);
+  box-shadow:0 15px 40px #ff9d0033;
 }
 
 h1{
-  margin-top:18px;
+  margin-top:20px;
   font-size:25px;
 }
 
-.subtitle{
-  margin-top:8px;
-  color:#8992a5;
+.sub{
+  margin-top:9px;
+  color:#8f98aa;
   font-size:13px;
   line-height:1.7;
 }
 
-.google-btn{
+.google{
   width:100%;
   margin-top:25px;
   padding:15px;
-
   border:1px solid #ffffff15;
   border-radius:15px;
-
   background:#fff;
   color:#111;
-
   font-size:15px;
   font-weight:bold;
-
   cursor:pointer;
 }
 
-.google-btn:disabled{
+.google:disabled{
   opacity:.55;
 }
 
 .status{
-  min-height:24px;
+  min-height:22px;
   margin-top:15px;
-
-  color:#8992a5;
+  color:#9da5b7;
   font-size:12px;
   line-height:1.6;
 }
@@ -110,13 +91,9 @@ h1{
 .note{
   margin-top:22px;
   padding:13px;
-
   border-radius:14px;
-
   background:#ffffff08;
-  border:1px solid #ffffff0d;
-
-  color:#727b90;
+  color:#777f92;
   font-size:11px;
   line-height:1.6;
 }
@@ -125,54 +102,49 @@ h1{
 
 <body>
 
-<div class="app">
+<div class="login">
 
-  <div class="card">
+  <div class="logo">
+    🪙
+  </div>
 
-    <div class="logo">
-      🪙
-    </div>
+  <h1>MM-Real-Earn</h1>
 
-    <h1>
-      MM-Real-Earn
-    </h1>
+  <div class="sub">
+    Earn • Play • Reward
+    <br>
+    Google Account ဖြင့် Login ဝင်ပါ
+  </div>
 
-    <p class="subtitle">
-      Earn • Play • Reward
-      <br>
-      Google Account ဖြင့် Login ဝင်ပါ။
-    </p>
+  <button
+    class="google"
+    id="googleBtn"
+    onclick="googleLogin()">
 
-    <button
-      class="google-btn"
-      id="googleBtn"
-      onclick="loginWithGoogle()">
+    🔵 Continue with Google
 
-      🔐 Continue with Google
+  </button>
 
-    </button>
+  <div
+    class="status"
+    id="status">
+  </div>
 
-    <div
-      class="status"
-      id="status">
-    </div>
-
-    <div class="note">
-      Google Account တစ်ခုကို User တစ်ယောက်အဖြစ်
-      သတ်မှတ်ပြီး Coin Balance ကို Account နဲ့
-      ချိတ်ဆက်သိမ်းဆည်းမယ်။
-    </div>
-
+  <div class="note">
+    Google Account တစ်ခုစီအတွက်
+    Coin Balance ကို သီးခြားသိမ်းဆည်းထားပါမယ်။
   </div>
 
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-/* =====================================
+/* =========================
    SUPABASE
-===================================== */
+========================= */
 
 const SUPABASE_URL =
   "https://acclbthzfzrfbwyslpvv.supabase.co";
@@ -188,132 +160,121 @@ const supabaseClient =
   );
 
 
-/* =====================================
+/* =========================
    STATUS
-===================================== */
+========================= */
 
-function showStatus(message,color){
+function showStatus(text,color="#9da5b7"){
 
   const status =
     document.getElementById("status");
 
-  status.innerText =
-    message;
-
-  status.style.color =
-    color || "#8992a5";
+  status.innerText = text;
+  status.style.color = color;
 
 }
 
 
-/* =====================================
-   GOOGLE LOGIN
-===================================== */
-
-async function loginWithGoogle(){
-
-  const button =
-    document.getElementById("googleBtn");
-
-  button.disabled = true;
-
-  button.innerText =
-    "⏳ Google Login...";
-
-
-  showStatus(
-    "Google Login ဖွင့်နေပါတယ်...",
-    "#ffd43b"
-  );
-
-
-  try{
-
-    const { error } =
-      await supabaseClient.auth.signInWithOAuth({
-
-        provider:"google",
-
-        options:{
-
-          redirectTo:
-            window.location.origin +
-            "/index.html"
-
-        }
-
-      });
-
-
-    if(error){
-
-      console.error(error);
-
-      showStatus(
-        "❌ Login မအောင်မြင်ပါ။ " +
-        error.message,
-        "#ff6868"
-      );
-
-      button.disabled = false;
-
-      button.innerText =
-        "🔐 Continue with Google";
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    showStatus(
-      "❌ Login Error ဖြစ်သွားပါတယ်။",
-      "#ff6868"
-    );
-
-    button.disabled = false;
-
-    button.innerText =
-      "🔐 Continue with Google";
-
-  }
-
-}
-
-
-/* =====================================
+/* =========================
    CHECK LOGIN
-===================================== */
+========================= */
 
 async function checkLogin(){
 
   const {
-    data
+    data,
+    error
   } =
-    await supabaseClient.auth.getSession();
+  await supabaseClient.auth.getSession();
+
+
+  if(error){
+
+    console.error(error);
+    return;
+
+  }
 
 
   if(data.session){
 
-    window.location.href =
-      "index.html";
+    window.location.replace(
+      "index.html"
+    );
 
   }
 
 }
 
 
-/* =====================================
-   AUTH STATE
-===================================== */
+/* =========================
+   GOOGLE LOGIN
+========================= */
+
+async function googleLogin(){
+
+  const button =
+    document.getElementById(
+      "googleBtn"
+    );
+
+
+  button.disabled = true;
+
+  showStatus(
+    "🔄 Google Login ဖွင့်နေပါတယ်..."
+  );
+
+
+  const {
+    error
+  } =
+  await supabaseClient.auth.signInWithOAuth({
+
+    provider:"google",
+
+    options:{
+
+      redirectTo:
+        "https://mlbypassus-ship-it.github.io/my-2d-live/index.html"
+
+    }
+
+  });
+
+
+  if(error){
+
+    console.error(error);
+
+    button.disabled = false;
+
+    showStatus(
+      "❌ Login မအောင်မြင်ပါ။ " +
+      error.message,
+      "#ff6868"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   AUTH LISTENER
+========================= */
 
 supabaseClient.auth.onAuthStateChange(
   function(event,session){
 
-    if(session){
+    if(
+      event === "SIGNED_IN" &&
+      session
+    ){
 
-      window.location.href =
-        "index.html";
+      window.location.replace(
+        "index.html"
+      );
 
     }
 
@@ -321,9 +282,9 @@ supabaseClient.auth.onAuthStateChange(
 );
 
 
-/* =====================================
+/* =========================
    START
-===================================== */
+========================= */
 
 checkLogin();
 
