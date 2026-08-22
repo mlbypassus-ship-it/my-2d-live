@@ -4,43 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#080b16">
-
 <title>MM-Real-Earn</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
   background:#070a12;
   color:#fff;
   font-family:Arial,"Noto Sans Myanmar",sans-serif;
-  min-height:100vh;
 }
 
 .app{
-  width:100%;
   max-width:500px;
   min-height:100vh;
   margin:auto;
   padding-bottom:90px;
   background:
-    radial-gradient(circle at 20% 10%,#17315c55,transparent 30%),
-    radial-gradient(circle at 90% 30%,#5c2b7650,transparent 30%),
-    linear-gradient(180deg,#0b1020,#070a12);
+  radial-gradient(circle at 20% 10%,#17315c55,transparent 30%),
+  radial-gradient(circle at 90% 30%,#5c2b7650,transparent 30%),
+  linear-gradient(180deg,#0b1020,#070a12);
 }
-
-/* HEADER */
 
 .header{
   position:sticky;
   top:0;
   z-index:20;
   padding:16px;
-  background:#0b1020dd;
+  background:#0b1020ee;
   backdrop-filter:blur(14px);
   border-bottom:1px solid #ffffff12;
 }
@@ -66,20 +57,10 @@ body{
   justify-content:center;
   font-size:24px;
   background:linear-gradient(135deg,#ffd43b,#ff8a00);
-  box-shadow:0 8px 25px #ffb00030;
 }
 
-.logo-text b{
-  display:block;
-  font-size:18px;
-}
-
-.logo-text small{
-  color:#8d96aa;
-  font-size:11px;
-}
-
-/* COIN */
+.logo-text b{display:block;font-size:18px}
+.logo-text small{color:#8d96aa;font-size:11px}
 
 .coin-box{
   display:flex;
@@ -91,16 +72,8 @@ body{
   border:1px solid #ffffff12;
 }
 
-.coin{
-  font-size:19px;
-}
-
-.coin-value{
-  color:#ffd43b;
-  font-weight:bold;
-}
-
-/* NOTICE */
+.coin{font-size:19px}
+.coin-value{color:#ffd43b;font-weight:bold}
 
 .notice{
   margin:14px 16px 0;
@@ -133,23 +106,18 @@ body{
   to{transform:translateX(-100%)}
 }
 
-/* HERO */
-
 .hero{
   margin:16px;
   padding:25px 20px;
   border-radius:25px;
   background:
-    radial-gradient(circle at 80% 20%,#ffd43b20,transparent 30%),
-    linear-gradient(135deg,#171d35,#101522);
+  radial-gradient(circle at 80% 20%,#ffd43b20,transparent 30%),
+  linear-gradient(135deg,#171d35,#101522);
   border:1px solid #ffffff12;
   box-shadow:0 15px 45px #00000035;
 }
 
-.hero-title{
-  color:#8d96aa;
-  font-size:13px;
-}
+.hero-title{color:#8d96aa;font-size:13px}
 
 .hero h1{
   margin-top:7px;
@@ -175,8 +143,6 @@ body{
   font-weight:bold;
 }
 
-/* QUICK */
-
 .section-title{
   margin:22px 16px 12px;
   display:flex;
@@ -184,16 +150,8 @@ body{
   align-items:center;
 }
 
-.section-title h2{
-  font-size:18px;
-}
-
-.section-title span{
-  color:#727b90;
-  font-size:12px;
-}
-
-/* CARDS */
+.section-title h2{font-size:18px}
+.section-title span{color:#727b90;font-size:12px}
 
 .cards{
   display:grid;
@@ -208,11 +166,6 @@ body{
   border-radius:20px;
   background:#ffffff08;
   border:1px solid #ffffff0d;
-  transition:.2s;
-}
-
-.card:active{
-  transform:scale(.97);
 }
 
 .card-icon{
@@ -237,8 +190,6 @@ body{
   font-size:11px;
 }
 
-/* DAILY */
-
 .daily{
   margin:16px;
   padding:20px;
@@ -250,17 +201,10 @@ body{
 .daily-top{
   display:flex;
   justify-content:space-between;
-  align-items:center;
 }
 
-.daily-top h2{
-  font-size:17px;
-}
-
-.daily-top span{
-  color:#ffd43b;
-  font-size:12px;
-}
+.daily-top h2{font-size:17px}
+.daily-top span{color:#ffd43b;font-size:12px}
 
 .progress{
   height:9px;
@@ -273,7 +217,6 @@ body{
 .progress-bar{
   width:35%;
   height:100%;
-  border-radius:10px;
   background:linear-gradient(90deg,#ffd43b,#ff8a00);
 }
 
@@ -285,9 +228,7 @@ body{
   font-size:11px;
 }
 
-/* WITHDRAW */
-
-.withdraw{
+.withdraw-preview{
   margin:16px;
   padding:20px;
   border-radius:22px;
@@ -295,17 +236,15 @@ body{
   border:1px solid #ffffff0d;
 }
 
-.withdraw h2{
-  font-size:17px;
-}
+.withdraw-preview h2{font-size:17px}
 
-.withdraw p{
+.withdraw-preview p{
   margin-top:7px;
   color:#7f8799;
   font-size:12px;
 }
 
-.withdraw-row{
+.payment-row{
   display:flex;
   gap:10px;
   margin-top:15px;
@@ -316,9 +255,7 @@ body{
   padding:13px;
   border-radius:14px;
   background:#ffffff08;
-  border:1px solid #ffffff0d;
   text-align:center;
-  font-size:13px;
 }
 
 .payment span{
@@ -326,8 +263,6 @@ body{
   font-size:22px;
   margin-bottom:5px;
 }
-
-/* BOTTOM */
 
 .bottom{
   position:fixed;
@@ -358,10 +293,150 @@ body{
   margin-bottom:4px;
 }
 
-.nav.active{
+.nav.active{color:#ffd43b}
+
+/* WITHDRAW MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:#000b;
+}
+
+.modal-box{
+  width:100%;
+  max-width:500px;
+  background:#111827;
+  border-radius:25px 25px 0 0;
+  padding:22px;
+  box-shadow:0 -15px 50px #0008;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.close{
+  width:40px;
+  padding:8px;
+  border:0;
+  border-radius:10px;
+  background:#ffffff10;
+  color:#fff;
+}
+
+.balance{
+  padding:15px;
+  border-radius:15px;
+  background:#ffffff08;
+  margin-bottom:18px;
+}
+
+.balance small{color:#8992a5}
+
+.balance strong{
+  display:block;
+  margin-top:5px;
+  color:#ffd43b;
+  font-size:25px;
+}
+
+.label{
+  color:#8992a5;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.amount-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.amount{
+  padding:14px 8px;
+  border:1px solid #ffffff12;
+  border-radius:14px;
+  background:#ffffff08;
+  color:#fff;
+  font-weight:bold;
+}
+
+.amount small{
+  display:block;
+  margin-top:5px;
   color:#ffd43b;
 }
 
+.amount.selected{
+  border-color:#ffd43b;
+  background:#ffd43b18;
+}
+
+#paymentArea{display:none;margin-top:20px}
+
+.pay-grid{
+  display:flex;
+  gap:10px;
+}
+
+.pay{
+  flex:1;
+  padding:14px;
+  border:1px solid #ffffff12;
+  border-radius:14px;
+  background:#ffffff08;
+  color:#fff;
+  font-weight:bold;
+}
+
+.pay.selected-kpay{
+  border-color:#20d16d;
+  background:#20d16d22;
+}
+
+.pay.selected-wave{
+  border-color:#3187ff;
+  background:#3187ff22;
+}
+
+.phone{
+  width:100%;
+  margin-top:12px;
+  padding:14px;
+  border:0;
+  outline:0;
+  border-radius:12px;
+  background:#24243a;
+  color:#fff;
+  font-size:16px;
+}
+
+.submit{
+  width:100%;
+  margin-top:12px;
+  padding:15px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(135deg,#ffd43b,#ff9800);
+  color:#111;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.status{
+  text-align:center;
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.5;
+}
 </style>
 </head>
 
@@ -369,223 +444,420 @@ body{
 
 <div class="app">
 
-  <!-- HEADER -->
+<header class="header">
+  <div class="header-row">
 
-  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">🪙</div>
 
-    <div class="header-row">
-
-      <div class="logo">
-
-        <div class="logo-icon">
-          🪙
-        </div>
-
-        <div class="logo-text">
-          <b>MM-Real-Earn</b>
-          <small>Earn • Play • Reward</small>
-        </div>
-
+      <div class="logo-text">
+        <b>MM-Real-Earn</b>
+        <small>Earn • Play • Reward</small>
       </div>
-
-      <div class="coin-box">
-        <span class="coin">🪙</span>
-        <span class="coin-value" id="coinBalance">
-          0
-        </span>
-      </div>
-
     </div>
 
-  </header>
-
-
-  <!-- NOTICE -->
-
-  <div class="notice">
-
-    <div class="notice-label">
-      🔔 NOTI
+    <div class="coin-box">
+      <span class="coin">🪙</span>
+      <span class="coin-value" id="coinBalance">0</span>
     </div>
 
-    <div class="marquee">
-      MM-Real-Earn မှာ ဂိမ်းဆော့ပြီး Coin စုနိုင်ပါတယ် • Daily Reward အသစ်များ ရရှိနိုင်ပါပြီ 🎁
+  </div>
+</header>
+
+<div class="notice">
+  <div class="notice-label">🔔 NOTI</div>
+
+  <div class="marquee">
+    MM-Real-Earn မှာ Game ဆော့ပြီး Coin စုနိုင်ပါတယ် • Daily Reward အသစ်များ ရရှိနိုင်ပါပြီ 🎁
+  </div>
+</div>
+
+<section class="hero">
+
+  <div class="hero-title">မင်္ဂလာပါ 👋</div>
+
+  <h1>Coin စုပါ၊ Reward ရယူပါ</h1>
+
+  <p>
+    Mini Game ဆော့ပါ၊ Daily Test ဖြေပါ၊
+    Reward Video ကြည့်ပါ၊ Coin စုဆောင်းပြီး
+    သတ်မှတ်ထားသော Reward များ ရယူနိုင်ပါတယ်။
+  </p>
+
+  <button class="earn-button">
+    🚀 Earn Coin စတင်မယ်
+  </button>
+
+</section>
+
+<div class="section-title">
+  <h2>⚡ Quick Earn</h2>
+  <span>ပိုမိုရယူရန်</span>
+</div>
+
+<div class="cards">
+
+  <div class="card">
+    <div class="card-icon">🎮</div>
+    <h3>Mini Games</h3>
+    <p>Game ဆော့ပြီး Coin ရယူပါ</p>
+  </div>
+
+  <div class="card">
+    <div class="card-icon">📝</div>
+    <h3>Daily Quiz</h3>
+    <p>မြန်မာ Quiz ဖြေပြီး Coin ရယူပါ</p>
+  </div>
+
+  <div class="card">
+    <div class="card-icon">🎬</div>
+    <h3>Reward Video</h3>
+    <p>Reward ရနိုင်သော Video များ</p>
+  </div>
+
+  <div class="card">
+    <div class="card-icon">👥</div>
+    <h3>Refer & Earn</h3>
+    <p>သူငယ်ချင်းခေါ်ပြီး Bonus ရယူပါ</p>
+  </div>
+
+</div>
+
+<section class="daily">
+
+  <div class="daily-top">
+    <h2>🎁 Daily Progress</h2>
+    <span>7 Days</span>
+  </div>
+
+  <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="daily-info">
+    <span>Today's Progress</span>
+    <span>35%</span>
+  </div>
+
+</section>
+
+<section class="withdraw-preview">
+
+  <h2>💸 ငွေထုတ်ယူရန်</h2>
+
+  <p>
+    သတ်မှတ်ထားသော Coin ပြည့်မီပါက
+    KPay / Wave Money ဖြင့် ငွေထုတ်ရန် Request တင်နိုင်ပါတယ်။
+  </p>
+
+  <div class="payment-row">
+
+    <div class="payment">
+      <span>💚</span>
+      KPay
+    </div>
+
+    <div class="payment">
+      <span>💙</span>
+      Wave Money
     </div>
 
   </div>
 
+</section>
 
-  <!-- HERO -->
+<nav class="bottom">
 
-  <section class="hero">
+  <button class="nav active">
+    <span>🏠</span>
+    Home
+  </button>
 
-    <div class="hero-title">
-      မင်္ဂလာပါ 👋
+  <button class="nav">
+    <span>🎮</span>
+    Games
+  </button>
+
+  <button class="nav">
+    <span>🪙</span>
+    Earn
+  </button>
+
+  <button class="nav" onclick="openWithdraw()">
+    <span>💰</span>
+    Wallet
+  </button>
+
+  <button class="nav">
+    <span>👤</span>
+    Profile
+  </button>
+
+</nav>
+
+</div>
+
+
+<!-- WITHDRAW -->
+
+<div class="modal" id="withdrawModal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+      <h2>💰 ငွေထုတ်မယ်</h2>
+
+      <button class="close" onclick="closeWithdraw()">
+        ✕
+      </button>
     </div>
 
-    <h1>
-      Coin စုပါ၊ Reward ရယူပါ
-    </h1>
+    <div class="balance">
 
-    <p>
-      Mini Game ဆော့ပါ၊ Daily Test ဖြေပါ၊
-      သတ်မှတ်ထားတဲ့ Reward များကို ရယူပြီး
-      Coin စုဆောင်းနိုင်ပါတယ်။
-    </p>
+      <small>လက်ကျန် Coin</small>
 
-    <button class="earn-button">
-      🚀 Earn Coin စတင်မယ်
-    </button>
+      <strong>
+        <span id="withdrawBalance">0</span> 🪙
+      </strong>
 
-  </section>
+    </div>
 
+    <div class="label">
+      ငွေပမာဏ ရွေးပါ
+    </div>
 
-  <!-- QUICK MENU -->
+    <div class="amount-grid">
 
-  <div class="section-title">
+      <button
+        class="amount"
+        id="amount5000"
+        onclick="selectAmount(50000,5000)"
+      >
+        🪙 50,000
+        <small>5,000 Ks</small>
+      </button>
 
-    <h2>⚡ Quick Earn</h2>
+      <button
+        class="amount"
+        id="amount25000"
+        onclick="selectAmount(200000,25000)"
+      >
+        🪙 200,000
+        <small>25,000 Ks</small>
+      </button>
 
-    <span>ပိုမိုရယူရန်</span>
+    </div>
+
+    <div id="paymentArea">
+
+      <div class="label">
+        ငွေလက်ခံမည့်နည်းလမ်း
+      </div>
+
+      <div class="pay-grid">
+
+        <button
+          class="pay"
+          id="kpayBtn"
+          onclick="selectPayment('KPay')"
+        >
+          💚 KPay
+        </button>
+
+        <button
+          class="pay"
+          id="waveBtn"
+          onclick="selectPayment('Wave')"
+        >
+          💙 Wave
+        </button>
+
+      </div>
+
+      <input
+        class="phone"
+        id="withdrawPhone"
+        type="tel"
+        inputmode="numeric"
+        maxlength="11"
+        placeholder="KPay / Wave ဖုန်းနံပါတ်"
+      >
+
+      <button
+        class="submit"
+        onclick="submitWithdraw()"
+      >
+        💸 ငွေထုတ်ရန် Request တင်မယ်
+      </button>
+
+      <div id="withdrawStatus" class="status"></div>
+
+    </div>
 
   </div>
 
-
-  <div class="cards">
-
-    <div class="card">
-
-      <div class="card-icon">
-        🎮
-      </div>
-
-      <h3>Mini Games</h3>
-
-      <p>
-        Game ဆော့ပြီး Coin ရယူပါ
-      </p>
-
-    </div>
+</div>
 
 
-    <div class="card">
+<script>
 
-      <div class="card-icon">
-        📝
-      </div>
-
-      <h3>Daily Quiz</h3>
-
-      <p>
-        မြန်မာ Quiz ဖြေပြီး Coin ရယူပါ
-      </p>
-
-    </div>
+let selectedCoins = 0;
+let selectedMoney = 0;
+let selectedPayment = "";
 
 
-    <div class="card">
+/* OPEN */
 
-      <div class="card-icon">
-        🎬
-      </div>
+function openWithdraw(){
 
-      <h3>Reward Video</h3>
+  document.getElementById("withdrawModal").style.display="flex";
 
-      <p>
-        ခွင့်ပြုထားသော Reward Video များ
-      </p>
+  document.getElementById("withdrawBalance").innerText =
+    document.getElementById("coinBalance").innerText || "0";
 
-    </div>
+}
 
 
-    <div class="card">
+/* CLOSE */
 
-      <div class="card-icon">
-        👥
-      </div>
+function closeWithdraw(){
 
-      <h3>Refer & Earn</h3>
+  document.getElementById("withdrawModal").style.display="none";
 
-      <p>
-        သူငယ်ချင်းခေါ်ပြီး Bonus ရယူပါ
-      </p>
-
-    </div>
-
-  </div>
+}
 
 
-  <!-- DAILY -->
+/* AMOUNT */
 
-  <section class="daily">
+function selectAmount(coins,money){
 
-    <div class="daily-top">
+  selectedCoins = coins;
+  selectedMoney = money;
 
-      <h2>
-        🎁 Daily Progress
-      </h2>
+  document
+    .querySelectorAll(".amount")
+    .forEach(x => x.classList.remove("selected"));
 
-      <span>
-        7 Days
-      </span>
+  if(money === 5000){
+    document
+      .getElementById("amount5000")
+      .classList.add("selected");
+  }
 
-    </div>
+  if(money === 25000){
+    document
+      .getElementById("amount25000")
+      .classList.add("selected");
+  }
 
-    <div class="progress">
+  document
+    .getElementById("paymentArea")
+    .style.display="block";
 
-      <div class="progress-bar"></div>
-
-    </div>
-
-    <div class="daily-info">
-
-      <span>
-        Today's Progress
-      </span>
-
-      <span>
-        35%
-      </span>
-
-    </div>
-
-  </section>
+}
 
 
-  <!-- WITHDRAW -->
+/* PAYMENT */
 
-  <section class="withdraw">
+function selectPayment(type){
 
-    <h2>
-      💸 ငွေထုတ်ယူရန်
-    </h2>
+  selectedPayment = type;
 
-    <p>
-      သတ်မှတ်ထားသော Coin ပြည့်မီပါက
-      KPay / Wave Money ဖြင့် ငွေထုတ်ယူနိုင်ပါသည်။
-    </p>
+  document
+    .getElementById("kpayBtn")
+    .classList.remove("selected-kpay");
 
-    <div class="withdraw-row">
+  document
+    .getElementById("waveBtn")
+    .classList.remove("selected-wave");
 
-      <div class="payment">
-        <span>💚</span>
-        KPay
-      </div>
+  if(type === "KPay"){
+    document
+      .getElementById("kpayBtn")
+      .classList.add("selected-kpay");
+  }
 
-      <div class="payment">
-        <span>💙</span>
-        Wave Money
-      </div>
+  if(type === "Wave"){
+    document
+      .getElementById("waveBtn")
+      .classList.add("selected-wave");
+  }
 
-    </div>
-
-  </section>
+}
 
 
-  <!-- BOTTOM NAV -->
+/* REQUEST */
 
-  <nav class="bottom">
+function submitWithdraw(){
 
-    <button class="nav active">
-      <span>🏠</span>
-     
+  const phone =
+    document
+      .getElementById("withdrawPhone")
+      .value
+      .trim();
+
+  const status =
+    document.getElementById("withdrawStatus");
+
+
+  if(!selectedCoins){
+
+    status.style.color="#ff6868";
+    status.innerText="⚠️ ငွေပမာဏ အရင်ရွေးပါ";
+    return;
+
+  }
+
+
+  if(!selectedPayment){
+
+    status.style.color="#ff6868";
+    status.innerText="⚠️ KPay သို့မဟုတ် Wave ရွေးပါ";
+    return;
+
+  }
+
+
+  if(!/^[0-9]{8,11}$/.test(phone)){
+
+    status.style.color="#ff6868";
+    status.innerText="⚠️ ဖုန်းနံပါတ် မှန်ကန်စွာထည့်ပါ";
+    return;
+
+  }
+
+
+  status.style.color="#ffd43b";
+
+  status.innerText =
+    "🔄 Request တင်နေပါတယ်...";
+
+
+  /*
+    နောက်အဆင့်မှာ ဒီနေရာကို
+    Supabase Database နဲ့ ချိတ်မယ်။
+
+    User Request →
+    Database →
+    Admin စစ် →
+    Approve / Reject
+
+    Approve ဖြစ်မှ Coin နုတ်ပြီး
+    Withdraw status ပြောင်းမယ်။
+  */
+
+  setTimeout(function(){
+
+    status.style.color="#42e69a";
+
+    status.innerText =
+      "✅ Request တင်ရန် အဆင်သင့်ဖြစ်ပါပြီ။ Database ချိတ်ပြီးနောက် Admin ဆီ တကယ်ပို့ပါမယ်။";
+
+  },700);
+
+}
+
+</script>
+
+</body>
+</html>
