@@ -1,457 +1,335 @@
 <!DOCTYPE html>
 <html lang="my">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#070912">
-<title>MM-Real-Earn</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#080b16">
+
+<title>MM-Real-Earn • Earn Video</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-:root{
-  --bg:#070912;
-  --card:#101522;
-  --card2:#151b2a;
-  --gold:#ffd43b;
-  --gold2:#ff9b00;
-  --text:#fff;
-  --muted:#8b94a8;
-  --line:#ffffff12;
-}
-
 body{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 15% 0%,#243b6b55,transparent 28%),
-    radial-gradient(circle at 100% 25%,#7b3f8a35,transparent 30%),
-    var(--bg);
-  color:var(--text);
+  background:#070a12;
+  color:#fff;
   font-family:Arial,"Noto Sans Myanmar",sans-serif;
 }
 
 .app{
-  width:100%;
-  max-width:520px;
+  max-width:500px;
   min-height:100vh;
   margin:auto;
-  padding-bottom:100px;
+  padding-bottom:30px;
+
+  background:
+  radial-gradient(circle at 20% 10%,#17315c55,transparent 30%),
+  radial-gradient(circle at 90% 30%,#5c2b7650,transparent 30%),
+  linear-gradient(180deg,#0b1020,#070a12);
 }
 
 .header{
   position:sticky;
   top:0;
-  z-index:50;
+  z-index:20;
+
   padding:15px 16px;
-  background:#080b14eF;
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--line);
+
+  background:#0b1020ee;
+  backdrop-filter:blur(15px);
+
+  border-bottom:1px solid #ffffff12;
 }
 
 .header-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:8px;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.logo{
-  width:45px;
-  height:45px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:15px;
-  font-size:23px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 8px 25px #ffb30030;
-}
-
-.brand-text b{
-  display:block;
-  font-size:17px;
-}
-
-.brand-text small{
-  display:block;
-  margin-top:3px;
-  color:var(--muted);
-  font-size:10px;
-}
-
-.balance{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  padding:10px 12px;
-  border:1px solid #ffd43b25;
-  border-radius:14px;
-  background:#ffd43b0d;
-}
-
-.balance-icon{
-  font-size:18px;
-}
-
-.balance-value{
-  color:var(--gold);
-  font-size:14px;
-  font-weight:bold;
-}
-
-.noti{
-  margin:14px 16px 0;
-  min-height:42px;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#ffffff08;
-}
-
-.noti-label{
-  height:100%;
-  display:flex;
-  align-items:center;
-  padding:0 12px;
-  flex-shrink:0;
-  color:var(--gold);
-  font-size:12px;
-  font-weight:bold;
-  background:#ffd43b0b;
-}
-
-.noti-text{
-  padding:0 12px;
-  color:#c5cad6;
-  font-size:11px;
-  white-space:nowrap;
-  animation:marquee 13s linear infinite;
-}
-
-@keyframes marquee{
-  from{transform:translateX(100%)}
-  to{transform:translateX(-100%)}
-}
-
-.welcome{
-  margin:16px;
-  padding:24px 20px;
-  position:relative;
-  overflow:hidden;
-  border:1px solid #ffffff12;
-  border-radius:25px;
-  background:
-    radial-gradient(circle at 90% 10%,#ffd43b25,transparent 30%),
-    radial-gradient(circle at 0% 100%,#5d3b9b25,transparent 35%),
-    linear-gradient(145deg,#171e31,#0e1421);
-  box-shadow:0 20px 55px #00000045;
-}
-
-.welcome:after{
-  content:"🪙";
-  position:absolute;
-  right:-12px;
-  bottom:-25px;
-  font-size:120px;
-  opacity:.055;
-}
-
-.welcome small{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.welcome h1{
-  margin-top:7px;
-  font-size:27px;
-  line-height:1.25;
-}
-
-.welcome p{
-  margin-top:9px;
-  color:#969fb2;
-  font-size:12px;
-  line-height:1.7;
-}
-
-.section{
-  margin:22px 16px 12px;
-}
-
-.section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:12px;
-}
-
-.section-head h2{
-  font-size:17px;
-}
-
-.section-head span{
-  color:#687287;
-  font-size:10px;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.action{
-  min-height:145px;
-  padding:17px;
-  position:relative;
-  overflow:hidden;
-  text-align:left;
+.back{
+  border:0;
+  background:#ffffff0d;
   color:#fff;
-  border:1px solid var(--line);
-  border-radius:21px;
-  background:linear-gradient(145deg,#121927,#0d121e);
-  box-shadow:0 10px 30px #00000022;
-  cursor:pointer;
-  transition:.2s;
-}
 
-.action:active{
-  transform:scale(.97);
-}
+  padding:10px 13px;
+  border-radius:12px;
 
-.action:after{
-  content:"";
-  position:absolute;
-  width:75px;
-  height:75px;
-  right:-25px;
-  bottom:-25px;
-  border-radius:50%;
-  background:#ffd43b12;
-}
-
-.action-icon{
-  width:46px;
-  height:46px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:15px;
-  font-size:23px;
-  background:#ffffff0b;
-}
-
-.action h3{
-  margin-top:13px;
   font-size:14px;
 }
 
-.action p{
-  margin-top:5px;
-  color:#747e92;
-  font-size:10px;
-  line-height:1.5;
-}
-
-.action.gold{
-  border-color:#ffd43b25;
-  background:
-    radial-gradient(circle at 100% 0%,#ffd43b18,transparent 40%),
-    linear-gradient(145deg,#171b27,#101520);
-}
-
-.action.gold .action-icon{
-  background:#ffd43b18;
-}
-
-.coin-card{
-  margin:16px;
-  padding:20px;
-  border:1px solid #ffd43b22;
-  border-radius:22px;
-  background:
-    radial-gradient(circle at 100% 0%,#ffd43b18,transparent 38%),
-    linear-gradient(145deg,#151b29,#0d121d);
-}
-
-.coin-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.coin-top span{
-  color:#8d96aa;
-  font-size:11px;
-}
-
-.coin-top b{
-  color:var(--gold);
-  font-size:12px;
-}
-
-.big-coin{
-  margin-top:9px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.big-coin span{
-  font-size:31px;
-}
-
-.big-coin strong{
-  font-size:28px;
-  color:var(--gold);
-}
-
-.refer{
-  margin:16px;
-  padding:20px;
-  border-radius:22px;
-  border:1px solid #ffffff12;
-  background:linear-gradient(135deg,#17152a,#101520);
-}
-
-.refer-head{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-
-.refer-icon{
-  width:45px;
-  height:45px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:14px;
-  background:#8d5cff18;
-  font-size:22px;
-}
-
-.refer h2{
+.header-title{
+  font-weight:bold;
   font-size:16px;
 }
 
-.refer p{
-  margin-top:4px;
-  color:#7f899c;
-  font-size:11px;
-}
-
-.refer-btn{
-  width:100%;
-  margin-top:15px;
-  padding:13px;
-  border:0;
-  border-radius:13px;
-  color:#111;
-  font-size:13px;
-  font-weight:bold;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-}
-
-.support{
-  margin:16px;
-  padding:19px;
+.coin-box{
   display:flex;
   align-items:center;
-  gap:13px;
-  border:1px solid #ffffff10;
-  border-radius:20px;
-  background:#ffffff07;
+  gap:6px;
+
+  padding:9px 12px;
+
+  border-radius:13px;
+
+  background:#ffffff0c;
+  border:1px solid #ffffff12;
 }
 
-.support-icon{
-  width:44px;
-  height:44px;
+.coin{
+  color:#ffd43b;
+  font-weight:bold;
+}
+
+.hero{
+  margin:16px;
+  padding:24px 20px;
+
+  border-radius:24px;
+
+  background:
+  radial-gradient(circle at 80% 20%,#ffd43b20,transparent 30%),
+  linear-gradient(135deg,#171d35,#101522);
+
+  border:1px solid #ffffff12;
+}
+
+.hero-icon{
+  width:55px;
+  height:55px;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:14px;
-  background:#20d16d15;
-  font-size:21px;
+
+  border-radius:17px;
+
+  background:linear-gradient(
+    135deg,
+    #ff3030,
+    #ff0000
+  );
+
+  font-size:27px;
+
+  box-shadow:0 10px 30px #ff000033;
 }
 
-.support-text{
-  flex:1;
+.hero h1{
+  margin-top:15px;
+  font-size:23px;
 }
 
-.support-text b{
-  display:block;
+.hero p{
+  margin-top:8px;
+
+  color:#9da5b7;
+
   font-size:13px;
+  line-height:1.7;
 }
 
-.support-text small{
-  display:block;
-  margin-top:5px;
-  color:#7e889b;
-  font-size:10px;
-  word-break:break-all;
+.video-card{
+  margin:16px;
+  padding:16px;
+
+  border-radius:22px;
+
+  background:#ffffff08;
+
+  border:1px solid #ffffff0d;
 }
 
-.support-btn{
-  padding:10px 12px;
+.video-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:13px;
+}
+
+.video-title h2{
+  font-size:17px;
+}
+
+.video-title span{
+  color:#ffd43b;
+  font-size:12px;
+}
+
+.video-box{
+  width:100%;
+  aspect-ratio:16/9;
+
+  overflow:hidden;
+
+  border-radius:17px;
+
+  background:#000;
+
   border:1px solid #ffffff12;
-  border-radius:11px;
-  background:#ffffff09;
-  color:#fff;
+}
+
+#youtubePlayer{
+  width:100%;
+  height:100%;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:10px;
+
+  margin-top:14px;
+}
+
+.info{
+  padding:14px;
+
+  border-radius:15px;
+
+  background:#ffffff08;
+
+  border:1px solid #ffffff0d;
+}
+
+.info small{
+  color:#818a9d;
   font-size:11px;
 }
 
-.bottom{
-  position:fixed;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:520px;
-  height:78px;
-  display:flex;
-  z-index:100;
-  background:#0b101cee;
-  backdrop-filter:blur(20px);
-  border-top:1px solid #ffffff12;
-}
-
-.nav{
-  flex:1;
-  border:0;
-  background:none;
-  color:#687287;
-  font-size:9px;
-  cursor:pointer;
-}
-
-.nav span{
+.info strong{
   display:block;
-  margin-bottom:5px;
-  font-size:21px;
+
+  margin-top:5px;
+
+  font-size:18px;
 }
 
-.nav.active{
-  color:var(--gold);
+.gold{
+  color:#ffd43b;
 }
 
-.nav:active{
-  transform:scale(.94);
+.watch-button{
+  width:100%;
+
+  margin-top:16px;
+
+  padding:15px;
+
+  border:0;
+  border-radius:14px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ffd43b,
+    #ff9800
+  );
+
+  color:#111;
+
+  font-size:15px;
+  font-weight:bold;
 }
+
+.watch-button:disabled{
+  opacity:.45;
+}
+
+.status{
+  text-align:center;
+
+  margin-top:12px;
+
+  min-height:24px;
+
+  color:#9da5b7;
+
+  font-size:12px;
+
+  line-height:1.6;
+}
+
+.progress-box{
+  margin:16px;
+
+  padding:20px;
+
+  border-radius:22px;
+
+  background:linear-gradient(
+    135deg,
+    #121a2c,
+    #171226
+  );
+
+  border:1px solid #ffffff0d;
+}
+
+.progress-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.progress-top h2{
+  font-size:17px;
+}
+
+.progress-top span{
+  color:#ffd43b;
+  font-size:12px;
+}
+
+.progress{
+  height:9px;
+
+  margin-top:15px;
+
+  border-radius:10px;
+
+  background:#ffffff0d;
+
+  overflow:hidden;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+
+  background:
+  linear-gradient(
+    90deg,
+    #ffd43b,
+    #ff8a00
+  );
+
+  transition:.3s;
+}
+
+.progress-info{
+  display:flex;
+  justify-content:space-between;
+
+  margin-top:9px;
+
+  color:#858ea1;
+
+  font-size:11px;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -459,292 +337,171 @@ body{
 <div class="app">
 
 <header class="header">
+
   <div class="header-row">
 
-    <div class="brand">
-      <div class="logo">🪙</div>
+    <button
+      class="back"
+      onclick="goHome()">
+      ← Home
+    </button>
 
-      <div class="brand-text">
-        <b>MM-Real-Earn</b>
-        <small>Earn • Play • Reward</small>
-      </div>
+    <div class="header-title">
+      🎬 Earn Video
     </div>
 
-    <div class="balance">
-      <span class="balance-icon">🪙</span>
-      <span class="balance-value" id="coinBalance">0</span>
+    <div class="coin-box">
+
+      🪙
+
+      <span
+        class="coin"
+        id="coinBalance">
+        0
+      </span>
+
     </div>
 
   </div>
+
 </header>
 
 
-<div class="noti">
+<section class="hero">
 
-  <div class="noti-label">
-    🔔 NOTI
+  <div class="hero-icon">
+    ▶️
   </div>
-
-  <div class="noti-text">
-    MM-Real-Earn မှာ Game ဆော့ပြီး Coin စုနိုင်ပါတယ် • YouTube Video ကြည့်ပြီး Reward ရယူနိုင်ပါတယ် 🎁
-  </div>
-
-</div>
-
-
-<section class="welcome">
-
-  <small>မင်္ဂလာပါ 👋</small>
 
   <h1>
-    Coin စုပါ<br>
-    Reward ရယူပါ
+    Video ကြည့်ပြီး Coin ရယူပါ
   </h1>
 
   <p>
-    Game ဆော့ခြင်း၊ Video ကြည့်ခြင်းနဲ့
-    Coin စုဆောင်းပြီး Reward ရယူနိုင်ပါတယ်။
+    Watch ခလုတ်ကိုနှိပ်ပြီး
+    Video ကိုတကယ်ဖွင့်ကြည့်ပါ။
+    Video PLAYING ဖြစ်ပြီး
+    10 စက္ကန့်ပြည့်မှသာ
+    Random Coin Reward ရရှိပါမယ်။
   </p>
 
 </section>
 
 
-<section class="section">
+<section class="video-card">
 
-  <div class="section-head">
-    <h2>⚡ Quick Earn</h2>
-    <span>ရွေးချယ်ပါ</span>
-  </div>
+  <div class="video-title">
 
-
-  <div class="actions">
-
-    <button
-      class="action gold"
-      onclick="location.href='earn.html'">
-
-      <div class="action-icon">
-        🎬
-      </div>
-
-      <h3>
-        Reward Video
-      </h3>
-
-      <p>
-        Reward ရနိုင်သော Video များ
-      </p>
-
-    </button>
-
-
-    <button
-      class="action"
-      onclick="location.href='games.html'">
-
-      <div class="action-icon">
-        🎮
-      </div>
-
-      <h3>
-        Mini Game Earn
-      </h3>
-
-      <p>
-        Mini Game များဆော့ပြီး
-        Coin ရယူပါ
-      </p>
-
-    </button>
-
-
-    <button
-      class="action"
-      onclick="location.href='wallet.html'">
-
-      <div class="action-icon">
-        💰
-      </div>
-
-      <h3>
-        Withdraw
-      </h3>
-
-      <p>
-        Coin ပြည့်ရင်
-        ငွေထုတ်ယူနိုင်ပါတယ်
-      </p>
-
-    </button>
-
-
-    <button
-      class="action"
-      onclick="location.href='profile.html'">
-
-      <div class="action-icon">
-        👤
-      </div>
-
-      <h3>
-        Profile
-      </h3>
-
-      <p>
-        Account နဲ့
-        History ကြည့်ပါ
-      </p>
-
-    </button>
-
-  </div>
-
-</section>
-
-
-<section class="coin-card">
-
-  <div class="coin-top">
+    <h2>
+      ▶️ Reward Video
+    </h2>
 
     <span>
-      🪙 လက်ရှိ Coin Balance
+      Random Reward
     </span>
 
-    <b>
-      MM-REAL-EARN
-    </b>
+  </div>
+
+
+  <div class="video-box">
+
+    <div id="youtubePlayer"></div>
 
   </div>
 
 
-  <div class="big-coin">
+  <div class="info-grid">
 
-    <span>🪙</span>
+    <div class="info">
 
-    <strong id="bigCoinBalance">
-      0
-    </strong>
+      <small>
+        Today's Videos
+      </small>
 
-  </div>
-
-</section>
-
-
-<section class="refer">
-
-  <div class="refer-head">
-
-    <div class="refer-icon">
-      👥
-    </div>
-
-    <div>
-
-      <h2>
-        သူငယ်ချင်းခေါ်ပြီး Earn လုပ်ပါ
-      </h2>
-
-      <p>
-        Refer လုပ်ပြီး Bonus Coin ရယူပါ
-      </p>
+      <strong id="videoCount">
+        0 / 30
+      </strong>
 
     </div>
 
+
+    <div class="info">
+
+      <small>
+        Coin Balance
+      </small>
+
+      <strong
+        class="gold"
+        id="videoCoinBalance">
+        0
+      </strong>
+
+    </div>
+
   </div>
 
 
   <button
-    class="refer-btn"
-    onclick="location.href='refer.html'">
+    class="watch-button"
+    id="watchButton"
+    onclick="claimReward()"
+    disabled>
 
-    👥 Refer လုပ်ရန်
+    ⏳ Video ပြင်ဆင်နေသည်...
 
   </button>
+
+
+  <div
+    class="status"
+    id="watchStatus">
+
+    YouTube Video ပြင်ဆင်နေပါတယ်...
+
+  </div>
 
 </section>
 
 
-<section class="support">
+<section class="progress-box">
 
-  <div class="support-icon">
-    🎧
-  </div>
+  <div class="progress-top">
 
-  <div class="support-text">
+    <h2>
+      📊 Daily Progress
+    </h2>
 
-    <b>
-      Customer Service
-    </b>
-
-    <small>
-      waizinphyo4700@gmail.com
-    </small>
+    <span id="progressText">
+      0%
+    </span>
 
   </div>
 
-  <button
-    class="support-btn"
-    onclick="location.href='mailto:waizinphyo4700@gmail.com'">
 
-    ဆက်သွယ်ရန်
+  <div class="progress">
 
-  </button>
+    <div
+      class="progress-bar"
+      id="progressBar">
+    </div>
+
+  </div>
+
+
+  <div class="progress-info">
+
+    <span>
+      Video ကြည့်ပြီးစီးမှု
+    </span>
+
+    <span id="progressCount">
+      0 / 30
+    </span>
+
+  </div>
 
 </section>
-
-
-<nav class="bottom">
-
-  <button
-    class="nav active"
-    onclick="location.href='index.html'">
-
-    <span>🏠</span>
-    Home
-
-  </button>
-
-
-  <button
-    class="nav"
-    onclick="location.href='games.html'">
-
-    <span>🎮</span>
-    Games
-
-  </button>
-
-
-  <button
-    class="nav"
-    onclick="location.href='earn.html'">
-
-    <span>🎬</span>
-    Earn
-
-  </button>
-
-
-  <button
-    class="nav"
-    onclick="location.href='wallet.html'">
-
-    <span>💰</span>
-    Wallet
-
-  </button>
-
-
-  <button
-    class="nav"
-    onclick="location.href='profile.html'">
-
-    <span>👤</span>
-    Profile
-
-  </button>
-
-</nav>
 
 </div>
 
@@ -761,7 +518,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_PxrCIfh0MfL6KT1iQxgqfw__IgNG1OY";
 
-
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
@@ -770,20 +526,119 @@ const supabaseClient =
 
 
 /* =====================================
-   UPDATE BALANCE ON SCREEN
+   SETTINGS
 ===================================== */
 
-function showBalance(balance){
+const DAILY_LIMIT = 30;
+
+const YOUTUBE_VIDEO_ID =
+  "ha7t8JdMl94";
+
+
+const REWARDS = [
+  100,
+  150,
+  200,
+  250,
+  300,
+  400,
+  500,
+  700,
+  800,
+  1000,
+  1500,
+  2000
+];
+
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+let videoCount =
+  Number(
+    localStorage.getItem(
+      "mm_video_count"
+    ) || 0
+  );
+
+
+let videoDate =
+  localStorage.getItem(
+    "mm_video_date"
+  );
+
+
+let ytPlayer = null;
+
+let rewardTimer = null;
+
+let rewardStarted = false;
+
+let rewardClaimed = false;
+
+let currentUser = null;
+
+let currentBalance = 0;
+
+
+/* =====================================
+   NEW DAY
+===================================== */
+
+function checkNewDay(){
+
+  const today =
+    new Date()
+      .toLocaleDateString();
+
+
+  if(videoDate !== today){
+
+    videoDate = today;
+
+    videoCount = 0;
+
+
+    localStorage.setItem(
+      "mm_video_date",
+      today
+    );
+
+
+    localStorage.setItem(
+      "mm_video_count",
+      "0"
+    );
+
+  }
+
+}
+
+
+/* =====================================
+   UPDATE COIN DISPLAY
+===================================== */
+
+function updateCoinDisplay(){
 
   const value =
-    Number(balance || 0)
-      .toLocaleString();
+    Number(
+      currentBalance || 0
+    ).toLocaleString();
 
 
   const coinBalance =
     document.getElementById(
       "coinBalance"
     );
+
+
+  const videoCoinBalance =
+    document.getElementById(
+      "videoCoinBalance"
+    );
+
 
   if(coinBalance){
 
@@ -793,14 +648,9 @@ function showBalance(balance){
   }
 
 
-  const bigCoinBalance =
-    document.getElementById(
-      "bigCoinBalance"
-    );
+  if(videoCoinBalance){
 
-  if(bigCoinBalance){
-
-    bigCoinBalance.innerText =
+    videoCoinBalance.innerText =
       value;
 
   }
@@ -809,10 +659,10 @@ function showBalance(balance){
 
 
 /* =====================================
-   LOGIN + LOAD DATABASE BALANCE
+   LOAD USER + BALANCE
 ===================================== */
 
-async function startApp(){
+async function loadBalance(){
 
   const {
     data: sessionData,
@@ -828,7 +678,7 @@ async function startApp(){
       sessionError
     );
 
-    return;
+    return false;
 
   }
 
@@ -837,22 +687,20 @@ async function startApp(){
     sessionData.session;
 
 
-  /* LOGIN မဝင်ထားရင် */
-
   if(!session){
 
     window.location.replace(
       "https://mlbypassus-ship-it.github.io/my-2d-live/login.html"
     );
 
-    return;
+    return false;
 
   }
 
 
-  /* =================================
-     LOAD PROFILE
-  ================================= */
+  currentUser =
+    session.user;
+
 
   const {
     data: profile,
@@ -861,7 +709,10 @@ async function startApp(){
   await supabaseClient
     .from("profiles")
     .select("balance")
-    .eq("id", session.user.id)
+    .eq(
+      "id",
+      currentUser.id
+    )
     .single();
 
 
@@ -872,40 +723,773 @@ async function startApp(){
       profileError
     );
 
-    showBalance(0);
+    currentBalance = 0;
+
+    updateCoinDisplay();
+
+    return false;
+
+  }
+
+
+  currentBalance =
+    Number(
+      profile.balance || 0
+    );
+
+
+  updateCoinDisplay();
+
+  return true;
+
+}
+
+
+/* =====================================
+   ADD COIN TO SUPABASE
+===================================== */
+
+async function addCoin(amount){
+
+  if(!currentUser){
+
+    const loaded =
+      await loadBalance();
+
+    if(!loaded){
+
+      return false;
+
+    }
+
+  }
+
+
+  const newBalance =
+    currentBalance +
+    Number(amount);
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("profiles")
+    .update({
+
+      balance:
+        newBalance
+
+    })
+    .eq(
+      "id",
+      currentUser.id
+    )
+    .select("balance")
+    .single();
+
+
+  if(error){
+
+    console.error(
+      "Balance Update Error:",
+      error
+    );
+
+    return false;
+
+  }
+
+
+  currentBalance =
+    Number(
+      data.balance || 0
+    );
+
+
+  updateCoinDisplay();
+
+  return true;
+
+}
+
+
+/* =====================================
+   UPDATE UI
+===================================== */
+
+function updateUI(){
+
+  checkNewDay();
+
+
+  const videoCountElement =
+    document.getElementById(
+      "videoCount"
+    );
+
+
+  const progressCountElement =
+    document.getElementById(
+      "progressCount"
+    );
+
+
+  const progressBar =
+    document.getElementById(
+      "progressBar"
+    );
+
+
+  const progressText =
+    document.getElementById(
+      "progressText"
+    );
+
+
+  if(videoCountElement){
+
+    videoCountElement.innerText =
+      videoCount +
+      " / " +
+      DAILY_LIMIT;
+
+  }
+
+
+  if(progressCountElement){
+
+    progressCountElement.innerText =
+      videoCount +
+      " / " +
+      DAILY_LIMIT;
+
+  }
+
+
+  const percent =
+    Math.min(
+      100,
+      (
+        videoCount /
+        DAILY_LIMIT
+      ) * 100
+    );
+
+
+  if(progressBar){
+
+    progressBar.style.width =
+      percent + "%";
+
+  }
+
+
+  if(progressText){
+
+    progressText.innerText =
+      Math.round(percent) +
+      "%";
+
+  }
+
+
+  updateCoinDisplay();
+
+
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
+
+
+  if(!button){
 
     return;
 
   }
 
 
-  showBalance(
-    profile.balance
-  );
+  if(
+    videoCount >=
+    DAILY_LIMIT
+  ){
+
+    button.disabled = true;
+
+    button.innerText =
+      "✅ ဒီနေ့ Reward ပြည့်ပါပြီ";
+
+  }
 
 }
 
 
 /* =====================================
-   REFRESH BALANCE WHEN RETURNING
+   YOUTUBE API
 ===================================== */
 
-window.addEventListener(
-  "pageshow",
-  function(){
+function onYouTubeIframeAPIReady(){
 
-    startApp();
+  ytPlayer =
+    new YT.Player(
+      "youtubePlayer",
+      {
+
+        videoId:
+          YOUTUBE_VIDEO_ID,
+
+        playerVars:{
+
+          autoplay:0,
+
+          controls:1,
+
+          rel:0,
+
+          playsinline:1
+
+        },
+
+        events:{
+
+          onReady:
+            onPlayerReady,
+
+          onStateChange:
+            onPlayerStateChange
+
+        }
+
+      }
+    );
+
+}
+
+
+/* =====================================
+   PLAYER READY
+===================================== */
+
+function onPlayerReady(){
+
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
+
+
+  const status =
+    document.getElementById(
+      "watchStatus"
+    );
+
+
+  if(
+    videoCount >=
+    DAILY_LIMIT
+  ){
+
+    button.disabled = true;
+
+    button.innerText =
+      "✅ ဒီနေ့ Reward ပြည့်ပါပြီ";
+
+    return;
 
   }
-);
+
+
+  button.disabled = false;
+
+  button.innerText =
+    "🎁 Video ကြည့်ပြီး Reward ယူမယ်";
+
+
+  status.style.color =
+    "#9da5b7";
+
+
+  status.innerText =
+    "▶️ Watch ခလုတ်ကိုနှိပ်ပြီး Video စတင်ပါ။";
+
+}
+
+
+/* =====================================
+   PLAYER STATE
+===================================== */
+
+function onPlayerStateChange(event){
+
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
+
+
+  const status =
+    document.getElementById(
+      "watchStatus"
+    );
+
+
+  if(
+    event.data ===
+    YT.PlayerState.PLAYING
+  ){
+
+    if(!rewardStarted){
+
+      rewardStarted = true;
+
+
+      let seconds = 10;
+
+
+      button.disabled = true;
+
+
+      status.style.color =
+        "#ffd43b";
+
+
+      status.innerText =
+        "▶️ Video ကြည့်နေပါသည်... " +
+        seconds +
+        "s";
+
+
+      rewardTimer =
+        setInterval(
+          function(){
+
+            if(
+              !ytPlayer ||
+              ytPlayer.getPlayerState() !==
+              YT.PlayerState.PLAYING
+            ){
+
+              clearInterval(
+                rewardTimer
+              );
+
+              rewardTimer = null;
+
+              rewardStarted = false;
+
+              return;
+
+            }
+
+
+            seconds--;
+
+
+            if(seconds > 0){
+
+              status.innerText =
+                "▶️ Video ကြည့်နေပါသည်... " +
+                seconds +
+                "s";
+
+            }
+
+
+            if(seconds <= 0){
+
+              clearInterval(
+                rewardTimer
+              );
+
+              rewardTimer = null;
+
+
+              giveVideoReward();
+
+            }
+
+          },
+          1000
+        );
+
+    }
+
+  }
+
+
+  if(
+    event.data ===
+    YT.PlayerState.PAUSED
+  ){
+
+    if(
+      rewardStarted &&
+      !rewardClaimed
+    ){
+
+      clearInterval(
+        rewardTimer
+      );
+
+      rewardTimer = null;
+
+
+      rewardStarted = false;
+
+
+      button.disabled = false;
+
+
+      button.innerText =
+        "▶️ Video ပြန်ဖွင့်မယ်";
+
+
+      status.style.color =
+        "#ffcc66";
+
+
+      status.innerText =
+        "⏸️ Video ရပ်ထားပါတယ်။ ပြန်ဖွင့်ပြီး 10s ကြည့်ပါ။";
+
+    }
+
+  }
+
+
+  if(
+    event.data ===
+    YT.PlayerState.ENDED
+  ){
+
+    clearInterval(
+      rewardTimer
+    );
+
+    rewardTimer = null;
+
+
+    if(
+      !rewardClaimed &&
+      rewardStarted
+    ){
+
+      rewardStarted = false;
+
+      button.disabled = false;
+
+      button.innerText =
+        "🎁 Video ပြန်ကြည့်မယ်";
+
+      status.style.color =
+        "#9da5b7";
+
+      status.innerText =
+        "Video ပြီးပါပြီ။";
+
+    }
+
+  }
+
+}
+
+
+/* =====================================
+   WATCH BUTTON
+===================================== */
+
+function claimReward(){
+
+  checkNewDay();
+
+
+  if(
+    videoCount >=
+    DAILY_LIMIT
+  ){
+
+    updateUI();
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
+
+
+  const status =
+    document.getElementById(
+      "watchStatus"
+    );
+
+
+  if(!ytPlayer){
+
+    button.disabled = true;
+
+    status.style.color =
+      "#ffcc66";
+
+    status.innerText =
+      "⏳ YouTube Video ပြင်ဆင်နေပါတယ်... ခဏစောင့်ပါ။";
+
+    return;
+
+  }
+
+
+  if(rewardTimer){
+
+    clearInterval(
+      rewardTimer
+    );
+
+    rewardTimer = null;
+
+  }
+
+
+  rewardStarted = false;
+
+  rewardClaimed = false;
+
+
+  button.disabled = true;
+
+  button.innerText =
+    "▶️ Video ဖွင့်နေသည်...";
+
+
+  status.style.color =
+    "#ffd43b";
+
+
+  status.innerText =
+    "🎬 YouTube Video ဖွင့်နေပါတယ်...";
+
+
+  try{
+
+    ytPlayer.seekTo(
+      0,
+      true
+    );
+
+    ytPlayer.playVideo();
+
+  }
+
+  catch(error){
+
+    button.disabled = false;
+
+    button.innerText =
+      "🎁 Video ကြည့်ပြီး Reward ယူမယ်";
+
+    status.style.color =
+      "#ff6868";
+
+    status.innerText =
+      "❌ Video ဖွင့်မရပါ။ ထပ်ကြိုးစားပါ။";
+
+  }
+
+}
+
+
+/* =====================================
+   GIVE VIDEO REWARD
+===================================== */
+
+async function giveVideoReward(){
+
+  if(rewardClaimed){
+
+    return;
+
+  }
+
+
+  checkNewDay();
+
+
+  if(
+    videoCount >=
+    DAILY_LIMIT
+  ){
+
+    updateUI();
+
+    return;
+
+  }
+
+
+  rewardClaimed = true;
+
+  rewardStarted = false;
+
+
+  const reward =
+    REWARDS[
+      Math.floor(
+        Math.random() *
+        REWARDS.length
+      )
+    ];
+
+
+  const saved =
+    await addCoin(
+      reward
+    );
+
+
+  if(!saved){
+
+    rewardClaimed = false;
+
+
+    const button =
+      document.getElementById(
+        "watchButton"
+      );
+
+
+    const status =
+      document.getElementById(
+        "watchStatus"
+      );
+
+
+    button.disabled = false;
+
+    button.innerText =
+      "🎁 Reward ပြန်ယူမယ်";
+
+
+    status.style.color =
+      "#ff6868";
+
+
+    status.innerText =
+      "❌ Coin သိမ်းမရပါ။ ခဏနောက် ပြန်ကြိုးစားပါ။";
+
+    return;
+
+  }
+
+
+  videoCount++;
+
+
+  localStorage.setItem(
+    "mm_video_count",
+    videoCount
+  );
+
+
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
+
+
+  const status =
+    document.getElementById(
+      "watchStatus"
+    );
+
+
+  if(
+    videoCount >=
+    DAILY_LIMIT
+  ){
+
+    button.disabled = true;
+
+    button.innerText =
+      "✅ ဒီနေ့ Reward ပြည့်ပါပြီ";
+
+  }
+
+  else{
+
+    button.disabled = false;
+
+    button.innerText =
+      "🎁 နောက် Video ကြည့်မယ်";
+
+  }
+
+
+  status.style.color =
+    "#42e69a";
+
+
+  status.innerText =
+    "🎉 +" +
+    reward.toLocaleString() +
+    " Coin ရရှိပါပြီ 🪙";
+
+
+  updateUI();
+
+}
+
+
+/* =====================================
+   HOME
+===================================== */
+
+function goHome(){
+
+  window.location.href =
+    "index.html";
+
+}
 
 
 /* =====================================
    START
 ===================================== */
 
-startApp();
+checkNewDay();
 
+updateUI();
+
+loadBalance();
+
+
+/* =====================================
+   PAGE SHOW
+===================================== */
+
+window.addEventListener(
+  "pageshow",
+  function(){
+
+    checkNewDay();
+
+    updateUI();
+
+    loadBalance();
+
+  }
+);
+
+</script>
+
+
+<!-- YOUTUBE IFRAME API -->
+
+<script
+  src="https://www.youtube.com/iframe_api">
 </script>
 
 </body>
