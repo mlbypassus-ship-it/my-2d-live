@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#070912">
 <title>MM-Real-Earn</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{
   box-sizing:border-box;
@@ -41,8 +43,6 @@ body{
   margin:auto;
   padding-bottom:100px;
 }
-
-/* HEADER */
 
 .header{
   position:sticky;
@@ -110,8 +110,6 @@ body{
   font-weight:bold;
 }
 
-/* NOTI */
-
 .noti{
   margin:14px 16px 0;
   min-height:42px;
@@ -147,8 +145,6 @@ body{
   from{transform:translateX(100%)}
   to{transform:translateX(-100%)}
 }
-
-/* WELCOME */
 
 .welcome{
   margin:16px;
@@ -190,8 +186,6 @@ body{
   font-size:12px;
   line-height:1.7;
 }
-
-/* MAIN ACTIONS */
 
 .section{
   margin:22px 16px 12px;
@@ -283,8 +277,6 @@ body{
   background:#ffd43b18;
 }
 
-/* COIN CARD */
-
 .coin-card{
   margin:16px;
   padding:20px;
@@ -326,8 +318,6 @@ body{
   font-size:28px;
   color:var(--gold);
 }
-
-/* REFER */
 
 .refer{
   margin:16px;
@@ -375,8 +365,6 @@ body{
   font-weight:bold;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
 }
-
-/* CUSTOMER SERVICE */
 
 .support{
   margin:16px;
@@ -426,8 +414,6 @@ body{
   font-size:11px;
 }
 
-/* BOTTOM NAV */
-
 .bottom{
   position:fixed;
   left:50%;
@@ -472,290 +458,309 @@ body{
 
 <div class="app">
 
-  <!-- HEADER -->
+<header class="header">
+  <div class="header-row">
 
-  <header class="header">
-    <div class="header-row">
+    <div class="brand">
+      <div class="logo">🪙</div>
 
-      <div class="brand">
-        <div class="logo">🪙</div>
-
-        <div class="brand-text">
-          <b>MM-Real-Earn</b>
-          <small>Earn • Play • Reward</small>
-        </div>
+      <div class="brand-text">
+        <b>MM-Real-Earn</b>
+        <small>Earn • Play • Reward</small>
       </div>
-
-      <div class="balance">
-        <span class="balance-icon">🪙</span>
-        <span class="balance-value" id="coinBalance">0</span>
-      </div>
-
     </div>
-  </header>
 
-
-  <!-- NOTI -->
-
-  <div class="noti">
-    <div class="noti-label">🔔 NOTI</div>
-
-    <div class="noti-text">
-      MM-Real-Earn မှာ Game ဆော့ပြီး Coin စုနိုင်ပါတယ် • YouTube Video ကြည့်ပြီး Reward ရယူနိုင်ပါတယ် 🎁
+    <div class="balance">
+      <span class="balance-icon">🪙</span>
+      <span class="balance-value" id="coinBalance">0</span>
     </div>
+
+  </div>
+</header>
+
+
+<div class="noti">
+
+  <div class="noti-label">
+    🔔 NOTI
+  </div>
+
+  <div class="noti-text">
+    MM-Real-Earn မှာ Game ဆော့ပြီး Coin စုနိုင်ပါတယ် • YouTube Video ကြည့်ပြီး Reward ရယူနိုင်ပါတယ် 🎁
+  </div>
+
+</div>
+
+
+<section class="welcome">
+
+  <small>မင်္ဂလာပါ 👋</small>
+
+  <h1>
+    Coin စုပါ<br>
+    Reward ရယူပါ
+  </h1>
+
+  <p>
+    Game ဆော့ခြင်း၊ Video ကြည့်ခြင်းနဲ့
+    Coin စုဆောင်းပြီး Reward ရယူနိုင်ပါတယ်။
+  </p>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-head">
+    <h2>⚡ Quick Earn</h2>
+    <span>ရွေးချယ်ပါ</span>
   </div>
 
 
-  <!-- WELCOME -->
+  <div class="actions">
 
-  <section class="welcome">
+    <button
+      class="action gold"
+      onclick="location.href='earn.html'">
 
-    <small>မင်္ဂလာပါ 👋</small>
-
-    <h1>
-      Coin စုပါ<br>
-      Reward ရယူပါ
-    </h1>
-
-    <p>
-      Game ဆော့ခြင်း၊ Video ကြည့်ခြင်းနဲ့
-      Coin စုဆောင်းပြီး Reward ရယူနိုင်ပါတယ်။
-    </p>
-
-  </section>
-
-
-  <!-- QUICK EARN -->
-
-  <section class="section">
-
-    <div class="section-head">
-      <h2>⚡ Quick Earn</h2>
-      <span>ရွေးချယ်ပါ</span>
-    </div>
-
-    <div class="actions">
-
-      <!-- YOUTUBE -->
-
-      <button class="action gold"
-        onclick="location.href='earn.html'">
-
-        <div class="card" onclick="window.location.href='earn.html'">
-  <div class="card-icon">🎬</div>
-  <h3>Reward Video</h3>
-  <p>Reward ရနိုင်သော Video များ</p>
-        </div>
-
-      </button>
-
-
-      <!-- GAMES -->
-
-      <button class="action"
-        onclick="location.href='games.html'">
-
-        <div class="action-icon">🎮</div>
-
-        <h3>Mini Game Earn</h3>
-
-        <p>
-          Mini Game များဆော့ပြီး
-          Coin ရယူပါ
-        </p>
-
-      </button>
-
-
-      <!-- WITHDRAW -->
-
-      <button class="action"
-        onclick="location.href='wallet.html'">
-
-        <div class="action-icon">💰</div>
-
-        <h3>Withdraw</h3>
-
-        <p>
-          Coin ပြည့်ရင်
-          ငွေထုတ်ယူနိုင်ပါတယ်
-        </p>
-
-      </button>
-
-
-      <!-- PROFILE -->
-
-      <button class="action"
-        onclick="location.href='profile.html'">
-
-        <div class="action-icon">👤</div>
-
-        <h3>Profile</h3>
-
-        <p>
-          Account နဲ့
-          History ကြည့်ပါ
-        </p>
-
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- COIN BALANCE -->
-
-  <section class="coin-card">
-
-    <div class="coin-top">
-      <span>🪙 လက်ရှိ Coin Balance</span>
-      <b>MM-REAL-EARN</b>
-    </div>
-
-    <div class="big-coin">
-      <span>🪙</span>
-      <strong id="bigCoinBalance">0</strong>
-    </div>
-
-  </section>
-
-
-  <!-- REFER -->
-
-  <section class="refer">
-
-    <div class="refer-head">
-
-      <div class="refer-icon">👥</div>
-
-      <div>
-        <h2>သူငယ်ချင်းခေါ်ပြီး Earn လုပ်ပါ</h2>
-
-        <p>
-          Refer လုပ်ပြီး Bonus Coin ရယူပါ
-        </p>
+      <div class="action-icon">
+        🎬
       </div>
 
-    </div>
+      <h3>
+        Reward Video
+      </h3>
 
-    <button class="refer-btn"
-      onclick="location.href='refer.html'">
-
-      👥 Refer လုပ်ရန်
-
-    </button>
-
-  </section>
-
-
-  <!-- CUSTOMER SERVICE -->
-
-  <section class="support">
-
-    <div class="support-icon">🎧</div>
-
-    <div class="support-text">
-
-      <b>Customer Service</b>
-
-      <small>
-        waizinphyo4700@gmail.com
-      </small>
-
-    </div>
-
-    <button class="support-btn"
-      onclick="location.href='mailto:waizinphyo4700@gmail.com'">
-
-      ဆက်သွယ်ရန်
+      <p>
+        Reward ရနိုင်သော Video များ
+      </p>
 
     </button>
 
-  </section>
 
-
-  <!-- BOTTOM NAV -->
-
-  <nav class="bottom">
-
-    <button class="nav active"
-      onclick="location.href='index.html'">
-      <span>🏠</span>
-      Home
-    </button>
-
-    <button class="nav"
+    <button
+      class="action"
       onclick="location.href='games.html'">
-      <span>🎮</span>
-      Games
+
+      <div class="action-icon">
+        🎮
+      </div>
+
+      <h3>
+        Mini Game Earn
+      </h3>
+
+      <p>
+        Mini Game များဆော့ပြီး
+        Coin ရယူပါ
+      </p>
+
     </button>
 
-    <button class="nav"
-      onclick="location.href='earn.html'">
-      <span>🎬</span>
-      Earn
-    </button>
 
-    <button class="nav"
+    <button
+      class="action"
       onclick="location.href='wallet.html'">
-      <span>💰</span>
-      Wallet
+
+      <div class="action-icon">
+        💰
+      </div>
+
+      <h3>
+        Withdraw
+      </h3>
+
+      <p>
+        Coin ပြည့်ရင်
+        ငွေထုတ်ယူနိုင်ပါတယ်
+      </p>
+
     </button>
 
-    <button class="nav"
+
+    <button
+      class="action"
       onclick="location.href='profile.html'">
-      <span>👤</span>
-      Profile
+
+      <div class="action-icon">
+        👤
+      </div>
+
+      <h3>
+        Profile
+      </h3>
+
+      <p>
+        Account နဲ့
+        History ကြည့်ပါ
+      </p>
+
     </button>
 
-  </nav>
+  </div>
+
+</section>
+
+
+<section class="coin-card">
+
+  <div class="coin-top">
+
+    <span>
+      🪙 လက်ရှိ Coin Balance
+    </span>
+
+    <b>
+      MM-REAL-EARN
+    </b>
+
+  </div>
+
+
+  <div class="big-coin">
+
+    <span>🪙</span>
+
+    <strong id="bigCoinBalance">
+      0
+    </strong>
+
+  </div>
+
+</section>
+
+
+<section class="refer">
+
+  <div class="refer-head">
+
+    <div class="refer-icon">
+      👥
+    </div>
+
+    <div>
+
+      <h2>
+        သူငယ်ချင်းခေါ်ပြီး Earn လုပ်ပါ
+      </h2>
+
+      <p>
+        Refer လုပ်ပြီး Bonus Coin ရယူပါ
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <button
+    class="refer-btn"
+    onclick="location.href='refer.html'">
+
+    👥 Refer လုပ်ရန်
+
+  </button>
+
+</section>
+
+
+<section class="support">
+
+  <div class="support-icon">
+    🎧
+  </div>
+
+  <div class="support-text">
+
+    <b>
+      Customer Service
+    </b>
+
+    <small>
+      waizinphyo4700@gmail.com
+    </small>
+
+  </div>
+
+  <button
+    class="support-btn"
+    onclick="location.href='mailto:waizinphyo4700@gmail.com'">
+
+    ဆက်သွယ်ရန်
+
+  </button>
+
+</section>
+
+
+<nav class="bottom">
+
+  <button
+    class="nav active"
+    onclick="location.href='index.html'">
+
+    <span>🏠</span>
+    Home
+
+  </button>
+
+
+  <button
+    class="nav"
+    onclick="location.href='games.html'">
+
+    <span>🎮</span>
+    Games
+
+  </button>
+
+
+  <button
+    class="nav"
+    onclick="location.href='earn.html'">
+
+    <span>🎬</span>
+    Earn
+
+  </button>
+
+
+  <button
+    class="nav"
+    onclick="location.href='wallet.html'">
+
+    <span>💰</span>
+    Wallet
+
+  </button>
+
+
+  <button
+    class="nav"
+    onclick="location.href='profile.html'">
+
+    <span>👤</span>
+    Profile
+
+  </button>
+
+</nav>
 
 </div>
 
 
 <script>
 
-/* COIN DISPLAY */
-
-function updateHomeCoin(){
-
-  const savedCoins =
-    Number(localStorage.getItem("mm_real_earn_coins") || 0);
-
-  const coinBalance =
-    document.getElementById("coinBalance");
-
-  if(coinBalance){
-    coinBalance.innerText =
-      savedCoins.toLocaleString();
-  }
-
-  const bigCoinBalance =
-    document.getElementById("bigCoinBalance");
-
-  if(bigCoinBalance){
-    bigCoinBalance.innerText =
-      savedCoins.toLocaleString();
-  }
-
-}
-
-updateHomeCoin();
-
-window.addEventListener("pageshow", function(){
-  updateHomeCoin();
-});
-
-</script>
-<script>
+/* =====================================
+   SUPABASE
+===================================== */
 
 const SUPABASE_URL =
   "https://acclbthzfzrfbwyslpvv.supabase.co";
 
 const SUPABASE_KEY =
   "sb_publishable_PxrCIfh0MfL6KT1iQxgqfw__IgNG1OY";
+
 
 const supabaseClient =
   window.supabase.createClient(
@@ -764,23 +769,77 @@ const supabaseClient =
   );
 
 
-async function checkLogin(){
+/* =====================================
+   UPDATE BALANCE ON SCREEN
+===================================== */
+
+function showBalance(balance){
+
+  const value =
+    Number(balance || 0)
+      .toLocaleString();
+
+
+  const coinBalance =
+    document.getElementById(
+      "coinBalance"
+    );
+
+  if(coinBalance){
+
+    coinBalance.innerText =
+      value;
+
+  }
+
+
+  const bigCoinBalance =
+    document.getElementById(
+      "bigCoinBalance"
+    );
+
+  if(bigCoinBalance){
+
+    bigCoinBalance.innerText =
+      value;
+
+  }
+
+}
+
+
+/* =====================================
+   LOGIN + LOAD DATABASE BALANCE
+===================================== */
+
+async function startApp(){
 
   const {
-    data,
-    error
-  } = await supabaseClient.auth.getSession();
+    data: sessionData,
+    error: sessionError
+  } =
+  await supabaseClient.auth.getSession();
 
 
-  if(error){
+  if(sessionError){
 
-    console.error(error);
+    console.error(
+      "Session Error:",
+      sessionError
+    );
+
     return;
 
   }
 
 
-  if(!data.session){
+  const session =
+    sessionData.session;
+
+
+  /* LOGIN မဝင်ထားရင် */
+
+  if(!session){
 
     window.location.replace(
       "https://mlbypassus-ship-it.github.io/my-2d-live/login.html"
@@ -790,11 +849,64 @@ async function checkLogin(){
 
   }
 
+
+  /* =================================
+     LOAD PROFILE
+  ================================= */
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select("balance")
+    .eq("id", session.user.id)
+    .single();
+
+
+  if(profileError){
+
+    console.error(
+      "Profile Error:",
+      profileError
+    );
+
+    showBalance(0);
+
+    return;
+
+  }
+
+
+  showBalance(
+    profile.balance
+  );
+
 }
 
 
-checkLogin();
+/* =====================================
+   REFRESH BALANCE WHEN RETURNING
+===================================== */
+
+window.addEventListener(
+  "pageshow",
+  function(){
+
+    startApp();
+
+  }
+);
+
+
+/* =====================================
+   START
+===================================== */
+
+startApp();
 
 </script>
+
 </body>
 </html>
