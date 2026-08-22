@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b16">
+
+<title>Earn Video - MM-Real-Earn</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:#070a12;
+  color:#fff;
+  font-family:Arial,"Noto Sans Myanmar",sans-serif;
+}
+
+.app{
+  max-width:500px;
+  min-height:100vh;
+  margin:auto;
+  padding-bottom:30px;
+  background:
+    radial-gradient(circle at 15% 5%,#17315c55,transparent 30%),
+    radial-gradient(circle at 90% 25%,#5c2b7650,transparent 30%),
+    linear-gradient(180deg,#0b1020,#070a12);
+}
+
+/* HEADER */
+
+.header{
+  padding:16px;
+  background:#0b1020ee;
+  border-bottom:1px solid #ffffff12;
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter:blur(15px);
+}
+
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.back{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:13px;
+  background:#ffffff0c;
+  color:#fff;
+  font-size:20px;
+}
+
+.title{
+  flex:1;
+  margin-left:12px;
+}
+
+.title b{
+  display:block;
+  font-size:17px;
+}
+
+.title small{
+  color:#858ea1;
+  font-size:11px;
+}
+
+.coin-box{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 11px;
+  border-radius:13px;
+  background:#ffffff0c;
+  border:1px solid #ffffff12;
+}
+
+.coin{
+  font-size:18px;
+}
+
+.coin-value{
+  color:#ffd43b;
+  font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+  margin:18px 16px;
+  padding:23px 20px;
+  border-radius:23px;
+  background:
+    radial-gradient(circle at 80% 10%,#ffd43b22,transparent 35%),
+    linear-gradient(135deg,#171d35,#101522);
+  border:1px solid #ffffff12;
+}
+
+.hero-icon{
+  width:58px;
+  height:58px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#ff000020;
+  font-size:30px;
+}
+
+.hero h1{
+  margin-top:16px;
+  font-size:24px;
+}
+
+.hero p{
+  margin-top:8px;
+  color:#969fb1;
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* DAILY */
+
+.daily{
+  margin:16px;
+  padding:18px;
+  border-radius:20px;
+  background:#ffffff08;
+  border:1px solid #ffffff0d;
+}
+
+.daily-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.daily-top h2{
+  font-size:16px;
+}
+
+.daily-top span{
+  color:#ffd43b;
+  font-size:12px;
+}
+
+.progress{
+  height:9px;
+  margin-top:14px;
+  border-radius:10px;
+  background:#ffffff0d;
+  overflow:hidden;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  border-radius:10px;
+  background:linear-gradient(90deg,#ffd43b,#ff9800);
+  transition:.3s;
+}
+
+.progress-info{
+  display:flex;
+  justify-content:space-between;
+  margin-top:9px;
+  color:#7f8799;
+  font-size:11px;
+}
+
+/* VIDEO CARD */
+
+.video-card{
+  margin:16px;
+  padding:18px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#121a2c,#171226);
+  border:1px solid #ffffff0d;
+}
+
+.video-box{
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:17px;
+  overflow:hidden;
+  background:#05070d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.video-placeholder{
+  text-align:center;
+}
+
+.youtube-icon{
+  width:64px;
+  height:45px;
+  margin:auto;
+  border-radius:12px;
+  background:#ff0000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+}
+
+.video-placeholder p{
+  margin-top:12px;
+  color:#858ea1;
+  font-size:12px;
+}
+
+.watch-btn{
+  width:100%;
+  margin-top:15px;
+  padding:15px;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(135deg,#ffd43b,#ff9800);
+  color:#111;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.watch-btn:disabled{
+  opacity:.5;
+}
+
+/* REWARD INFO */
+
+.reward-info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+
+.reward{
+  padding:14px;
+  text-align:center;
+  border-radius:15px;
+  background:#ffffff08;
+}
+
+.reward small{
+  display:block;
+  color:#7f8799;
+  font-size:10px;
+}
+
+.reward strong{
+  display:block;
+  margin-top:5px;
+  color:#ffd43b;
+  font-size:17px;
+}
+
+/* STATUS */
+
+.status{
+  min-height:22px;
+  margin-top:13px;
+  text-align:center;
+  font-size:12px;
+  line-height:1.5;
+}
+
+/* NOTICE */
+
+.notice{
+  margin:16px;
+  padding:15px;
+  border-radius:17px;
+  background:#ffffff08;
+  border:1px solid #ffffff0d;
+}
+
+.notice b{
+  color:#ffd43b;
+  font-size:13px;
+}
+
+.notice p{
+  margin-top:7px;
+  color:#7f8799;
+  font-size:11px;
+  line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+
+  <header class="header">
+
+    <div class="header-row">
+
+      <button class="back" onclick="goHome()">
+        ←
+      </button>
+
+      <div class="title">
+        <b>🎬 Earn Video</b>
+        <small>Watch • Earn • Reward</small>
+      </div>
+
+      <div class="coin-box">
+        <span class="coin">🪙</span>
+        <span class="coin-value" id="coinBalance">0</span>
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-icon">
+      ▶️
+    </div>
+
+    <h1>Video ကြည့်ပြီး Coin ရယူပါ</h1>
+
+    <p>
+      Reward Video ကိုကြည့်ပြီး
+      သတ်မှတ်ထားသော Coin များ ရယူနိုင်ပါတယ်။
+      တစ်နေ့တာ Reward Limit ရှိပါတယ်။
+    </p>
+
+  </section>
+
+
+  <!-- DAILY PROGRESS -->
+
+  <section class="daily">
+
+    <div class="daily-top">
+
+      <h2>🎁 Today's Reward</h2>
+
+      <span id="videoCount">
+        0 / 30
+      </span>
+
+    </div>
+
+    <div class="progress">
+
+      <div
+        class="progress-bar"
+        id="progressBar">
+      </div>
+
+    </div>
+
+    <div class="progress-info">
+
+      <span>Video ကြည့်ပြီး</span>
+
+      <span id="progressText">
+        0%
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- VIDEO -->
+
+  <section class="video-card">
+
+    <div class="video-box">
+
+      <div class="video-placeholder">
+
+        <div class="youtube-icon">
+          ▶
+        </div>
+
+        <p>
+          YouTube Reward Video
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="watch-btn"
+      id="watchButton"
+      onclick="watchVideo()">
+
+      ▶️ Video ကြည့်ပြီး Coin ယူမယ်
+
+    </button>
+
+
+    <div class="reward-info">
+
+      <div class="reward">
+
+        <small>
+          တစ်ကြိမ်
+        </small>
+
+        <strong>
+          +200 🪙
+        </strong>
+
+      </div>
+
+      <div class="reward">
+
+        <small>
+          တစ်နေ့
+        </small>
+
+        <strong>
+          30 ကြိမ်
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="status"
+      id="status">
+    </div>
+
+  </section>
+
+
+  <!-- NOTICE -->
+
+  <div class="notice">
+
+    <b>⚠️ Reward Video အကြောင်း</b>
+
+    <p>
+      Video ကို သတ်မှတ်ထားသောအချိန်အထိ
+      ကြည့်ပြီးမှ Reward ရရှိမည့်စနစ်ဖြစ်ပါတယ်။
+      Video မပြီးဆုံးမီ ပိတ်ပါက Coin မရရှိပါ။
+    </p>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   SETTINGS
+========================= */
+
+const DAILY_LIMIT = 30;
+const REWARD_PER_VIDEO = 200;
+
+
+/* =========================
+   STORAGE
+========================= */
+
+let videoCount =
+  Number(
+    localStorage.getItem(
+      "mm_video_count"
+    ) || 0
+  );
+
+let videoDate =
+  localStorage.getItem(
+    "mm_video_date"
+  );
+
+
+/* =========================
+   DAILY RESET
+========================= */
+
+function checkNewDay(){
+
+  const today =
+    new Date()
+      .toLocaleDateString();
+
+  if(videoDate !== today){
+
+    videoDate = today;
+    videoCount = 0;
+
+    localStorage.setItem(
+      "mm_video_date",
+      today
+    );
+
+    localStorage.setItem(
+      "mm_video_count",
+      "0"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   UI
+========================= */
+
+function updateUI(){
+
+  checkNewDay();
+
+  document.getElementById(
+    "videoCount"
+  ).innerText =
+    videoCount + " / " + DAILY_LIMIT;
+
+
+  const percent =
+    (videoCount / DAILY_LIMIT) * 100;
+
+
+  document.getElementById(
+    "progressBar"
+  ).style.width =
+    percent + "%";
+
+
+  document.getElementById(
+    "progressText"
+  ).innerText =
+    Math.round(percent) + "%";
+
+
+  document.getElementById(
+    "coinBalance"
+  ).innerText =
+    localStorage.getItem(
+      "mm_coins"
+    ) || "0";
+
+
+  if(videoCount >= DAILY_LIMIT){
+
+    document.getElementById(
+      "watchButton"
+    ).disabled = true;
+
+    document.getElementById(
+      "watchButton"
+    ).innerText =
+      "✅ ဒီနေ့ Reward ပြည့်ပါပြီ";
+
+  }
+
+}
+
+
+/* =========================
+   WATCH VIDEO
+========================= */
+
+function watchVideo(){
+
+  checkNewDay();
+
+  if(videoCount >= DAILY_LIMIT){
+
+    showStatus(
+      "🎬 ဒီနေ့ Video 30 ကြိမ် ပြည့်သွားပါပြီ။",
+      "#ff6868"
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "watchButton"
+    );
+
+
+  button.disabled = true;
+
+  button.innerText =
+    "⏳ Video ကြည့်နေပါတယ်...";
+
+
+  showStatus(
+    "▶️ Video ပြီးဆုံးအောင် စောင့်ပါ...",
+    "#ffd43b"
+  );
+
+
+  /*
+    နောက်အဆင့်မှာ
+    ဒီနေရာကို YouTube / Ads Network
+    နဲ့ ချိတ်မယ်။
+  */
+
+
+  setTimeout(function(){
+
+    videoCount++;
+
+    localStorage.setItem(
+      "mm_video_count",
+      videoCount
+    );
+
+
+    addCoin(
+      REWARD_PER_VIDEO
+    );
+
+
+    showStatus(
+      "🎉 +" +
+      REWARD_PER_VIDEO +
+      " Coin ရရှိပါပြီ!",
+      "#42e69a"
+    );
+
+
+    button.disabled = false;
+
+    button.innerText =
+      "▶️ Video ကြည့်ပြီး Coin ယူမယ်";
+
+
+    updateUI();
+
+  },5000);
+
+}
+
+
+/* =========================
+   ADD COIN
+========================= */
+
+function addCoin(amount){
+
+  let coins =
+    Number(
+      localStorage.getItem(
+        "mm_coins"
+      ) || 0
+    );
+
+  coins += amount;
+
+  localStorage.setItem(
+    "mm_coins",
+    coins
+  );
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(
+  text,
+  color
+){
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+  status.innerText =
+    text;
+
+  status.style.color =
+    color;
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function goHome(){
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+checkNewDay();
+updateUI();
+
+</script>
+
+</body>
+</html>
